@@ -1,280 +1,198 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Constipação Pediátrica — Calculadora e Protocolo</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>Constipação Pediátrica — SBP 2024</title>
 <style>
 :root{
-  --bg:#f8fafc;--card:#fff;--ink:#1f2937;--muted:#64748b;--line:#e2e8f0;
-  --primary:#a8444a;--primary2:#fbeaec;--danger:#b91c1c;--warn:#b45309;--ok:#047857;
-  --blue:#1d4ed8;--soft:#f1f5f9;--violet:#6d28d9;
+  --navy:#17365d;--blue:#315d9b;--light:#eef4fb;--green:#eafaf0;--greenb:#3fa563;
+  --yellow:#fff8ea;--yellowb:#d79b00;--red:#fff1f0;--redb:#c9362b;--gray:#667085;
+  --card:#fff;--line:#e3e8ef;--ink:#172033;--shadow:0 4px 18px rgba(28,53,85,.10)
 }
 *{box-sizing:border-box}
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:linear-gradient(180deg,#fff7f7 0%,var(--bg) 260px);color:var(--ink)}
-header{padding:24px 16px 12px;text-align:center}
-header h1{margin:0;font-size:1.5rem;line-height:1.2;color:#8f383d}
-header p{max-width:880px;margin:8px auto 0;color:var(--muted);font-size:.95rem;line-height:1.45}
-main{max-width:1120px;margin:0 auto;padding:12px 12px 72px;display:grid;gap:9px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:0 4px 18px rgba(15,23,42,.06);padding:13px}
-.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:9px}.col-3{grid-column:span 3}.col-4{grid-column:span 4}.col-6{grid-column:span 6}.col-8{grid-column:span 8}.col-12{grid-column:span 12}
-@media(max-width:760px){.col-3,.col-4,.col-6,.col-8{grid-column:span 12}header h1{font-size:1.25rem}.table-wrap{overflow-x:auto}}
-label{display:block;font-weight:700;font-size:.92rem;margin-bottom:6px;color:#334155}
-input,select,textarea{width:100%;padding:11px 12px;border:1px solid #cbd5e1;border-radius:12px;background:#fff;font-size:1rem;color:var(--ink)}
-input:focus,select:focus,textarea:focus{outline:2px solid #f1b7ba;border-color:var(--primary)}
-.section-title{font-size:1.06rem;margin:0 0 12px;color:#8f383d;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.pill{display:inline-flex;align-items:center;padding:5px 9px;border-radius:999px;background:var(--primary2);color:#8f383d;font-weight:800;font-size:.76rem}
-.pill.blue{background:#dbeafe;color:#1e40af}.pill.violet{background:#ede9fe;color:#5b21b6}
-.hint,.small{font-size:.82rem;color:var(--muted);line-height:1.45}
-.checks{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}@media(max-width:760px){.checks{grid-template-columns:1fr}}
-.check{display:flex;gap:8px;align-items:flex-start;background:#fff;border:1px solid var(--line);padding:10px;border-radius:12px;min-height:46px}.check input{width:18px;min-width:18px;margin-top:2px}.check span{font-size:.9rem;line-height:1.3}
-.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}button{border:0;border-radius:13px;padding:12px 15px;font-weight:800;cursor:pointer;font-size:.95rem}.primary{background:var(--primary);color:#fff}.ghost{background:var(--soft);color:#334155}.dangerBtn{background:#fee2e2;color:#991b1b}
-.result{display:none}.result.show{display:block}.alert{border-radius:14px;padding:12px 14px;margin:10px 0;line-height:1.48;border:1px solid}.alert-danger{background:#fef2f2;border-color:#fecaca;color:#7f1d1d}.alert-warn{background:#fffbeb;border-color:#fde68a;color:#78350f}.alert-ok{background:#ecfdf5;border-color:#a7f3d0;color:#064e3b}.alert-info{background:#eff6ff;border-color:#bfdbfe;color:#1e3a8a}.alert-violet{background:#f5f3ff;border-color:#ddd6fe;color:#4c1d95}
-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.9rem;min-width:720px}th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:#f8e8e9;color:#7f3034}.table-wrap{width:100%}
-.rx{background:#0f172a;color:#e2e8f0;border-radius:14px;padding:14px;white-space:pre-wrap;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.87rem;line-height:1.48;margin-top:10px}
-.copyline{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:12px;flex-wrap:wrap}
-details{border:1px solid var(--line);border-radius:14px;padding:10px 12px;background:#fff;margin-top:10px}summary{font-weight:800;cursor:pointer;color:#334155}ul{margin:8px 0 0 18px;padding:0}li{margin:5px 0}.source{padding:10px 12px;border-left:4px solid #94a3b8;background:#f8fafc;border-radius:8px;margin:8px 0;font-size:.84rem;line-height:1.45}.source a{color:#1d4ed8}.tag{font-size:.74rem;font-weight:800;padding:3px 7px;border-radius:999px;display:inline-block;margin-right:4px}.tag.sbp{background:#fee2e2;color:#991b1b}.tag.ext{background:#dbeafe;color:#1e40af}.tag.inst{background:#ede9fe;color:#5b21b6}
-.kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}.kpi div{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:10px}.kpi b{display:block;font-size:1.05rem;color:#8f383d}.kpi span{font-size:.78rem;color:var(--muted)}@media(max-width:760px){.kpi{grid-template-columns:repeat(2,1fr)}}
-.compare{display:grid;grid-template-columns:1fr 1fr;gap:10px}.compare>div{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fff}.compare h4{margin:0 0 8px;color:#334155}.note{font-size:.82rem;line-height:1.45;color:#475569}.warnline{font-weight:800;color:#92400e}@media(max-width:760px){.compare{grid-template-columns:1fr}}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;margin:0;background:#f5f7fa;color:var(--ink)}
+header{background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;padding:10px 16px}
+header .wrap{max-width:1180px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+header h1{margin:0;font-size:20px}
+header .sub{font-size:12px;opacity:.9;margin-top:3px}
+main{max-width:1180px;margin:auto;padding:10px}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px;margin-bottom:10px;box-shadow:var(--shadow)}
+h2{color:var(--navy);font-size:17px;margin:0 0 10px}
+h3{color:var(--navy);font-size:14px;margin:0 0 5px}
+.patientGrid{display:grid;grid-template-columns:120px 100px 110px 1fr 1fr;gap:8px;align-items:end}
+label{display:block;font-size:11px;font-weight:800;color:#344054;margin-bottom:3px}
+input,select{width:100%;padding:8px 9px;border:1px solid #cbd5e1;border-radius:8px;background:#fff;font-size:13px}
+button{border:0;border-radius:9px;background:var(--navy);color:#fff;font-weight:850;padding:9px 13px;cursor:pointer;font-size:13px}
+.quick{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}
+.checkGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+.checkline{display:flex;gap:7px;align-items:flex-start;border:1px solid var(--line);border-radius:9px;padding:8px;background:#fbfdff;font-size:11.5px;line-height:1.25;font-weight:650;color:#344054}
+.checkline input{width:auto;margin-top:2px}
+.result{display:none}.result.show{display:block}
+.phase{display:flex;gap:7px;align-items:center;margin:12px 0 7px;font-weight:900;color:var(--navy)}
+.num{width:23px;height:23px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:var(--navy);color:#fff;font-size:11px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.rx{border:1px solid var(--line);border-radius:10px;padding:10px;background:#f8fbff;margin:7px 0}
+.rx.ok{border-left:5px solid var(--greenb);background:#f8fcf9}
+.rx.warn{border-left:5px solid var(--yellowb);background:#fffdf7}
+.rx.red{border-left:5px solid var(--redb);background:#fff8f7}
+.dose{background:var(--green);border-left:4px solid var(--greenb);border-radius:6px;padding:8px 10px;margin-top:6px;font-weight:900;color:#1c6b3c;font-size:15px}
+.note{font-size:11.5px;color:#475467;margin-top:6px;line-height:1.35}
+.alert{border-radius:9px;padding:9px 10px;margin:7px 0;font-size:12.5px;line-height:1.35}
+.alert.red{background:var(--red);border-left:5px solid var(--redb)}
+.alert.warn{background:var(--yellow);border-left:5px solid var(--yellowb)}
+.alert.info{background:var(--light);border-left:5px solid var(--blue)}
+.parents{font-size:12.5px;line-height:1.45;margin:0;padding-left:19px}
+.parents li{margin:4px 0}
+details{border:1px solid var(--line);border-radius:9px;background:#fbfdff;padding:9px 10px;margin-top:7px}
+summary{cursor:pointer;font-weight:850;color:#344054;font-size:12px}
+table{width:100%;border-collapse:collapse;margin-top:7px;font-size:11.5px}
+th,td{border:1px solid #e0e6ee;padding:6px 7px;text-align:left;vertical-align:top}
+th{background:#eef3f9;color:var(--navy)}
+.copyarea{white-space:pre-wrap;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;background:#0b1220;color:#e5e7eb;border-radius:9px;padding:10px;line-height:1.42;margin-top:7px}
+.source{font-size:10.5px;color:var(--gray);margin-top:8px}
+@media(max-width:850px){.patientGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.checkGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.grid2{grid-template-columns:1fr}}
+@media(max-width:520px){.checkGrid{grid-template-columns:1fr}header h1{font-size:18px}}
 </style>
 </head>
 <body>
-<header>
-  <h1>Constipação Pediátrica</h1>
-  <p>SBP 2024 • calculadora de conduta</p>
-</header>
+<header><div class="wrap">
+  <div><h1>🚻 Constipação Pediátrica</h1><div class="sub">SBP 2024 • emergência → casa → orientações</div></div>
+</div></header>
+
 <main>
-  
 <section class="card">
-  <h2 class="section-title">1) Dados do paciente <span class="pill">entrada</span></h2>
-  <div class="grid">
-    <div class="col-3"><label>Peso (kg)</label><input id="peso" type="number" step="0.1" min="0" placeholder="Ex.: 18"></div>
-    <div class="col-3"><label>Idade</label><input id="idade" type="number" step="1" min="0" placeholder="Ex.: 3"></div>
-    <div class="col-3"><label>Unidade</label><select id="unidade"><option value="anos">anos</option><option value="meses">meses</option><option value="dias">dias</option></select></div>
-    <div class="col-3"><label>Controle esfincteriano?</label><select id="controle"><option value="nao">Não / não sabe</option><option value="sim">Sim</option></select></div>
-    <div class="col-4"><label>Dias sem evacuar</label><input id="diasSemEvacuar" type="number" step="1" min="0" placeholder="Ex.: 5"></div>
-    <div class="col-4"><label>Consistência</label><select id="bristol"><option value="duras">Duras/ressecadas</option><option value="pastosas">Pastosas</option><option value="liquidas">Líquidas/escape</option><option value="nao">Não informado</option></select></div>
-    <div class="col-4"><label>Dor abdominal atual</label><select id="dor"><option value="nao">Não/importante não</option><option value="leve">Leve</option><option value="moderada">Moderada</option><option value="intensa">Intensa/progressiva</option></select></div>
+  <div class="patientGrid">
+    <div><label>Peso (kg)</label><input id="peso" type="number" min="0" step="0.1" value="15" oninput="calcular()"></div>
+    <div><label>Idade</label><input id="idade" type="number" min="0" step="0.1" value="3" oninput="calcular()"></div>
+    <div><label>Unidade</label><select id="unidade" onchange="calcular()"><option value="anos">anos</option><option value="meses">meses</option></select></div>
+    <div><label>Fecaloma / impactação?</label><select id="impactacao" onchange="calcular()"><option value="nao">Não evidente</option><option value="sim">Sim / provável</option></select></div>
+    <div><label>Via oral possível?</label><select id="vo" onchange="calcular()"><option value="sim">Sim</option><option value="nao">Não</option></select></div>
   </div>
 </section>
 
 <section class="card">
-  <h2 class="section-title">2) Sinais de alarme <span class="pill">não perder</span></h2>
-  <div class="checks" id="alarmes">
-    <label class="check"><input type="checkbox" value="Mecônio >48h"><span>Atraso na eliminação de mecônio &gt; 48 h</span></label>
-    <label class="check"><input type="checkbox" value="Início no primeiro mês"><span>Início no primeiro mês de vida</span></label>
-    <label class="check"><input type="checkbox" value="Vômitos biliosos"><span>Vômitos biliosos</span></label>
-    <label class="check"><input type="checkbox" value="Febre/queda do estado geral"><span>Febre, toxemia ou queda do estado geral</span></label>
-    <label class="check"><input type="checkbox" value="Baixo ganho ponderoestatural"><span>Baixo ganho de peso/estatura</span></label>
-    <label class="check"><input type="checkbox" value="Distensão abdominal importante"><span>Distensão abdominal importante</span></label>
-    <label class="check"><input type="checkbox" value="Sangue nas fezes"><span>Sangue nas fezes sem fissura evidente</span></label>
-    <label class="check"><input type="checkbox" value="Alteração neurológica/sacral"><span>Alteração neurológica, coluna lombossacra ou tufo de pelos sacral</span></label>
-    <label class="check"><input type="checkbox" value="Anomalia anal/Hirschsprung"><span>Fístulas perineais, anomalia anal ou suspeita de Hirschsprung</span></label>
-    <label class="check"><input type="checkbox" value="Suspeita de violência sexual"><span>Suspeita de violência sexual — não realizar toque retal</span></label>
+  <h2>⚠️ Sinais de alarme</h2>
+  <div class="checkGrid" id="alarmes">
+    <label class="checkline"><input type="checkbox" onchange="calcular()">Mecônio &gt;48 h / início no 1º mês</label>
+    <label class="checkline"><input type="checkbox" onchange="calcular()">Vômitos biliosos</label>
+    <label class="checkline"><input type="checkbox" onchange="calcular()">Febre / toxemia / queda do estado geral</label>
+    <label class="checkline"><input type="checkbox" onchange="calcular()">Distensão abdominal importante</label>
+    <label class="checkline"><input type="checkbox" onchange="calcular()">Baixo ganho ponderoestatural</label>
+    <label class="checkline"><input type="checkbox" onchange="calcular()">Sangue sem fissura evidente</label>
+    <label class="checkline"><input type="checkbox" onchange="calcular()">Alteração neurológica / lombossacra</label>
+    <label class="checkline"><input type="checkbox" onchange="calcular()">Suspeita de Hirschsprung / anomalia anal</label>
   </div>
 </section>
 
-<section class="card">
-  <h2 class="section-title">3) Roma IV e fecaloma <span class="pill">funcional</span></h2>
-  <div class="alert alert-info"><b>Critérios de Roma IV:</b> em crianças &lt;4 anos, considerar ≥2 critérios por ≥1 mês; em crianças ≥4 anos, ≥2 critérios presentes ao menos 1x/semana por ≥1 mês. O sistema abaixo conta os critérios marcados, mas a interpretação final deve respeitar a faixa etária.</div>
-  <div class="checks" id="roma">
-    <label class="check"><input type="checkbox" value="≤2 evacuações/semana"><span>≤ 2 evacuações por semana</span></label>
-    <label class="check"><input type="checkbox" value="Retenção excessiva"><span>Retenção excessiva / comportamento de prender</span></label>
-    <label class="check"><input type="checkbox" value="Dor/dificuldade evacuatória"><span>Dor ou dificuldade para evacuar</span></label>
-    <label class="check"><input type="checkbox" value="Fezes volumosas"><span>Fezes de grande calibre / podem obstruir o vaso</span></label>
-    <label class="check"><input type="checkbox" value="Massa fecal"><span>Massa fecal palpável ou reto cheio, se avaliado</span></label>
-    <label class="check"><input type="checkbox" value="Incontinência fecal"><span>Escape/incontinência fecal ≥ 1x/semana</span></label>
-  </div>
-  <div class="grid" style="margin-top:12px">
-    <div class="col-4"><label>Impactação/fecaloma?</label><select id="impactacao"><option value="nao">Não evidente</option><option value="suspeita">Suspeita clínica</option><option value="sim">Sim / massa fecal importante</option></select></div>
-    <div class="col-4"><label>PEG disponível?</label><select id="pegDisp"><option value="sim">Sim</option><option value="nao">Não</option></select></div>
-    <div class="col-4"><label>Via oral possível/tolerada?</label><select id="vo"><option value="sim">Sim</option><option value="nao">Não</option></select></div>
-  </div>
-  <div class="btns"><button class="primary" onclick="calcular()">Calcular conduta</button><button class="ghost" onclick="limpar()">Limpar</button><button class="dangerBtn" onclick="marcarImpactacao()">Marcar impactação</button></div>
-</section>
-
-<section class="card">
-  <h2 class="section-title">4) Conduta geral resumida <span class="pill blue">resumo prático</span></h2>
-  <div class="compare">
-    <div><h4>Pilares do tratamento</h4><ul>
-      <li><b>Desimpactação fecal</b> quando houver retenção/fecaloma.</li>
-      <li><b>PEG/macrogol</b> como laxante osmótico de primeira linha.</li>
-      <li><b>Orientação nutricional</b> com fibras adequadas para idade.</li>
-      <li><b>Reeducação intestinal:</b> sentar 5–10 min após refeições, com apoio para os pés.</li>
-      <li><b>Hidratação adequada</b>, individualizada para idade, peso, dieta e perdas.</li>
-      <li><b>Seguimento e tratamento prolongado</b>, com ajuste pela consistência das fezes.</li>
-    </ul></div>
-    <div><h4>Material visual enviado (Pedbook)</h4><ul>
-      <li>Desimpactação com PEG 4000: <b>1–1,5 g/kg/dia por 3–6 dias</b>.</li>
-      <li>Manutenção: <b>0,32–0,76 g/kg/dia</b> (média 0,5 g/kg/dia).</li>
-      <li>Lactulose: <b>1–3 mL/kg/dia</b> em 1–2 tomadas.</li>
-      <li>Óleo mineral: <b>1–3 mL/kg/dia</b> à noite, máx. 90 mL; o post orienta evitar &lt;6 anos.</li>
-      <li>Reavaliação inicial sugerida em <b>7–15 dias</b> e diário evacuatório.</li>
-    </ul></div>
-  </div>
-  <div class="alert alert-warn"><b>Diferenças entre fontes:</b> o Guia SBP 2024 usa PEG <b>1–1,5 g/kg/dia por 3 dias ou até esvaziamento</b> na desimpactação e <b>0,2–0,8 g/kg/dia</b> na manutenção. Para óleo mineral, a SBP recomenda evitar em <b>&lt;2 anos</b> ou em pacientes com disfagia/risco de aspiração. Por isso, a calculadora mantém os valores da SBP como padrão e exibe os números do material visual apenas como referência complementar.</div>
-  <div class="alert alert-violet"><b>Hidratação:</b> o post cita 30–35 mL/kg/dia. Esse valor não aparece como recomendação quantitativa no Guia SBP 2024 e não deve ser usado como necessidade hídrica total universal. A ferramenta mantém a orientação de hidratação adequada individualizada.</div>
-</section>
-
-<section class="card">
-  <h2 class="section-title">5) Enemas e opções retais <span class="pill blue">comparativo</span></h2>
-  <div class="table-wrap"><table>
-    <tr><th>Opção</th><th>Dose / faixa</th><th>Como interpretar</th><th>Fonte / cautelas</th></tr>
-    <tr><td><b>Enema com SF 0,9% puro</b></td><td><b>&lt;1 ano:</b> 5–10 mL/kg, à noite.<br><b>&gt;1 ano:</b> 6 mL/kg.</td><td>Opção retal de esvaziamento quando PEG VO não é possível. Preferir solução isotônica, aplicação lenta e sem pressão.</td><td><span class="tag sbp">SBP 2024</span> Guia, p. 6. Estratégia retal é mais invasiva/desconfortável e deve ser reservada quando PEG VO não for possível.</td></tr>
-    <tr><td><b>Fosfato de sódio</b></td><td><b>SBP:</b> &gt;1 ano, 2,5 mL/kg/dose.</td><td>Não é opção de rotina. A própria SBP orienta <b>evitar</b> pelo risco de hiperfosfatemia.</td><td><span class="tag sbp">SBP 2024</span> p. 6. <span class="tag ext">Outros protocolos</span> frequentemente contraindicam &lt;2 anos e em doença renal/risco de distúrbio eletrolítico.</td></tr>
-    <tr><td><b>Solução glicerinada 12%</b></td><td><b>10–20 mL/kg/dose</b> em protocolo institucional público.</td><td>Pode ser usada para lavagem/desimpactação conforme protocolo local. <b>Não é dose padronizada no Guia SBP 2024.</b></td><td><span class="tag inst">Protocolo institucional</span> Manual público de Pediatria do Município de Santo André. Não apresentar como “dose SBP”.</td></tr>
-    <tr><td><b>Supositório de glicerina</b></td><td>Uso pontual, sobretudo em lactentes, conforme produto/protocolo local.</td><td>Pode ajudar quando há fezes no reto; não substitui plano de manutenção.</td><td><span class="tag ext">Protocolos pediátricos</span> Uso ocasional; evitar uso repetitivo indiscriminado.</td></tr>
-    <tr><td><b>Microlax / microenema</b></td><td>Seguir apresentação e bula/protocolo local.</td><td>Pode ser opção de resgate pontual em alguns serviços.</td><td><span class="tag ext">Protocolos externos</span> Não há posologia específica no Guia SBP 2024 enviado.</td></tr>
-  </table></div>
-  <div class="alert alert-warn"><b>Evitar soluções hipotônicas e preparações caseiras.</b> Enemas com água pura, sabão ou formulações não padronizadas podem causar lesão ou distúrbios hidroeletrolíticos. Em suspeita de obstrução, perfuração, megacólon tóxico, peritonite ou doença orgânica, não realizar enema de rotina.</div>
-  <details open><summary>Como realizar o enema com SF 0,9% no PA</summary>
-    <ul>
-      <li>Calcular o volume pelo peso e faixa etária.</li>
-      <li>Usar <b>SF 0,9% puro</b>, idealmente próximo da temperatura corporal.</li>
-      <li>Posicionar em decúbito lateral esquerdo, quando tolerado; proteger o leito e manter acesso fácil a comadre/banheiro.</li>
-      <li>Lubrificar adequadamente a ponta/sonda retal e introduzir com delicadeza, sem forçar.</li>
-      <li>Infundir <b>lentamente, em baixa pressão</b>. Interromper se houver resistência relevante, dor intensa, sangramento ou piora clínica.</li>
-      <li>Aguardar evacuação e reavaliar abdome, dor, eliminação de fezes/gases e estado geral.</li>
-    </ul>
-    <p class="small">A profundidade de introdução, calibre da sonda e material dependem da idade, treinamento e protocolo institucional; esta ferramenta não fixa esses parâmetros.</p>
-  </details>
-</section>
-
-<section class="card result" id="resultado">
-  <h2 class="section-title">Resultado calculado <span class="pill">saída</span></h2>
+<section class="card result show" id="resultado">
   <div id="saida"></div>
-  <div class="copyline"><button class="primary" onclick="copiarPrescricao()">Copiar prescrição</button><span class="small">Confira apresentação comercial, função renal, contraindicações e protocolo local antes de prescrever.</span></div>
 </section>
 
 <section class="card">
-  <h2 class="section-title">5) Tratamento de base e manutenção <span class="pill violet">SBP 2024</span></h2>
-  <div class="table-wrap"><table>
-    <tr><th>Medicação</th><th>Desimpactação</th><th>Manutenção</th><th>Observações</th></tr>
-    <tr><td><b>PEG (macrogol)</b></td><td>1–1,5 g/kg/dia por 3 dias ou até esvaziamento das fezes retidas.</td><td>0,2–0,8 g/kg/dia, titulando pela consistência.</td><td>Primeira escolha para desimpactação e manutenção. Bulas brasileiras podem indicar uso a partir de 2 anos, embora a SBP descreva segurança em qualquer faixa etária.</td></tr>
-    <tr><td><b>Lactulose</b></td><td>Não é a primeira escolha para desimpactação.</td><td>1–3 mL/kg/dia quando PEG não está disponível.</td><td>Pode causar flatulência e cólicas. Contraindicada na galactosemia.</td></tr>
-    <tr><td><b>Óleo mineral</b></td><td>Não é a opção preferencial para desimpactação.</td><td>Opção adicional/segunda linha.</td><td>Evitar em &lt;2 anos e em disfagia/risco de aspiração; nunca administrar à força.</td></tr>
-    <tr><td><b>Leite de magnésia / estimulantes</b></td><td colspan="2">Podem ser considerados como opções adicionais ou de segunda linha.</td><td>A dose não é padronizada no trecho principal do Guia SBP 2024 enviado; seguir protocolo/formulário institucional.</td></tr>
-  </table></div>
-  <div class="alert alert-info"><b>Meta de manutenção:</b> fezes pastosas diariamente ou a cada 2 dias, evitando retenção e fezes volumosas. Manter tratamento medicamentoso por pelo menos <b>2 meses</b>; considerar redução gradual apenas após todos os sintomas estarem ausentes por pelo menos <b>1 mês</b>.</div>
-  <div class="alert alert-ok"><b>Monitorização prática:</b> reavaliar inicialmente em 7–15 dias quando possível, ajustar a dose conforme resposta clínica e utilizar diário evacuatório (frequência, consistência, dor e episódios de retenção/escape). Sinais de melhora: fezes mais macias, menos dor e menos comportamento retentivo.</div>
+  <details>
+    <summary>📚 Conflitos / pontos de atenção</summary>
+    <table>
+      <tr><th>Tema</th><th>Resumo prático</th></tr>
+      <tr><td><b>PEG</b></td><td>SBP: primeira escolha para desimpactação quando VO é possível.</td></tr>
+      <tr><td><b>SF 0,9%</b></td><td>Opção retal quando PEG VO não é possível.</td></tr>
+      <tr><td><b>Fosfato</b></td><td>SBP cita 2,5 mL/kg em &gt;1 ano, porém recomenda evitar pelo risco de hiperfosfatemia.</td></tr>
+      <tr><td><b>Glicerinado</b></td><td>Pode constar em protocolos locais; não é a opção priorizada no Guia SBP 2024 usado nesta ferramenta.</td></tr>
+      <tr><td><b>Óleo mineral</b></td><td>Evitar em &lt;2 anos e em disfagia/risco de aspiração.</td></tr>
+    </table>
+  </details>
+  <div class="source">Base principal: Sociedade Brasileira de Pediatria — Guia Prático de Orientação: Constipação intestinal, 2024.</div>
 </section>
-
-<section class="card">
-  <h2 class="section-title">7) Orientações para alta</h2>
-  <ul>
-    <li>Explicar o ciclo dor → retenção → fezes mais ressecadas → mais dor.</li>
-    <li>Reforçar hidratação e alimentação habitual saudável com oferta adequada de fibras; não é necessário “megadose” de fibras.</li>
-    <li>Evitar interromper o tratamento assim que houver melhora inicial; a recorrência é comum quando a manutenção é suspensa precocemente.</li>
-    <li>Evitar subdosagem por receio dos laxantes osmóticos; titular pela consistência e pela frequência das fezes.</li>
-    <li>Não forçar evacuação nem punir a criança; isso pode intensificar o comportamento de retenção.</li>
-    <li>Como regra prática dietética complementar, alguns materiais usam <b>fibra (g/dia) ≈ idade + 5</b>; não substituir avaliação nutricional individual.</li>
-    <li>Treino de toalete por 5–10 minutos após refeições, com apoio para os pés, sem punições.</li>
-    <li>Não suspender o laxante logo após a primeira evacuação; o objetivo é prevenir nova retenção.</li>
-    <li>Retornar antes se vômitos biliosos, febre/queda do estado geral, distensão importante, dor intensa/progressiva, sangue relevante, incapacidade de eliminar gases ou piora clínica.</li>
-    <li>Falha terapêutica, sinais de alarme ou suspeita de causa orgânica → investigação e/ou gastroenterologia pediátrica.</li>
-  </ul>
-</section>
-
-<section class="card">
-  <h2 class="section-title">7) Fontes e hierarquia de evidência</h2>
-  <div class="source"><span class="tag ext">MATERIAL VISUAL</span><b> Pedbookmed — “Constipação Intestinal em Pediatria” (post de 17/08/2025).</b> Utilizado para incorporar o resumo de conduta, reavaliação em 7–15 dias, diário evacuatório e os intervalos posológicos apresentados nas imagens enviadas. Quando há divergência, a calculadora prioriza a SBP 2024 e sinaliza a diferença.</div>
-  <div class="source"><span class="tag sbp">BASE PRINCIPAL</span><b> Sociedade Brasileira de Pediatria.</b> Guia Prático de Orientação nº 144 — Constipação intestinal. Departamento Científico de Gastroenterologia, 04/04/2024. No guia: PEG é primeira linha; SF 0,9% e fosfato são opções retais quando PEG VO não é possível; fosfato deve ser evitado pelo risco de hiperfosfatemia.</div>
-  <div class="source"><span class="tag ext">ATUALIZAÇÃO EXTERNA</span><b> AGA/NASPGHAN, 2026.</b> Clinical care pathway para constipação funcional pediátrica, reforçando abordagem estruturada e longitudinal. <a href="https://gastro.org/clinical-guidance/diagnosis-and-management-of-pediatric-functional-constipation/" target="_blank" rel="noopener">Abrir referência</a>.</div>
-  <div class="source"><span class="tag inst">COMPLEMENTAR</span><b> Protocolo institucional público.</b> Manual de Pediatria — situações prevalentes no ambulatório (Município de Santo André): solução glicerinada 12% 10–20 mL/kg por vez para lavagem/desimpactação. Essa dose <b>não consta no Guia SBP 2024</b> e deve ser usada somente conforme protocolo local. <a href="https://www.santoandre.sp.gov.br/biblioteca/pesquisa/arquivo.asp?file=410528.pdf" target="_blank" rel="noopener">Abrir referência</a>.</div>
-  <div class="source"><span class="tag ext">LINK INFORMADO</span><b> Post do Instagram fornecido pelo usuário.</b> Mantido apenas como referência de consulta: <a href="https://www.instagram.com/p/DNddTkSOExW/" target="_blank" rel="noopener">abrir post</a>. O conteúdo não foi usado como fonte de dose sem validação independente.</div>
-  <p class="small">Ferramenta de apoio à decisão clínica. Não substitui avaliação médica, exame físico, julgamento clínico, bula vigente nem protocolos institucionais.</p>
-</section>
-
-  <section class="card">
-    <h2 class="section-title">Pontos de conflito / atenção</h2>
-    <details>
-      <summary>SBP x outras fontes</summary>
-      <ul>
-        <li><b>Prioridade:</b> SBP 2024.</li>
-        <li><b>PEG:</b> primeira escolha para desimpactação quando VO é possível.</li>
-        <li><b>SF 0,9%:</b> opção retal quando PEG VO não é possível.</li>
-        <li><b>Fosfato de sódio:</b> a SBP cita a dose, mas recomenda evitar pelo risco de hiperfosfatemia.</li>
-        <li><b>Enema glicerinado:</b> pode constar em protocolos locais, mas não é a opção priorizada no guia da SBP usado nesta ferramenta.</li>
-      </ul>
-    </details>
-    <details style="margin-top:8px">
-      <summary>Quando não tratar como constipação funcional simples</summary>
-      <ul>
-        <li>Início no primeiro mês de vida ou mecônio &gt;48 h.</li>
-        <li>Vômitos biliosos, febre/toxemia, baixo ganho ponderal ou distensão importante.</li>
-        <li>Sangue sem fissura evidente, alterações neurológicas/lombossacras ou suspeita de Hirschsprung.</li>
-      </ul>
-    </details>
-  </section>
-
 </main>
+
 <script>
-function val(id){return document.getElementById(id).value}
-function num(id){const v=parseFloat(val(id));return Number.isFinite(v)?v:null}
-function checks(id){return Array.from(document.querySelectorAll(`#${id} input:checked`)).map(x=>x.value)}
-function idadeMeses(){const i=num('idade');if(i===null)return null;const u=val('unidade');if(u==='anos')return i*12;if(u==='meses')return i;return i/30.4375}
-function arred(n,dec=1){if(!Number.isFinite(n))return '—';return n.toLocaleString('pt-BR',{maximumFractionDigits:dec,minimumFractionDigits:dec})}
-function ml(n){return arred(n,0)+' mL'}
+function n(id){return parseFloat(document.getElementById(id).value)||0}
+function v(id){return document.getElementById(id).value}
+function fmt(x){if(!isFinite(x))return"—";return (Math.round(x*10)/10).toLocaleString("pt-BR",{maximumFractionDigits:1})}
+function idadeMeses(){const i=n("idade");return v("unidade")==="anos"?i*12:i}
+function alarmes(){return [...document.querySelectorAll("#alarmes input")].filter(x=>x.checked).length}
+
 function calcular(){
-  const peso=num('peso'),meses=idadeMeses(),al=checks('alarmes'),ro=checks('roma');
-  const imp=val('impactacao'),peg=val('pegDisp'),vo=val('vo'),dor=val('dor'),dias=num('diasSemEvacuar');
-  const res=document.getElementById('resultado'),out=document.getElementById('saida');
-  if(!peso||peso<=0){out.innerHTML='<div class="alert alert-danger"><b>Informe o peso</b> para calcular as doses.</div>';res.classList.add('show');return}
-  if(dor==='intensa')al.push('Dor abdominal intensa/progressiva');
-  const idadeTxt=meses===null?'idade não informada':meses<1?`${Math.round(meses*30)} dias`:meses<24?`${Math.round(meses)} meses`:`${arred(meses/12)} anos`;
-  const menor1=meses!==null&&meses<12, menor2=meses!==null&&meses<24;
-  const pegDesMin=peso*1,pegDesMax=peso*1.5,pegManMin=peso*.2,pegManMax=peso*.8;
-  const lactMin=peso*1,lactMax=peso*3;
-  const sfMin=menor1?peso*5:peso*6,sfMax=menor1?peso*10:peso*6;
-  const fosfato=peso*2.5;
-  const glicMin=peso*10,glicMax=peso*20;
-  const temImp=imp==='sim'||imp==='suspeita'||(dias!==null&&dias>=5);
-  let html=`<div class="alert alert-info"><b>Paciente:</b> ${arred(peso)} kg • ${idadeTxt}. Roma IV marcados: <b>${ro.length}</b>. Sinais de alarme: <b>${al.length}</b>.</div>`;
-  if(al.length)html+=`<div class="alert alert-danger"><b>Há sinal(is) de alarme.</b> Não conduzir automaticamente como constipação funcional simples. Investigar causa orgânica/complicação conforme história e exame.<br><b>Marcados:</b> ${al.join('; ')}.</div>`;
-  else if(ro.length>=2)html+=`<div class="alert alert-ok"><b>Critérios clínicos compatíveis com constipação funcional</b>, desde que outra condição médica não explique o quadro.</div>`;
-  else html+=`<div class="alert alert-warn"><b>Roma IV incompleto pela seleção.</b> Correlacionar com duração dos sintomas, história e exame; em lactentes lembrar pseudoconstipação do aleitamento e disquesia.</div>`;
+  const p=n("peso"), m=idadeMeses(), imp=v("impactacao"), vo=v("vo"), a=alarmes();
+  const out=document.getElementById("saida");
+  if(!p){out.innerHTML='<div class="alert red"><b>Informe o peso.</b></div>';return}
 
-  html+=`<div class="kpi"><div><b>${arred(pegDesMin)}–${arred(pegDesMax)} g/d</b><span>PEG desimpactação</span></div><div><b>${menor1?ml(sfMin)+'–'+ml(sfMax):ml(sfMin)}</b><span>SF 0,9% retal</span></div><div><b>${arred(pegManMin)}–${arred(pegManMax)} g/d</b><span>PEG manutenção</span></div><div><b>${arred(lactMin)}–${arred(lactMax)} mL/d</b><span>Lactulose</span></div></div>`;
+  const pegDesMin=p*1, pegDesMax=p*1.5;
+  const pegManMin=p*.2, pegManIni=p*.4, pegManMax=p*.8;
+  const lactMin=p*1, lactMax=p*3;
+  const sf = m<12 ? `${fmt(p*5)}–${fmt(p*10)} mL` : `${fmt(p*6)} mL`;
+  const fos=p*2.5;
 
-  if(temImp){
-    html+=`<h3>Desimpactação / esvaziamento</h3><div class="table-wrap"><table><tr><th>Opção</th><th>Dose calculada</th><th>Nota</th></tr>`;
-    html+=`<tr><td><b>PEG VO — primeira linha</b></td><td>${arred(pegDesMin)} a ${arred(pegDesMax)} g/dia</td><td>SBP: 1–1,5 g/kg/dia por 3 dias ou até esvaziamento das fezes retidas.</td></tr>`;
-    html+=`<tr><td><b>SF 0,9% puro — retal</b></td><td>${menor1?`${ml(sfMin)} a ${ml(sfMax)}`:ml(sfMin)}</td><td>${menor1?'SBP: 5–10 mL/kg, à noite, em menores de 1 ano.':'SBP: 6 mL/kg em maiores de 1 ano.'} Reservar quando PEG VO não for possível.</td></tr>`;
-    html+=`<tr><td><b>Fosfato de sódio — retal</b></td><td>${meses!==null&&meses<=12?'Evitar / faixa não indicada pela SBP':ml(fosfato)}</td><td>SBP: 2,5 mL/kg em &gt;1 ano, porém orienta evitar pelo risco de hiperfosfatemia. Muitos protocolos são ainda mais restritivos em &lt;2 anos e doença renal.</td></tr>`;
-    html+=`<tr><td><b>Solução glicerinada 12%</b></td><td>${ml(glicMin)} a ${ml(glicMax)}</td><td>Faixa de protocolo institucional público (10–20 mL/kg/dose). Não é dose SBP 2024; seguir protocolo local.</td></tr></table></div>`;
-    if(vo==='sim'&&peg==='sim')html+=`<div class="alert alert-ok"><b>Preferência:</b> PEG por via oral, se tolerado. A SBP considera PEG e enema eficazes para esvaziamento, mas recomenda PEG como primeira linha.</div>`;
-    else html+=`<div class="alert alert-warn"><b>Via oral indisponível/não tolerada:</b> considerar opção retal, com preferência pelo SF 0,9% em vez de fosfato quando apropriado, e conforme avaliação/protocolo local.</div>`;
+  let html="";
+  if(a>0){
+    html+=`<div class="alert red"><b>⚠️ HÁ SINAL(IS) DE ALARME.</b> Não conduzir como constipação funcional simples; investigar conforme o achado.</div>`;
   }
 
-  html+=`<h3>Manutenção após esvaziamento</h3><div class="table-wrap"><table><tr><th>Opção</th><th>Dose calculada</th><th>Nota</th></tr>`;
-  html+=`<tr><td><b>PEG</b></td><td>${arred(pegManMin)} a ${arred(pegManMax)} g/dia</td><td>SBP: 0,2–0,8 g/kg/dia; titular para fezes pastosas diárias ou a cada 2 dias.</td></tr>`;
-  html+=`<tr><td><b>Lactulose</b></td><td>${arred(lactMin)} a ${arred(lactMax)} mL/dia</td><td>SBP: 1–3 mL/kg/dia quando PEG não está disponível.</td></tr></table></div>`;
-  html+=`<div class="alert alert-info"><b>Duração:</b> manter tratamento por pelo menos 2 meses e só considerar redução gradual quando os sintomas estiverem ausentes há pelo menos 1 mês.</div>`;
-  html+=`<div class="alert alert-ok"><b>Seguimento sugerido:</b> reavaliação inicial em 7–15 dias, diário evacuatório e ajuste da dose conforme consistência/frequência. O material visual cita redução de 25% a cada 2 semanas; a SBP 2024, porém, orienta redução gradual sem fixar esse esquema. Por isso, não automatizamos um desmame rígido.</div>`;
-  const rx=gerarRx(peso,meses,temImp,peg,vo,pegDesMin,pegDesMax,pegManMin,pegManMax,lactMin,lactMax,sfMin,sfMax,fosfato,glicMin,glicMax,menor1);
-  html+=`<h3>Prescrição / conduta sugerida para copiar</h3><div class="rx" id="rxText">${rx}</div>`;
-  out.innerHTML=html;res.classList.add('show');window.scrollTo({top:res.offsetTop-10,behavior:'smooth'});
-}
-function gerarRx(peso,meses,temImp,peg,vo,pegDesMin,pegDesMax,pegManMin,pegManMax,lactMin,lactMax,sfMin,sfMax,fosfato,glicMin,glicMax,menor1){
-  let s=`CONSTIPAÇÃO INTESTINAL PEDIÁTRICA\nPeso: ${arred(peso)} kg\n\n`;
-  if(temImp){
-    s+=`DESIMPACTAÇÃO / ESVAZIAMENTO\n`;
-    s+=`1) PREFERENCIAL — PEG VO: ${arred(pegDesMin)} a ${arred(pegDesMax)} g/dia, por 3 dias ou até esvaziamento das fezes retidas (SBP 2024).\n\n`;
-    s+=`SE VIA ORAL NÃO FOR POSSÍVEL / CONFORME AVALIAÇÃO:\n`;
-    s+=`2) SF 0,9% PURO, VIA RETAL: ${menor1?`${ml(sfMin)} a ${ml(sfMax)} (5–10 mL/kg)`:`${ml(sfMin)} (6 mL/kg)`}. Administrar lentamente, em baixa pressão.\n`;
-    s+=`3) FOSFATO DE SÓDIO: ${meses!==null&&meses<=12?'EVITAR NESTA FAIXA':ml(fosfato)+' (2,5 mL/kg)'}. A SBP orienta evitar pelo risco de hiperfosfatemia; avaliar função renal/hidratação e protocolo local.\n`;
-    s+=`4) SOLUÇÃO GLICERINADA 12%: ${ml(glicMin)} a ${ml(glicMax)} (10–20 mL/kg/dose) — dose de protocolo institucional, NÃO da SBP 2024.\n\n`;
+  html+=`<div class="phase"><span class="num">1</span> CONDUTA NA EMERGÊNCIA</div>`;
+
+  if(imp==="sim"){
+    if(vo==="sim"){
+      html+=`<div class="rx red"><h3>COM FECALOMA / IMPACTAÇÃO — VO POSSÍVEL</h3>
+      <div class="dose">PEG ${fmt(pegDesMin)}–${fmt(pegDesMax)} g/dia VO</div>
+      <div class="note">1–1,5 g/kg/dia por 3 dias ou até esvaziamento. <b>1ª escolha SBP.</b></div></div>`;
+    }else{
+      html+=`<div class="rx red"><h3>COM FECALOMA / IMPACTAÇÃO — VO NÃO POSSÍVEL</h3>
+      <div class="dose">SF 0,9% puro: ${sf} via retal</div>
+      <div class="note">${m<12?"<1 ano: 5–10 mL/kg à noite.":">1 ano: 6 mL/kg."} Administrar morno, lentamente e sem pressão.</div></div>`;
+    }
+  }else{
+    html+=`<div class="rx ok"><h3>SEM FECALOMA / IMPACTAÇÃO CLARA</h3>
+    <div class="dose">Não realizar desimpactação retal de rotina</div>
+    <div class="note">Se clinicamente bem e sem sinais de alarme: iniciar manutenção oral + orientações.</div></div>`;
   }
-  s+=`MANUTENÇÃO\n`;
-  s+=`PEG: ${arred(pegManMin)} a ${arred(pegManMax)} g VO ao dia (0,2–0,8 g/kg/dia), ajustar pela consistência das fezes.\n`;
-  s+=`SE PEG INDISPONÍVEL: Lactulose ${arred(lactMin)} a ${arred(lactMax)} mL VO ao dia (1–3 mL/kg/dia).\n\n`;
-  s+=`ORIENTAÇÕES\n- Meta: fezes pastosas diariamente ou a cada 2 dias, sem dor/retenção.\n- Manter tratamento por pelo menos 2 meses.\n- Reduzir gradualmente somente após sintomas ausentes por pelo menos 1 mês.\n- Hidratação e alimentação saudável com fibras adequadas.\n- Sentar no vaso 5–10 min após refeições, com apoio para os pés, sem punição.\n- Retornar antes se vômitos biliosos, febre/queda do estado geral, distensão importante, dor intensa/progressiva, sangue relevante ou ausência de eliminação de gases.\n\n`;
-  s+=`FONTES: SBP 2024 (Guia Prático de Orientação nº 144); protocolos externos/institucionais quando expressamente indicado.`;
-  return s;
+
+  html+=`<div class="phase"><span class="num">2</span> CONDUTA PARA CASA</div>
+  <div class="grid2">
+    <div class="rx ok"><h3>PEG — 1ª escolha</h3>
+      <div class="dose">${fmt(pegManMin)}–${fmt(pegManMax)} g/dia VO</div>
+      <div class="note">0,2–0,8 g/kg/dia. Início prático: <b>${fmt(pegManIni)} g/dia</b>; titular pela consistência.</div>
+    </div>
+    <div class="rx"><h3>Lactulose — se PEG indisponível</h3>
+      <div class="dose">${fmt(lactMin)}–${fmt(lactMax)} mL/dia VO</div>
+      <div class="note">1–3 mL/kg/dia.</div>
+    </div>
+  </div>`;
+
+  html+=`<div class="phase"><span class="num">3</span> ORIENTAÇÕES AOS GENITORES</div>
+  <div class="rx">
+    <ul class="parents">
+      <li>Manter o laxante conforme prescrito; não suspender após a primeira evacuação.</li>
+      <li>Objetivo: fezes pastosas diariamente ou a cada 2 dias, sem dor ou retenção.</li>
+      <li>Oferecer água regularmente e manter frutas, verduras, legumes, feijão e cereais integrais.</li>
+      <li>Sentar no vaso por 5–10 minutos após as refeições, com os pés apoiados.</li>
+      <li>Retornar se vômitos biliosos, distensão importante, dor intensa/progressiva, sangue importante, febre com piora do estado geral ou ausência de gases.</li>
+    </ul>
+  </div>`;
+
+  const presc = imp==="sim"
+    ? (vo==="sim"
+      ? `CONSTIPAÇÃO COM IMPACTAÇÃO — ${fmt(p)} KG\n1. PEG: ${fmt(pegDesMin)}–${fmt(pegDesMax)} g VO 1x/dia por 3 dias ou até esvaziamento.\n2. Após desimpactação: PEG ${fmt(pegManIni)} g VO 1x/dia; titular entre ${fmt(pegManMin)}–${fmt(pegManMax)} g/dia.`
+      : `CONSTIPAÇÃO COM IMPACTAÇÃO — ${fmt(p)} KG\n1. SF 0,9% puro: ${sf} via retal, administrar lentamente e sem pressão.\n2. Após esvaziamento e quando VO possível: PEG ${fmt(pegManIni)} g VO 1x/dia; titular entre ${fmt(pegManMin)}–${fmt(pegManMax)} g/dia.`)
+    : `CONSTIPAÇÃO SEM IMPACTAÇÃO CLARA — ${fmt(p)} KG\n1. PEG ${fmt(pegManIni)} g VO 1x/dia; titular entre ${fmt(pegManMin)}–${fmt(pegManMax)} g/dia conforme consistência das fezes.`;
+
+  html+=`<details><summary>📝 Prescrição prática</summary><div class="copyarea" id="presc">${presc}</div><div class="quick"><button onclick="copiar()">Copiar prescrição</button></div></details>`;
+
+  html+=`<details><summary>Outras opções / exceções</summary>
+    <table>
+      <tr><th>Opção</th><th>Dose / observação</th></tr>
+      <tr><td>Fosfato de sódio</td><td>${m>12?`2,5 mL/kg = <b>${fmt(fos)} mL</b>. SBP recomenda evitar.`:"Não priorizar nesta faixa; SBP cita uso acima de 1 ano."}</td></tr>
+      <tr><td>Óleo mineral</td><td>Opção adicional/2ª linha. Evitar &lt;2 anos e em disfagia/risco de aspiração.</td></tr>
+    </table>
+  </details>`;
+
+  out.innerHTML=html;
 }
-function copiarPrescricao(){const el=document.getElementById('rxText');if(!el)return;navigator.clipboard.writeText(el.innerText).then(()=>alert('Prescrição copiada!')).catch(()=>alert('Não foi possível copiar automaticamente.'))}
-function limpar(){document.querySelectorAll('input').forEach(i=>{if(i.type==='checkbox')i.checked=false;else i.value=''});document.querySelectorAll('select').forEach(s=>s.selectedIndex=0);document.getElementById('resultado').classList.remove('show')}
-function marcarImpactacao(){document.getElementById('impactacao').value='sim';['≤2 evacuações/semana','Dor/dificuldade evacuatória','Fezes volumosas','Massa fecal'].forEach(v=>{const cb=Array.from(document.querySelectorAll('#roma input')).find(x=>x.value===v);if(cb)cb.checked=true})}
+
+function copiar(){
+  const t=document.getElementById("presc");
+  if(t) navigator.clipboard.writeText(t.innerText);
+}
+calcular();
 </script>
 </body>
 </html>
