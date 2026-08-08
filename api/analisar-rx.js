@@ -21,10 +21,11 @@ export default async function handler(req, res) {
 
     // Aceita alguns nomes para facilitar compatibilidade com o HTML
     const imagem =
-      body.imagem ||
-      body.image ||
-      body.imageData ||
-      body.dataUrl;
+  body.imageDataUrl ||
+  body.imagem ||
+  body.image ||
+  body.imageData ||
+  body.dataUrl;
 
     if (!imagem) {
       return res.status(400).json({
