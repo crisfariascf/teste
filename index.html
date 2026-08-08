@@ -122,6 +122,23 @@ ul{margin:6px 0;padding-left:20px}li{margin:4px 0;font-size:13.3px}
 .rx-warning{background:#fff7ed;border-left:4px solid #ea580c;padding:9px 11px;border-radius:9px;font-size:12px;color:#7c2d12;line-height:1.45}
 .rx-status{font-size:11.5px;color:#64748b;margin-top:6px}
 
+
+/* ===== IA RX DEMO ===== */
+.ai-panel{border:1px solid #bfdbfe;background:linear-gradient(180deg,#eff6ff,#fff);border-radius:14px;padding:14px}
+.ai-panel h3{color:#1d4ed8;margin-top:0}
+.ai-actions{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.ai-btn{background:#1d4ed8;box-shadow:0 3px 10px #1d4ed840}
+.ai-btn:hover{background:#1e40af}
+.ai-btn:disabled{opacity:.55;cursor:not-allowed}
+.ai-result{display:none;border:1px solid #bfdbfe;background:#fff;border-radius:12px;padding:12px;margin-top:10px;font-size:13px;line-height:1.45}
+.ai-result.show{display:block}
+.ai-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 12px;margin-top:8px}
+.ai-item{padding:6px 8px;border-radius:8px;background:#f8fafc;border:1px solid #e2e8f0}
+.ai-item.yes{background:#fff7ed;border-color:#fed7aa}.ai-item.no{background:#f0fdf4;border-color:#bbf7d0}
+.ai-confidence{display:inline-block;padding:4px 8px;border-radius:999px;background:#dbeafe;color:#1e3a8a;font-weight:800;font-size:11px}
+.ai-mode{font-size:11px;color:#64748b;margin-top:7px}
+@media(max-width:650px){.ai-grid{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -208,7 +225,19 @@ ul{margin:6px 0;padding-left:20px}li{margin:4px 0;font-size:13.3px}
         <div id="rxIntegrationStatus" class="rx-status"></div>
       </div>
 
-      <div class="rx-warning"><b>Importante:</b> este módulo organiza a leitura e o tratamento visual da imagem; não realiza diagnóstico automático por IA. O padrão radiográfico isolado não define etiologia viral versus bacteriana e deve ser correlacionado à clínica.</div>
+      <div class="ai-panel">
+        <h3>🤖 Exemplo — pré-análise do RX com IA</h3>
+        <div class="small">Envia somente a imagem carregada para o backend local. A resposta estruturada pode pré-marcar os achados, mas deve ser revisada antes de integrar à conduta.</div>
+        <div class="ai-actions">
+          <button id="rxAiButton" type="button" class="ai-btn" onclick="analisarRxComIA()">🤖 ANALISAR RX COM IA</button>
+          <button type="button" class="secondary" onclick="aplicarAchadosIA()">✓ APLICAR ACHADOS</button>
+          <button type="button" class="light" onclick="descartarAchadosIA()">DESCARTAR</button>
+        </div>
+        <div id="rxAiStatus" class="rx-status">Conectado ao endpoint <b>/api/analisar-rx</b>. No GitHub sozinho a IA não funciona; publique pela Vercel e configure <b>OPENAI_API_KEY</b>.</div>
+        <div id="rxAiResult" class="ai-result"></div>
+      </div>
+
+      <div class="rx-warning"><b>Importante:</b> a IA é apenas apoio à leitura. O padrão radiográfico isolado não define etiologia viral versus bacteriana e não deve determinar antibioticoterapia sem correlação clínica e revisão médica.</div>
     </div>
   </div>
 </section>
@@ -743,6 +772,59 @@ function rxInit(){
   ['rxInc','rxQual','rxRotacao','rxHipoinsp','rxPenet','rxNormal','rxHiperins','rxPeribronq','rxInterst','rxConsol','rxMultilobar','rxAtelect','rxDerrame','rxPneumo','rxCavit','rxCardio','rxOsseo','rxSide','rxRegion','rxObs'].forEach(id=>rxEl(id).addEventListener('change',generateRxReport));
   rxEl('rxObs').addEventListener('input',generateRxReport);rxUpdateOutputs();generateRxReport();
 }
+
+
+// ===== IA RX: integração de exemplo =====
+let rxAiLast = null;
+function aiBool(v){return v===true}
+function aiLabel(v){return v===true?'Presente':(v===false?'Não identificado':'Indeterminado')}
+function aiClass(v){return v===true?'yes':(v===false?'no':'')}
+function renderAiResult(r){
+  rxAiLast=r;
+  const itens=[
+    ['Hiperinsuflação',r.hiperinsuflacao],['Espessamento peribrônquico',r.espessamento_peribronquico],
+    ['Opacidades intersticiais',r.opacidades_intersticiais],['Consolidação',r.consolidacao],
+    ['Multilobar/extenso',r.multilobar],['Atelectasia',r.atelectasia],['Derrame pleural',r.derrame],
+    ['Pneumotórax',r.pneumotorax],['Cavitação/pneumatoceles',r.cavitacao],['Cardiomegalia aparente',r.cardiomegalia_aparente]
+  ];
+  const el=rxEl('rxAiResult');
+  el.innerHTML=`<div><b>Pré-leitura sugerida</b> <span class="ai-confidence">confiança: ${escHtml(r.confianca||'não informada')}</span></div>
+    <div class="ai-grid">${itens.map(([n,v])=>`<div class="ai-item ${aiClass(v)}"><b>${n}:</b> ${aiLabel(v)}</div>`).join('')}</div>
+    <div style="margin-top:10px"><b>Descrição sugerida:</b><br>${escHtml(r.descricao||'—')}</div>
+    ${r.limitacoes?.length?`<div style="margin-top:8px"><b>Limitações:</b> ${r.limitacoes.map(escHtml).join(' • ')}</div>`:''}
+    <div class="ai-mode">Modo: ${escHtml(r._modo||'API')}</div>`;
+  el.classList.add('show');
+}
+async function analisarRxComIA(){
+  if(!rxState.img){alert('Carregue uma radiografia primeiro.');return}
+  const btn=rxEl('rxAiButton'),status=rxEl('rxAiStatus');
+  btn.disabled=true;status.textContent='Analisando imagem…';
+  try{
+    // Usa a imagem original carregada, não os filtros visuais do canvas.
+    const temp=document.createElement('canvas');
+    const max=1800,scale=Math.min(1,max/Math.max(rxState.img.width,rxState.img.height));
+    temp.width=Math.max(1,Math.round(rxState.img.width*scale));temp.height=Math.max(1,Math.round(rxState.img.height*scale));
+    temp.getContext('2d').drawImage(rxState.img,0,0,temp.width,temp.height);
+    const imageDataUrl=temp.toDataURL('image/jpeg',0.86);
+    const resp=await fetch('/api/analisar-rx',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({imageDataUrl})});
+    const data=await resp.json();
+    if(!resp.ok)throw new Error(data.error||'Falha na análise');
+    renderAiResult(data);status.textContent='Pré-análise concluída. Revise os achados e clique em “APLICAR ACHADOS” se concordar.';
+  }catch(err){
+    status.textContent='Falha na análise: '+err.message+' — confirme se o site foi publicado pela Vercel e se OPENAI_API_KEY foi configurada nas variáveis de ambiente.';
+  }finally{btn.disabled=false}
+}
+function aplicarAchadosIA(){
+  const r=rxAiLast;if(!r){alert('Execute a análise primeiro.');return}
+  const map={rxHiperins:'hiperinsuflacao',rxPeribronq:'espessamento_peribronquico',rxInterst:'opacidades_intersticiais',rxConsol:'consolidacao',rxMultilobar:'multilobar',rxAtelect:'atelectasia',rxDerrame:'derrame',rxPneumo:'pneumotorax',rxCavit:'cavitacao',rxCardio:'cardiomegalia_aparente'};
+  Object.entries(map).forEach(([id,k])=>{if(typeof r[k]==='boolean')rxSet(id,r[k])});
+  if(r.qualidade&&['adequada','limitada','inadequada'].includes(r.qualidade))rxEl('rxQual').value=r.qualidade;
+  if(r.incidencia&&['PA','AP','AP_supino','lateral'].includes(r.incidencia))rxEl('rxInc').value=r.incidencia;
+  if(typeof r.rotacao==='boolean')rxSet('rxRotacao',r.rotacao);if(typeof r.hipoinspiracao==='boolean')rxSet('rxHipoinsp',r.hipoinspiracao);
+  if(r.descricao)rxEl('rxObs').value='IA (revisar): '+r.descricao;
+  generateRxReport();rxEl('rxAiStatus').textContent='Achados da IA aplicados. Revise manualmente antes de usar a descrição/conduta.';
+}
+function descartarAchadosIA(){rxAiLast=null;rxEl('rxAiResult').classList.remove('show');rxEl('rxAiResult').innerHTML='';rxEl('rxAiStatus').textContent='Pré-análise descartada.'}
 
 rxInit();
 calc();
