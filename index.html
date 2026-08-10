@@ -1,877 +1,420 @@
-
 <!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PAC Pediátrica + Análise de RX</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Protocolo Pediátrico de Adequação Vacinal • PNI 2026 + SBP 2026/2027</title>
 <style>
 :root{
-  --bg:#eef3f4; --card:#fff; --ink:#122127; --muted:#5b6b70;
-  --brand:#0e7c72; --brand-dark:#0a5f57; --brand-light:#e3f5f2;
-  --warn:#b45309; --warn-light:#fef3c7; --danger:#b91c1c; --danger-light:#fee2e2;
-  --ok:#15803d; --ok-light:#dcfce7; --info:#075985; --info-light:#e0f2fe; --line:#dbe7e6;
-  --intl:#6d28d9; --intl-dark:#4c1d95; --intl-light:#f3e8ff; --intl-line:#c4b5fd;
+  --bg:#f4f7f8;--card:#fff;--ink:#17212b;--muted:#64748b;--line:#dbe4e8;
+  --pri:#0c7468;--pri2:#095c53;--ok:#166534;--okbg:#eaf8ef;
+  --warn:#92400e;--warnbg:#fff7df;--bad:#9f1d1d;--badbg:#fff0f0;
+  --blue:#1d4ed8;--bluebg:#eef5ff;--vio:#6d28d9;--viobg:#f4efff;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);font-family:'Segoe UI',system-ui,-apple-system,Roboto,Arial,sans-serif;color:var(--ink)}
-header{background:linear-gradient(120deg,#0a5f57,#0e7c72 55%,#1499a0);color:#fff;padding:20px 18px 18px}
-header .wrap{width:min(96vw,1680px);margin:0 auto}
-header h1{font-size:25px;margin:0 0 5px;display:flex;align-items:center;gap:10px;letter-spacing:-.25px}
-header .sub{font-size:14px;opacity:.92;max-width:760px}
-header .src{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
-.source-chip{display:inline-flex;align-items:center;padding:5px 9px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);font-size:11px;font-weight:700;line-height:1}
-.source-chip.intl-chip{background:rgba(243,232,255,.18);border-color:rgba(233,213,255,.35)}
-main{width:min(96vw,1680px);max-width:none;margin:0 auto;padding:18px 0}
-.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 3px 14px #0e7c7212;border-top:4px solid var(--brand)}
-.card.alt{border-top-color:#1499a0}
-.card.dark{border-top-color:#334155}
-.span3{grid-column:span 3}.span4{grid-column:span 4}.span5{grid-column:span 5}.span6{grid-column:span 6}.span7{grid-column:span 7}.span8{grid-column:span 8}.span12{grid-column:span 12}
-@media(max-width:900px){main,header .wrap{width:min(94vw,1680px)}main{padding:12px 0}.span3,.span4,.span5,.span6,.span7,.span8{grid-column:span 12}}
-@media(min-width:1400px){.card{padding:20px}.grid{gap:16px}.span3{grid-column:span 3}.span5{grid-column:span 5}.span4{grid-column:span 4}}
-.step{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--brand);color:#fff;font-size:12.5px;font-weight:800;margin-right:8px}
-h2{font-size:16.5px;margin:0 0 12px;display:flex;align-items:center}
-h3{font-size:15px;margin:18px 0 8px;color:var(--brand-dark)}
-h4{font-size:13px;margin:12px 0 6px;color:var(--brand-dark);font-weight:800}
-label{font-weight:650;font-size:13.5px;display:block;margin:9px 0 4px;color:#324047}
-input,select{width:100%;padding:10px 11px;border:1.5px solid #cdd9d8;border-radius:10px;background:#fbfdfd;font-size:14.5px}
-input:focus,select:focus{outline:2px solid var(--brand);border-color:var(--brand)}
-.check{display:flex;gap:9px;align-items:flex-start;margin:6px 0;padding:7px 9px;border-radius:10px;transition:.15s}
-.check:hover{background:var(--brand-light)}
-.check input{width:auto;margin-top:3px;accent-color:var(--brand)}
-.check span{font-size:13.5px;line-height:1.35}
-button{border:0;border-radius:12px;background:var(--brand);color:#fff;padding:13px 18px;font-weight:750;cursor:pointer;font-size:14.5px;box-shadow:0 3px 10px #0e7c7240}
-button:hover{background:var(--brand-dark)}
-.btn2{background:#475569;box-shadow:0 3px 10px #47556940}
-.actionbar{position:sticky;bottom:0;background:linear-gradient(0deg,var(--bg) 60%,transparent);padding:10px 0 4px;display:flex;gap:10px;margin-top:6px}
-.pill{display:inline-block;padding:7px 12px;border-radius:999px;font-weight:750;font-size:12.5px;margin:3px}
-.ok{background:var(--ok-light);color:var(--ok)}.warn{background:var(--warn-light);color:var(--warn)}.danger{background:var(--danger-light);color:var(--danger)}.info{background:var(--info-light);color:var(--info)}
-.small{color:var(--muted);font-size:12.3px}
-.rx{white-space:pre-wrap;background:#0b1a1e;color:#dff5f0;border-radius:14px;padding:15px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.8px;line-height:1.55;border:1px solid #123}
-.rx.no-atb{background:#f0fdf4;color:#14532d;border:1px solid #86efac;border-left:5px solid var(--ok);font-family:'Segoe UI',system-ui,-apple-system,Roboto,Arial,sans-serif;font-size:14px;line-height:1.5}
-.rx.rx-report{white-space:normal;background:#fff;color:var(--ink);border:1px solid #d7e1e1;padding:0;font-family:'Segoe UI',system-ui,-apple-system,Roboto,Arial,sans-serif;overflow:hidden;box-shadow:0 4px 16px #0f172a0b}
-.rx-head{padding:18px 20px;background:linear-gradient(90deg,#f0fdfa,#fff);border-bottom:1px solid #d7e1e1}
-.rx-head-title{font-size:18px;font-weight:850;color:var(--brand-dark);margin-bottom:3px}
-.rx-head-sub{font-size:13.5px;color:#475569}
-.rx-source-base{display:inline-block;margin-top:8px;padding:4px 8px;border-radius:999px;background:#dff5f0;color:var(--brand-dark);font-size:10.5px;font-weight:800}
-.rx-row{display:grid;grid-template-columns:minmax(160px,22%) 1fr;border-bottom:1px solid #e5ecec;min-height:58px}
-.rx-row:last-child{border-bottom:0}
-.rx-label{display:flex;align-items:center;gap:9px;padding:13px 16px;background:#f8fbfb;color:var(--brand-dark);font-size:13px;font-weight:800;border-right:1px solid #e5ecec}
-.rx-icon{font-size:18px;width:22px;text-align:center}
-.rx-value{padding:13px 18px;font-size:14px;line-height:1.5;align-self:center}
-.rx-value strong{font-size:15px;color:#0f3f3a}
-.rx-intl-mark{color:var(--intl);font-weight:850}
-.rx-row.intl-row{background:var(--intl-light)}
-.rx-row.intl-row .rx-label{background:#ede9fe;color:var(--intl-dark)}
-.rx-row.intl-row .rx-value{color:var(--intl-dark)}
-@media(max-width:650px){.rx-row{grid-template-columns:1fr}.rx-label{border-right:0;border-bottom:1px solid #edf2f2;padding:9px 13px}.rx-value{padding:11px 13px}.rx-head{padding:15px}}
-.row{display:flex;gap:8px;flex-wrap:wrap}
-.alert{padding:12px 14px;border-radius:12px;margin:8px 0;font-size:14.5px;font-weight:700;display:flex;align-items:center;gap:8px}
-.alert.ok{background:var(--ok-light);color:var(--ok)}
-.alert.warn{background:var(--warn-light);color:var(--warn)}
-.alert.danger{background:var(--danger-light);color:var(--danger)}
-.table{width:100%;border-collapse:collapse;font-size:12.8px}
-.table th,.table td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:left;vertical-align:top}
-.table th{background:var(--brand-light);color:var(--brand-dark)}
-.hidden{display:none}
-.footer{font-size:11px;color:var(--muted);margin-top:16px;line-height:1.55}
-details{border:1px solid var(--line);border-radius:12px;padding:11px 15px;margin:9px 0;background:#f8fcfb}
-details[open]{background:var(--brand-light)}
-summary{font-weight:750;cursor:pointer;font-size:13.5px;color:var(--brand-dark)}
-ul{margin:6px 0;padding-left:20px}li{margin:4px 0;font-size:13.3px}
-.tag{font-size:10.5px;background:#eef2ff;color:#3730a3;padding:2px 8px;border-radius:8px;font-weight:750;margin-left:6px;vertical-align:middle}
-.note{background:var(--info-light);border-left:4px solid var(--info);border-radius:10px;padding:10px 13px;font-size:13px;margin:8px 0;color:#0c4a6e}
-.intl{background:var(--intl-light);border:1px solid var(--intl-line);border-left:5px solid var(--intl);border-radius:12px;padding:12px 14px;margin:10px 0;color:var(--intl-dark);font-size:13px;line-height:1.45}
-.intl strong{color:var(--intl-dark)}
-.intl-title{font-weight:850;margin-bottom:4px}
-.card.intl-card{border-top-color:var(--intl);background:#fdfaff}
-.pill.intl-pill{background:var(--intl-light);color:var(--intl-dark)}
-.divider{border:none;border-top:1px dashed var(--line);margin:14px 0}
-
-
-/* ===== MÓDULO RX DE TÓRAX ===== */
-.rx-module{grid-column:span 12;border-top-color:#1d4ed8;background:linear-gradient(180deg,#ffffff,#f8fbff)}
-.rx-module h2{color:#173b75}
-.rx-layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(320px,.9fr);gap:16px;align-items:start}
-@media(max-width:1050px){.rx-layout{grid-template-columns:1fr}}
-.rx-viewer{background:#081018;border-radius:16px;overflow:hidden;border:1px solid #1f3344;box-shadow:inset 0 0 0 1px #ffffff08}
-.rx-toolbar{display:flex;gap:7px;flex-wrap:wrap;padding:10px;background:#0e1a25;border-bottom:1px solid #263747}
-.rx-toolbar button{padding:8px 11px;border-radius:9px;font-size:12.5px;background:#21364a;box-shadow:none}
-.rx-toolbar button:hover{background:#2d4a65}
-.rx-file{display:none}
-.rx-stage{position:relative;height:min(66vh,680px);min-height:420px;display:flex;align-items:center;justify-content:center;overflow:hidden;touch-action:none;background:radial-gradient(circle at center,#13202b,#060b10 72%)}
-.rx-placeholder{color:#b7c7d5;text-align:center;padding:24px;font-size:14px;line-height:1.55;max-width:420px}
-#rxCanvas{display:none;transform-origin:center center;max-width:none;user-select:none;-webkit-user-drag:none}
-.rx-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;padding:12px;background:#0e1a25;color:#d9e6ef}
-.rx-controls label{color:#d9e6ef;margin:0;font-size:12px}
-.rx-controls input[type=range]{padding:0;border:0;background:transparent;accent-color:#5aa3ff}
-.rx-control-line{display:grid;grid-template-columns:84px 1fr 44px;gap:8px;align-items:center}
-.rx-control-line output{text-align:right;font-variant-numeric:tabular-nums;color:#9fc8ef;font-size:11px}
-.rx-side{display:flex;flex-direction:column;gap:12px}
-.rx-panel{border:1px solid #d8e3ef;border-radius:14px;background:#fff;padding:13px}
-.rx-panel h3{margin:0 0 9px;color:#173b75;font-size:14px}
-.rx-panel .check{padding:6px 7px;margin:4px 0}
-.rx-panel .check:hover{background:#eef6ff}
-.rx-panel select,.rx-panel input{font-size:13.5px}
-.rx-mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.rx-report-box{white-space:pre-wrap;background:#f7fafc;border:1px solid #d9e3ec;border-left:4px solid #1d4ed8;border-radius:10px;padding:11px;font-size:12.8px;line-height:1.48;min-height:92px;color:#25313d}
-.rx-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}
-.rx-actions button{padding:9px 12px;font-size:12.5px;box-shadow:none}
-.rx-actions .secondary{background:#475569}
-.rx-actions .light{background:#e8eff7;color:#173b75}
-.rx-warning{background:#fff7ed;border-left:4px solid #ea580c;padding:9px 11px;border-radius:9px;font-size:12px;color:#7c2d12;line-height:1.45}
-.rx-status{font-size:11.5px;color:#64748b;margin-top:6px}
-
-
-/* ===== IA RX DEMO ===== */
-.ai-panel{border:1px solid #bfdbfe;background:linear-gradient(180deg,#eff6ff,#fff);border-radius:14px;padding:14px}
-.ai-panel h3{color:#1d4ed8;margin-top:0}
-.ai-actions{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
-.ai-btn{background:#1d4ed8;box-shadow:0 3px 10px #1d4ed840}
-.ai-btn:hover{background:#1e40af}
-.ai-btn:disabled{opacity:.55;cursor:not-allowed}
-.ai-result{display:none;border:1px solid #bfdbfe;background:#fff;border-radius:12px;padding:12px;margin-top:10px;font-size:13px;line-height:1.45}
-.ai-result.show{display:block}
-.ai-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 12px;margin-top:8px}
-.ai-item{padding:6px 8px;border-radius:8px;background:#f8fafc;border:1px solid #e2e8f0}
-.ai-item.yes{background:#fff7ed;border-color:#fed7aa}.ai-item.no{background:#f0fdf4;border-color:#bbf7d0}
-.ai-confidence{display:inline-block;padding:4px 8px;border-radius:999px;background:#dbeafe;color:#1e3a8a;font-weight:800;font-size:11px}
-.ai-mode{font-size:11px;color:#64748b;margin-top:7px}
-@media(max-width:650px){.ai-grid{grid-template-columns:1fr}}
-
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial}
+.wrap{max-width:1180px;margin:auto;padding:16px}
+.hero{background:linear-gradient(135deg,#0c7468,#0f514b);color:#fff;border-radius:20px;padding:22px;box-shadow:0 10px 30px #0f172a12}
+.hero h1{margin:0;font-size:25px}.hero p{margin:7px 0 0;font-size:13px;opacity:.93}
+.pills{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}.pill{padding:6px 9px;border-radius:99px;background:#ffffff1f;font-size:11px;font-weight:800}
+.card{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:17px;padding:16px;box-shadow:0 3px 12px #0f172a08}
+h2{font-size:17px;margin:0 0 12px}h3{font-size:14px;margin:0 0 8px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+label{font-size:11px;font-weight:800;color:#506070;display:block;margin-bottom:5px}
+input,select{width:100%;border:1px solid #cbd7dc;border-radius:10px;padding:10px;background:#fff;color:#17212b;font-size:14px}
+input:focus,select:focus{outline:2px solid #99f6e4;border-color:#0f766e}
+.age{padding:10px;border-radius:10px;background:#ecfdf5;border:1px solid #a7f3d0;font-size:13px;font-weight:800;color:#166534;min-height:41px}
+.checks{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:11px}
+.check{display:flex;align-items:flex-start;gap:7px;background:#f8fafc;border:1px solid #e2e8f0;padding:9px;border-radius:10px;font-size:12px}
+.check input{width:auto;margin-top:2px}.check label{font-weight:600;margin:0;color:#334155}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.btn{border:0;border-radius:11px;padding:11px 14px;font-weight:800;cursor:pointer}
+.btn-pri{background:var(--pri);color:#fff}.btn-pri:hover{background:var(--pri2)}.btn-lite{background:#e9eff2;color:#334155}
+.btn-wide{width:100%;font-size:15px;margin-top:12px}
+.vaccine{border:1px solid var(--line);border-radius:14px;margin:9px 0;overflow:hidden}
+.vhead{display:flex;justify-content:space-between;align-items:center;padding:11px 12px;background:#fbfcfd;gap:8px}
+.vtitle{font-weight:850;font-size:14px}.tags{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}
+.tag{font-size:10px;padding:4px 7px;border-radius:99px;font-weight:850}.pni{background:#ccfbf1;color:#115e59}.sbp{background:#ede9fe;color:#5b21b6}.special{background:#fee2e2;color:#991b1b}
+.vbody{padding:12px}.dosegrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.smallnote{font-size:11px;color:var(--muted);line-height:1.4;margin-top:7px}
+.sectionbar{display:flex;justify-content:space-between;gap:10px;align-items:center}
+#results{display:none}.box{padding:13px;border-radius:13px;margin:9px 0;border:1px solid transparent}.box ul{margin:5px 0 0 18px;padding:0}.box li{margin:5px 0;line-height:1.35}
+.info{background:var(--bluebg);border-color:#c7dcff;color:#1e3a8a}.bad{background:var(--badbg);border-color:#fecaca;color:#7f1d1d}.warn{background:var(--warnbg);border-color:#fde68a;color:#78350f}.ok{background:var(--okbg);border-color:#bbf7d0;color:#14532d}.vio{background:var(--viobg);border-color:#ddd0ff;color:#5b21b6}
+.legend{display:flex;gap:7px;flex-wrap:wrap}.legend span{font-size:10px;font-weight:800;padding:5px 7px;border-radius:99px}
+table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}th,td{border-bottom:1px solid #e5e7eb;padding:8px;text-align:left;vertical-align:top}th{color:#475569;background:#f8fafc}
+.footer{font-size:11px;color:#64748b;padding:14px 2px 30px;line-height:1.5}
+.hidden{display:none!important}
+@media(max-width:820px){.grid{grid-template-columns:1fr 1fr}.checks{grid-template-columns:1fr 1fr}.dosegrid{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.grid,.checks,.dosegrid{grid-template-columns:1fr}.wrap{padding:10px}.hero{border-radius:16px}.hero h1{font-size:20px}.vhead{align-items:flex-start}}
+@media print{body{background:#fff}.hero{box-shadow:none}.card{box-shadow:none}.no-print{display:none!important}.wrap{max-width:none}.vaccine{break-inside:avoid}}
 </style>
 </head>
 <body>
-<header><div class="wrap">
-<h1>🩺 Calculadora de PAC Pediátrica</h1>
-<div class="sub">Avaliação clínica, gravidade e tratamento com doses calculadas.</div>
-<div class="src"><span class="source-chip">Base: SBP + protocolos nacionais</span><span class="source-chip intl-chip">✦ UpToDate 2026</span></div>
-</div></header>
-<main>
-<div class="grid">
+<div class="wrap">
+<section class="hero">
+  <h1>💉 Protocolo Pediátrico de Adequação Vacinal</h1>
+  <p>Reconstrução do histórico, identificação de pendências e planejamento de resgate vacinal.</p>
+  <div class="pills"><span class="pill">PNI / Ministério da Saúde 2026 = referência principal</span><span class="pill">SBP 2026/2027 = recomendações complementares</span><span class="pill">0–19 anos</span></div>
+</section>
 
-<section class="card rx-module">
-  <h2><span class="step" style="background:#1d4ed8">🩻</span>Análise assistida do RX de tórax</h2>
-  <div class="rx-layout">
-    <div class="rx-viewer">
-      <div class="rx-toolbar">
-        <button type="button" onclick="document.getElementById('rxFile').click()">📂 ABRIR RX</button>
-        <button type="button" onclick="rxFit()">↔ AJUSTAR</button>
-        <button type="button" onclick="rxZoom(1.15)">＋ ZOOM</button>
-        <button type="button" onclick="rxZoom(1/1.15)">－ ZOOM</button>
-        <button type="button" onclick="rxRotate(-90)">↶ 90°</button>
-        <button type="button" onclick="rxRotate(90)">↷ 90°</button>
-        <button type="button" onclick="rxToggleInvert()">◐ INVERTER</button>
-        <button type="button" onclick="rxResetView()">⟲ RESET</button>
-        <input id="rxFile" class="rx-file" type="file" accept="image/png,image/jpeg,image/webp,image/bmp">
-      </div>
-      <div id="rxStage" class="rx-stage">
-        <div id="rxPlaceholder" class="rx-placeholder"><b>Arraste ou selecione uma radiografia</b><br>JPG, PNG, WEBP ou BMP. O processamento desta versão é local no navegador; a imagem não é enviada para servidor.</div>
-        <canvas id="rxCanvas"></canvas>
-      </div>
-      <div class="rx-controls">
-        <div class="rx-control-line"><label for="rxBrightness">Brilho</label><input id="rxBrightness" type="range" min="-100" max="100" value="0"><output id="rxBrightnessOut">0</output></div>
-        <div class="rx-control-line"><label for="rxContrast">Contraste</label><input id="rxContrast" type="range" min="-100" max="100" value="0"><output id="rxContrastOut">0</output></div>
-        <div class="rx-control-line"><label for="rxGamma">Gamma</label><input id="rxGamma" type="range" min="50" max="200" value="100"><output id="rxGammaOut">1,00</output></div>
-        <div class="rx-control-line"><label for="rxSharp">Nitidez</label><input id="rxSharp" type="range" min="0" max="2" step="1" value="0"><output id="rxSharpOut">0</output></div>
-      </div>
-    </div>
-
-    <div class="rx-side">
-      <div class="rx-panel">
-        <h3>1. Qualidade técnica</h3>
-        <div class="rx-mini-grid">
-          <div><label>Incidência</label><select id="rxInc"><option value="nao_informada">Não informada</option><option value="PA">PA</option><option value="AP">AP</option><option value="AP_supino">AP supino</option><option value="lateral">Lateral</option></select></div>
-          <div><label>Qualidade</label><select id="rxQual"><option value="adequada">Adequada</option><option value="limitada">Limitada</option><option value="inadequada">Inadequada</option></select></div>
-        </div>
-        <div class="check"><input id="rxRotacao" type="checkbox"><span>Rotação significativa</span></div>
-        <div class="check"><input id="rxHipoinsp" type="checkbox"><span>Hipoinspiração / baixo volume pulmonar</span></div>
-        <div class="check"><input id="rxPenet" type="checkbox"><span>Penetração/exposição inadequada</span></div>
-      </div>
-
-      <div class="rx-panel">
-        <h3>2. Achados pulmonares / pleurais</h3>
-        <div class="check"><input id="rxNormal" type="checkbox"><span>Sem alteração pulmonar aguda evidente</span></div>
-        <div class="check"><input id="rxHiperins" type="checkbox"><span>Hiperinsuflação pulmonar</span></div>
-        <div class="check"><input id="rxPeribronq" type="checkbox"><span>Espessamento peribrônquico / perihilar</span></div>
-        <div class="check"><input id="rxInterst" type="checkbox"><span>Opacidades intersticiais / perihilares</span></div>
-        <div class="check"><input id="rxConsol" type="checkbox"><span>Consolidação focal / alveolar</span></div>
-        <div class="check"><input id="rxMultilobar" type="checkbox"><span>Acometimento multilobar / extenso</span></div>
-        <div class="check"><input id="rxAtelect" type="checkbox"><span>Atelectasia</span></div>
-        <div class="check"><input id="rxDerrame" type="checkbox"><span>Derrame pleural</span></div>
-        <div class="check"><input id="rxPneumo" type="checkbox"><span>Pneumotórax</span></div>
-        <div class="check"><input id="rxCavit" type="checkbox"><span>Cavitação / pneumatoceles / suspeita de necrose</span></div>
-      </div>
-
-      <div class="rx-panel">
-        <h3>3. Topografia e demais achados</h3>
-        <div class="rx-mini-grid">
-          <div><label>Lado</label><select id="rxSide"><option value="">—</option><option value="direito">Direito</option><option value="esquerdo">Esquerdo</option><option value="bilateral">Bilateral</option></select></div>
-          <div><label>Região</label><select id="rxRegion"><option value="">—</option><option value="superior">Superior</option><option value="media">Média/perihilar</option><option value="inferior">Inferior/basal</option><option value="difusa">Difusa</option></select></div>
-        </div>
-        <div class="check"><input id="rxCardio" type="checkbox"><span>Aumento aparente da área cardíaca</span></div>
-        <div class="check"><input id="rxOsseo" type="checkbox"><span>Alteração óssea/partes moles visível</span></div>
-        <label>Observação livre</label><input id="rxObs" type="text" placeholder="Ex.: discreta opacidade paracardíaca direita">
-      </div>
-
-      <div class="rx-panel">
-        <h3>4. Descrição gerada</h3>
-        <div id="rxAutoReport" class="rx-report-box">Selecione os achados radiográficos.</div>
-        <div class="rx-actions">
-          <button type="button" onclick="generateRxReport()">ATUALIZAR DESCRIÇÃO</button>
-          <button type="button" class="secondary" onclick="copyRxReport()">📋 COPIAR</button>
-          <button type="button" class="light" onclick="clearRxFindings()">LIMPAR ACHADOS</button>
-        </div>
-        <div id="rxIntegrationStatus" class="rx-status"></div>
-      </div>
-
-      <div class="ai-panel">
-        <h3>🤖 Exemplo — pré-análise do RX com IA</h3>
-        <div class="small">Envia somente a imagem carregada para o backend local. A resposta estruturada pode pré-marcar os achados, mas deve ser revisada antes de integrar à conduta.</div>
-        <div class="ai-actions">
-          <button id="rxAiButton" type="button" class="ai-btn" onclick="analisarRxComIA()">🤖 ANALISAR RX COM IA</button>
-          <button type="button" class="secondary" onclick="aplicarAchadosIA()">✓ APLICAR ACHADOS</button>
-          <button type="button" class="light" onclick="descartarAchadosIA()">DESCARTAR</button>
-        </div>
-        <div id="rxAiStatus" class="rx-status">Conectado ao endpoint <b>/api/analisar-rx</b>. No GitHub sozinho a IA não funciona; publique pela Vercel e configure <b>OPENAI_API_KEY</b>.</div>
-        <div id="rxAiResult" class="ai-result"></div>
-      </div>
-
-      <div class="rx-warning"><b>Importante:</b> a IA é apenas apoio à leitura. O padrão radiográfico isolado não define etiologia viral versus bacteriana e não deve determinar antibioticoterapia sem correlação clínica e revisão médica.</div>
-    </div>
+<section class="card">
+  <h2>1) Dados do paciente</h2>
+  <div class="grid">
+    <div><label>DATA DE NASCIMENTO</label><input id="dob" type="date" onchange="calcAge()"></div>
+    <div><label>PESO (KG)</label><input id="weight" type="number" min="0" step="0.01" placeholder="Ex.: 8,6"></div>
+    <div><label>IDADE</label><div class="age" id="ageBox">Informe a data de nascimento</div></div>
+    <div><label>PERFIL</label><select id="profile"><option value="routine">Rotina / hígido</option><option value="special">Condição especial / CRIE</option></select></div>
+  </div>
+  <div class="checks">
+    <div class="check"><input type="checkbox" id="immuno"><label for="immuno">Imunocomprometido</label></div>
+    <div class="check"><input type="checkbox" id="comorb"><label for="comorb">Comorbidade relevante</label></div>
+    <div class="check"><input type="checkbox" id="indigenous"><label for="indigenous">Indígena</label></div>
+    <div class="check"><input type="checkbox" id="asplenia"><label for="asplenia">Asplenia / hiposplenia</label></div>
+    <div class="check"><input type="checkbox" id="hbsmom"><label for="hbsmom">Mãe HBsAg positiva</label></div>
+    <div class="check"><input type="checkbox" id="severeallergy"><label for="severeallergy">Reação grave prévia a vacina/componente</label></div>
   </div>
 </section>
 
-
-<section class="card span3"><h2><span class="step">1</span>Dados</h2>
-<label>Idade</label><div class="row"><input id="idade" type="number" min="0" step="1" value="24" style="flex:1"><select id="idadeUn" style="flex:1"><option value="m">meses</option><option value="a">anos</option></select></div>
-<label>Peso (kg)</label><input id="peso" type="number" min="0" step="0.1" value="12">
-<label>FR (irpm)</label><input id="fr" type="number" min="0" step="1" value="48">
-<label>SpO₂ em ar ambiente (%)</label><input id="spo2" type="number" min="0" max="100" step="1" value="96">
-<label>Temperatura (°C)</label><input id="temp" type="number" step="0.1" value="38.5">
-<label>Seguimento domiciliar em 24–48 horas</label><select id="seguimento"><option value="sim">Garantido</option><option value="incerto">Incerto</option><option value="nao">Não garantido</option></select>
-<div class="intl"><div class="intl-title">✦ UpToDate 2026 — complemento internacional</div>O seguimento pode ser presencial ou por telefone. Se não estiver garantido, reavaliar também a segurança do tratamento domiciliar.</div>
-</section>
-
-<section class="card alt span5"><h2><span class="step">2</span>Achados clínicos e gravidade</h2>
-<div class="check"><input id="tosse" type="checkbox" checked><span>Tosse e/ou dificuldade respiratória</span></div>
-<div class="check"><input id="tiragem" type="checkbox"><span>Desconforto respiratório moderado-grave: tiragem subcostal, batimento de asas nasais, gemência ou apneia (FR&gt;70 se &lt;12m / FR&gt;50 se maior)</span></div>
-<div class="check"><input id="perigo" type="checkbox"><span>Sinal de perigo / toxemia: sonolência, rebaixamento do nível de consciência, convulsão, choque, cianose, aparência tóxica (quadro grave/séptico)</span></div>
-<div class="check"><input id="oral" type="checkbox"><span>Recusa alimentar, vômitos importantes, desidratação ou incapacidade de ingesta VO</span></div>
-<div class="check"><input id="comorb" type="checkbox"><span>Doença subjacente (cardiopulmonar, síndrome genética, distúrbio neurológico) ou imunodeficiência primária/secundária</span></div>
-<div class="check"><input id="extensa" type="checkbox"><span>Pneumonia extensa/multilobar à radiografia (se realizada)</span></div>
-<div class="check"><input id="sibilo" type="checkbox"><span>Sibilância predominante</span></div>
-<div class="check"><input id="melhorouBdl" type="checkbox"><span>Melhorou após broncodilatador de ação rápida (3x, 15/15min)</span></div>
-<div class="check"><input id="conjuntivite" type="checkbox"><span>Conjuntivite associada (RN/lactente &lt;2 meses — sugere <i>C. trachomatis</i>)</span></div>
-
-<hr class="divider">
-<label>Perfil clínico predominante</label><select id="perfil"><option value="automatico" selected>Automático assistido</option><option value="tipico">Típico bacteriano — seleção manual</option><option value="atipico">Atípico — seleção manual</option><option value="viral">Predominantemente viral — seleção manual</option><option value="indeterminado">Indeterminado ou misto — seleção manual</option></select>
-<div class="check"><input id="inicioAbrupto" type="checkbox"><span>Início abrupto, com piora em horas ou poucos dias</span></div>
-<div class="check"><input id="foco" type="checkbox"><span>Dor torácica/abdominal ou ausculta focal (crepitações focais, sopro tubário, murmúrio reduzido/assimétrico)</span></div>
-<div class="check"><input id="inicioGradual" type="checkbox"><span>Início gradual ou evolução subaguda</span></div>
-<div class="check"><input id="tosseSeca" type="checkbox"><span>Tosse seca progressiva ou pouco produtiva</span></div>
-<div class="check"><input id="extrapulm" type="checkbox"><span>Cefaleia, mal-estar, mialgia, odinofagia/faringite, rouquidão ou exantema</span></div>
-<div class="check"><input id="prodromoViral" type="checkbox"><span>Pródromo viral predominante: coriza, congestão, sintomas difusos ou contato/surto viral</span></div>
-<div class="check"><input id="testeViral" type="checkbox"><span>Teste viral positivo (não exclui coinfecção bacteriana)</span></div>
-<div id="perfilLive" class="intl" aria-live="polite"><div class="intl-title">✦ Perfil sugerido agora</div>Marque os achados para atualizar a classificação.</div>
-<details><summary>Ajuda para interpretar o perfil: típico, atípico e viral</summary>
-<ul>
-<li><b>Sugere atípico:</b> escolar (&gt;5 anos, mas possível em pré-escolar), tosse seca ou pouco produtiva de evolução <b>subaguda/crônica</b> (dias a semanas), <b>ausência de febre alta</b> ou queda leve do estado geral, sintomas extrapulmonares (cefaleia, mialgia, faringite, exantema — inclusive Stevens-Johnson), <b>dissociação clínico-radiológica</b> (RX mais alterado que a clínica sugere), surto em ambiente coletivo (escola/creche).</li>
-<li><b>Sugere típico (pneumocócico):</b> início <b>agudo</b>, febre <b>alta</b>, taquipneia/tiragem, toxemia, crepitações localizadas, boa resposta em 48–72h a amoxicilina.</li>
-<li><b>Sugere quadro viral:</b> coriza/congestão, sintomas difusos, sibilância com resposta ao broncodilatador e ausência de foco bacteriano ou gravidade.</li>
-</ul>
-<div class="intl"><div class="intl-title">✦ UpToDate 2026 — complemento internacional</div>Idade ≥5 anos, isoladamente, não indica macrolídeo. Início abrupto, febre alta, dor torácica e foco auscultatório favorecem perfil típico; início gradual, cefaleia, mal-estar, odinofagia e tosse seca progressiva favorecem atípico. No perfil indeterminado, individualizar cobertura típica + atípica conforme gravidade e contexto. Uso excessivo de macrolídeos favorece resistência.</div>
-<div class="note">⚠️ Coriza e secreção purulenta/amarelada isoladas, tosse sem taquipneia, sem tiragem, sem crepitações e sem febre alta são achados comuns de <b>IVAS viral</b>. Não definem PAC bacteriana nem indicam antibiótico por si só; a cor do catarro não é critério diagnóstico isolado.</div>
-</details>
-</section>
-
-<section class="card dark span4"><h2><span class="step">3</span>Complicações / contexto especial</h2>
-<div class="check"><input id="derrame" type="checkbox"><span>Derrame pleural / empiema</span></div>
-<div class="check"><input id="necrose" type="checkbox"><span>Pneumonia necrosante</span></div>
-<div class="check"><input id="abscesso" type="checkbox"><span>Abscesso pulmonar</span></div>
-<div class="check"><input id="semMelhoraDrenagem" type="checkbox"><span>Sem melhora após drenagem pleural (febre &gt;72h, débito escasso com imagem persistente, septações persistentes)</span></div>
-<div class="check"><input id="porta" type="checkbox"><span>Porta de entrada cutânea / varicela / escarlatina / quadro séptico</span></div>
-<div class="check"><input id="aspirativa" type="checkbox"><span>Pneumonia aspirativa (distúrbio de deglutição, RGE, malformação — risco de anaeróbios)</span></div>
-<div class="check"><input id="alergia" type="checkbox"><span>Alergia a penicilina (não anafilática)</span></div>
-<div class="check"><input id="semHib" type="checkbox"><span>&gt;3 meses sem imunização completa contra <i>H. influenzae</i></span></div>
-<div class="check" style="background:var(--warn-light)"><input id="usoAtb" type="checkbox"><span><b>Uso de antibiótico nos últimos 30 dias</b> (ambulatorial → amoxicilina+clavulanato; hospitalar → ampicilina+sulbactam)</span></div>
-<div class="check"><input id="falha" type="checkbox"><span>Falha clínica após 48–72h de amoxicilina ambulatorial (febril/piora)</span></div>
-<div class="check"><input id="imunossuprimido" type="checkbox"><span>Imunossuprimido / em tratamento antineoplásico</span></div>
-<div class="check"><input id="hiv" type="checkbox"><span>Portador de HIV sem TARV ou tratamento irregular</span></div>
-<div class="check"><input id="cateter" type="checkbox"><span>Internação recente com uso de cateter central ou cirurgia prévia</span></div>
-<div class="check"><input id="doseAlta" type="checkbox"><span>Considerar amoxicilina em dose alta (90mg/kg/dia) — &lt;5 anos com risco de pneumococo resistente</span></div>
-
-<hr class="divider">
-<h4>✦ Triagem complementar de UTI pediátrica</h4>
-<div class="check"><input id="suporteVent" type="checkbox"><span>Necessidade de ventilação não invasiva/invasiva ou oxigênio em alta concentração</span></div>
-<div class="check"><input id="apneia" type="checkbox"><span>Apneias recorrentes</span></div>
-<div class="check"><input id="choque" type="checkbox"><span>Instabilidade hemodinâmica ou choque</span></div>
-<div class="check"><input id="mental" type="checkbox"><span>Alteração/rebaixamento do estado mental</span></div>
-<div class="check"><input id="altoRisco" type="checkbox"><span>Condição de base com alto risco de deterioração</span></div>
-
-<h4>✦ Risco de <i>S. aureus</i>/MRSA</h4>
-<div class="check"><input id="influenza" type="checkbox"><span>Influenza atual/recente ou coinfecção suspeita</span></div>
-<div class="check"><input id="rapida" type="checkbox"><span>Evolução rápida, aspecto tóxico, hemoptise, cavitação/necrose/abscesso/empiema ou necessidade de UTI</span></div>
-
-<div class="actionbar">
-<button onclick="calc()">CONDUTA:</button>
+<section class="card">
+<div class="sectionbar">
+  <div>
+    <h2>2) Transcrição da caderneta</h2>
+    <div class="smallnote">Digite somente as datas comprovadas. Campos vazios são tratados como “sem registro”.</div>
+  </div>
+  <div class="legend no-print"><span class="pni">PNI</span><span class="sbp">SBP</span></div>
 </div>
-</section>
-
-<section class="card span12"><h2>📋 Resultado</h2><div id="badges"></div><div id="summary"></div>
-<h3>💊 Prescrição sugerida</h3><div id="rx" class="rx">A conduta será atualizada conforme o preenchimento.</div>
-<h3>🧭 Orientações gerais e sinais de alarme</h3><div id="orient"></div>
-<h3>🧪 Exames conforme gravidade</h3><div id="exames"></div>
-<h3>🔄 Transição EV → VO</h3><div id="transicao"></div>
-</section>
-
-<section class="card intl-card span12"><h2>✦ UpToDate 2026 — complemento internacional</h2>
-<div class="intl"><strong>Hierarquia das fontes:</strong> SBP e protocolos nacionais/institucionais permanecem como base principal. Estes itens são apoio internacional e devem ser correlacionados com epidemiologia, resistência local e avaliação clínica.</div>
-<details><summary>POCUS e tomografia</summary><p class="small">A acurácia do POCUS pulmonar depende da experiência do examinador. Pode complementar a avaliação de consolidação e é especialmente útil no derrame. A tomografia não é exame rotineiro da PAC; reservar para dúvidas diagnósticas ou complicações selecionadas.</p></details>
-<details><summary>Biomarcadores e painel viral</summary><p class="small">PCR e procalcitonina não devem iniciar, manter ou suspender antibiótico isoladamente. Teste viral positivo não exclui coinfecção bacteriana, sobretudo na doença grave.</p></details>
-<details><summary><i>Chlamydia pneumoniae</i></summary><p class="small">Início gradual, faringite, rouquidão, sinusite associada ou surto em ambiente fechado podem aumentar a suspeita, mas nenhum achado clínico, laboratorial ou radiológico confirma isoladamente. Testagem ambulatorial raramente é necessária; se o resultado modificar a conduta, preferir método molecular/NAAT. Sorologia não é recomendada para diagnóstico agudo, e NAAT positivo não exclui coinfecção.</p></details>
-</section>
-
-<section class="card alt span12">
-<h2>📚 Referências rápidas de apoio</h2>
-
-<details><summary>Critérios de taquipneia por idade</summary>
-<table class="table"><tr><th>Faixa etária</th><th>FR (taquipneia)</th></tr>
-<tr><td>&lt;2 meses</td><td>≥60 irpm — se presente + tosse/dificuldade respiratória, já classifica como pneumonia grave (internar)</td></tr>
-<tr><td>2–11 meses</td><td>≥50 irpm</td></tr>
-<tr><td>12–59 meses</td><td>≥40 irpm</td></tr>
-<tr><td>≥5 anos</td><td>≥30 irpm como alerta clínico (FR&gt;40 isoladamente tem associação fraca ao diagnóstico de PAC)</td></tr>
-</table>
-<p class="small">SpO₂ ≤96% e aumento do esforço respiratório (grunhidos, batimento de asas nasais, retrações) são os achados mais associados à PAC; SpO₂&gt;96% reduz a probabilidade. (SBP nº6/2021)</p>
-</details>
-
-<details><summary>Critérios de internação (consolidado Einstein + HCA + SBP)</summary>
-<ul>
-<li>Idade &lt;2 meses</li>
-<li>Insuficiência respiratória aguda / hipoxemia (SpO₂&lt;92% em ar ambiente)</li>
-<li>Comprometimento do estado geral, toxemia, aparência tóxica ou desidratação</li>
-<li>Desconforto respiratório moderado-grave (FR&gt;70 se &lt;12 meses; FR&gt;50 se maiores) ou dificuldade em respirar (gemência, batimento de asas nasais, retrações, apneia)</li>
-<li>Pneumonia extensa à radiografia (quando realizada)</li>
-<li>Impossibilidade de ingerir medicações/líquidos (vômitos)</li>
-<li>Falha de resposta à terapêutica ambulatorial</li>
-<li>Imunodeficiência primária ou secundária, doença subjacente cardiopulmonar/neurológica/genética</li>
-<li>Complicações: derrame pleural, abscesso pulmonar, pneumatocele, pneumotórax, pneumonia necrosante</li>
-<li>Dificuldade de seguimento adequado</li>
-</ul>
-</details>
-
-<details><summary>Quando pedir raio-X? (SBP + Einstein)</summary>
-<ul>
-<li>Radiografia <b>não deve ser rotina</b> em criança com quadro leve tratada ambulatorialmente — a concordância entre sinais clínicos e achados radiográficos é baixa.</li>
-<li>Padrão radiológico <b>não define etiologia</b> (não distingue bacteriana de viral) e deve ser evitado em quadros tipicamente virais ou com sibilância, pois induz erro diagnóstico e uso desnecessário de antibiótico.</li>
-<li>Considerar RX em: casos mais graves/internação, evolução prolongada ou recorrente apesar do tratamento, suspeita de aspiração de corpo estranho, malformação congênita, febre + leucocitose sem causa aparente em &lt;5 anos, pneumonia redonda, ou <b>febre prolongada + tosse mesmo sem taquipneia/desconforto</b> ("pneumonia oculta").</li>
-<li>RX pode ser <b>falso-negativo</b> — infiltrados só aparecem em 5–19% das crianças com febre sem outros sinais respiratórios baixos; se a evolução não é a esperada, reavaliar clínica e radiologicamente, independente do RX inicial.</li>
-<li>RX de controle não é necessário se houve boa evolução clínica; considerar apenas em pneumonia redonda, colapso, pneumonia recorrente localizada ou sintomas persistentes.</li>
-<li>Na suspeita de complicação (derrame/necrose), a <b>USG de tórax é o exame preferido</b> — mais sensível que o RX e sem radiação.</li>
-</ul>
-</details>
-
-<details><summary>Indicações de drenagem pleural e falha de drenagem (SBP nº7/2022)</summary>
-<p><b>Indicações de drenagem pleural simples:</b> pus em espaço pleural; germes Gram-positivos na coloração; glicose &lt;50mg/dL; LDH &gt;1000 UI; comprometimento de função pulmonar por derrame extenso; septações e/ou loculações em cavidade torácica; pH&lt;7,20 (risco alto de septações se pH&lt;7,0).</p>
-<p><b>Falha da drenagem torácica:</b> persistência ou aumento da febre após 72h; débito escasso com persistência de imagem radiológica; persistência de septações/loculações em US; piora do quadro respiratório.</p>
-<p><b>Indicações de VTCA:</b> derrame pleural massivo persistente com comprometimento respiratório e falha de drenagem simples + fibrinolíticos; fístula bronco-pleural não resolvida com drenagem simples; necrose extensa.</p>
-<table class="table"><tr><th>Peso</th><th>Tubo — derrame loculado</th><th>Tubo — derrame não loculado</th></tr>
-<tr><td>&lt;3kg</td><td>8–10</td><td>10–12</td></tr>
-<tr><td>3–8kg</td><td>10–12</td><td>12–16</td></tr>
-<tr><td>9–15kg</td><td>12–16</td><td>16–20</td></tr>
-<tr><td>16–40kg</td><td>16–20</td><td>24–28</td></tr>
-<tr><td>&gt;40kg</td><td>24–28</td><td>28–36</td></tr>
-</table>
-</details>
-
-<details><summary>Antibioticoterapia — quadro geral de doses (referência HCA/Einstein)</summary>
-<table class="table"><tr><th>Antibiótico</th><th>Dose</th><th>Intervalo</th><th>Dose máx./dia</th></tr>
-<tr><td>Amoxicilina</td><td>50–90 mg/kg/dia</td><td>6/6h (ou 8/8–12/12h)</td><td>4 g</td></tr>
-<tr><td>Amoxicilina+Clavulanato</td><td>80–90 mg/kg/dia (componente amoxicilina)</td><td>12/12h</td><td>4 g de amoxicilina</td></tr>
-<tr><td>Ampicilina</td><td>200 mg/kg/dia</td><td>6/6h</td><td>8 g</td></tr>
-<tr><td>Ampicilina+Sulbactam</td><td>200 mg/kg/dia (ampicilina)</td><td>6/6h</td><td>8 g</td></tr>
-<tr><td>Penicilina cristalina</td><td>200.000 UI/kg/dia</td><td>6/6h</td><td>16 mi UI</td></tr>
-<tr><td>Ceftriaxona</td><td>100 mg/kg/dia</td><td>12/12h ou 1x/dia</td><td>2 g</td></tr>
-<tr><td>Cefotaxima</td><td>150–200 mg/kg/dia</td><td>6/6h ou 8/8h</td><td>6 g</td></tr>
-<tr><td>Cefepime</td><td>50 mg/kg/dose</td><td>8/8h</td><td>2 g</td></tr>
-<tr><td>Oxacilina</td><td>150–200 mg/kg/dia</td><td>6/6h</td><td>12 g</td></tr>
-<tr><td>Vancomicina</td><td>40 mg/kg/dia (10mg/kg/dose)</td><td>6/6h</td><td>4 g</td></tr>
-<tr><td>Clindamicina</td><td>40 mg/kg/dia</td><td>6/6h ou 8/8h</td><td>1 g</td></tr>
-<tr><td>Metronidazol</td><td>25–40 mg/kg/dia</td><td>8/8h ou 6/6h</td><td>1,5 g</td></tr>
-<tr><td>Azitromicina</td><td>10 mg/kg/dia — base HCA</td><td>1x/dia por 5 dias</td><td>500 mg/dose</td></tr>
-<tr><td>Gentamicina (RN–2m)</td><td>5–7,5 mg/kg/dia</td><td>1x/dia</td><td>—</td></tr>
-<tr><td>Cefuroxima</td><td>30–50 mg/kg/dia</td><td>12/12h</td><td>500 mg (VO)</td></tr>
-</table>
-</details>
-
-</section>
-
-<section class="card span12"><h3 style="margin-top:0">Referências</h3>
-<p class="footer">1) Sociedade Brasileira de Pediatria. Abordagem Diagnóstica e Terapêutica das Pneumonias Adquiridas na Comunidade Não Complicadas. Documento Científico nº6, 2021. 2) Sociedade Brasileira de Pediatria. Pneumonias Adquiridas na Comunidade Complicadas. 3) Hospital Albert Einstein. Protocolo Pneumonia Adquirida na Comunidade em Pediatria. Código PTC.3693, 2022. 4) Hospital da Criança e do Adolescente Dr. Severino Bezerra de Carvalho — Campina Grande/PB. Normatização de Antibioticoterapia Inicial em Pediatria, Ago/2023; protocolo ATB anexado. 5) UpToDate 2026: Community-acquired pneumonia in children — outpatient treatment; clinical features and diagnosis; inpatient treatment in children &gt;28 days; epidemiology/pathogenesis/etiology; pneumonia caused by <i>Chlamydia pneumoniae</i>.<br>
-Ferramenta de apoio à decisão clínica — não substitui a avaliação médica individualizada, a conferência de função renal/alergias/apresentações disponíveis e o protocolo institucional vigente. Em caso de conflito de dose entre as fontes, prevaleceram os valores dos protocolos institucionais (Einstein/HCA) por serem mais recentes e operacionais; achados fisiopatológicos e critérios de gravidade seguiram a SBP. A conduta de amoxicilina+clavulanato para uso recente de antibiótico em PAC ambulatorial é extrapolada do padrão institucional do HCA usado em outras infecções respiratórias (sinusite/otite), já que a tabela específica de PAC ambulatorial do HCA não contempla essa opção.</p>
-</section>
-
+<div class="toolbar no-print">
+  <button class="btn btn-lite" onclick="fillExample()">Preencher exemplo</button>
+  <button class="btn btn-lite" onclick="clearAll()">Limpar</button>
 </div>
-</main>
+<div id="vaccines"></div>
+<button class="btn btn-pri btn-wide no-print" onclick="analyze()">ANALISAR E GERAR PROTOCOLO</button>
+</section>
+
+<section class="card" id="results">
+  <h2>3) Protocolo individualizado</h2>
+  <div id="alerts"></div>
+  <div class="box info"><h3>📋 RESUMO DA SITUAÇÃO VACINAL</h3><div id="summary"></div></div>
+  <div class="box bad"><h3>💉 CONDUTA / VACINAS A REVISAR HOJE</h3><ul id="today"></ul></div>
+  <div class="box warn"><h3>📅 PRÓXIMAS DOSES / JANELAS</h3><ul id="next"></ul></div>
+  <div class="box ok"><h3>✅ ESQUEMAS OU DOSES IDENTIFICADOS</h3><ul id="done"></ul></div>
+  <div class="box vio"><h3>🟣 COMPLEMENTO SBP 2026/2027</h3><ul id="sbpout"></ul></div>
+  <div class="box info"><h3>👨‍👩‍👧 ORIENTAÇÕES AOS RESPONSÁVEIS</h3><ul id="guidance"></ul></div>
+  <div class="toolbar no-print">
+    <button class="btn btn-lite" onclick="copyProtocol()">📋 Copiar protocolo</button>
+    <button class="btn btn-lite" onclick="window.print()">🖨️ Imprimir / PDF</button>
+  </div>
+</section>
+
+<section class="card">
+  <h2>4) Regras importantes do protocolo</h2>
+  <table>
+    <tr><th>Regra</th><th>Aplicação</th></tr>
+    <tr><td>Esquema atrasado</td><td>Em regra, não reiniciar séries válidas. Completar o que falta respeitando idade e intervalo mínimo.</td></tr>
+    <tr><td>Rotavírus</td><td>Possui limites etários próprios. O sistema sinaliza quando a oportunidade de determinada dose pode ter sido perdida.</td></tr>
+    <tr><td>Vacinas vivas</td><td>Condições de imunossupressão, uso de imunossupressores e situações especiais exigem revisão individual.</td></tr>
+    <tr><td>Menores de 2 anos</td><td>Febre amarela e SCR/tetraviral não devem ser aplicadas simultaneamente na rotina; respeitar o intervalo recomendado quando aplicável.</td></tr>
+    <tr><td>CRIE</td><td>Condições especiais não são resolvidas automaticamente por este módulo; o resultado sinaliza necessidade de protocolo específico.</td></tr>
+  </table>
+</section>
+
+<div class="footer">
+  <b>Base técnica:</b> Calendário Nacional de Vacinação e Instrução Normativa do PNI 2026; Calendário de Vacinação da Sociedade Brasileira de Pediatria 2026/2027. Ferramenta de apoio à conferência clínica; situações especiais, contraindicações, intercambialidade, surtos, exposição, viagens e produtos específicos devem ser confirmados na norma vigente.
+</div>
+</div>
+
 <script>
-function n(id){return parseFloat(document.getElementById(id).value)||0}
-function c(id){return document.getElementById(id).checked}
-function fmt(x){return (Math.round(x*10)/10).toString().replace('.',',')}
-function cap(x,max){return max?Math.min(x,max):x}
-function doseLine(nome,totalDia,intervalo,maxDiaMg,via,dur,obs){
-  let d=cap(totalDia,maxDiaMg);
-  let tomadas={"6/6h":4,"8/8h":3,"12/12h":2,"24/24h":1,"1x/dia":1}[intervalo]||1;
-  return `• ${nome}: ${fmt(d)} mg/dia (${fmt(d/tomadas)} mg ${intervalo}), ${via}, por ${dur}.${obs?' '+obs:''}`;
+const V = [
+ {id:'bcg',name:'BCG',tags:['PNI'],labels:['Dose única'],note:'PNI: rotina ao nascer; atualização até 4 anos, 11 meses e 29 dias.'},
+ {id:'hb',name:'Hepatite B',tags:['PNI','SBP'],labels:['Ao nascer','Dose 2 / registro','Dose 3 / registro','Dose 4 / registro'],note:'A dose ao nascer é monovalente; doses posteriores podem estar contidas em vacinas combinadas.'},
+ {id:'penta',name:'Pentavalente (DTP-HB-Hib)',tags:['PNI'],labels:['1ª dose','2ª dose','3ª dose'],note:'Rotina PNI: 2, 4 e 6 meses.'},
+ {id:'dtp',name:'DTP / reforços',tags:['PNI'],labels:['1º reforço','2º reforço'],note:'PNI: reforços após esquema primário; revisar dT a partir de 7 anos quando aplicável.'},
+ {id:'vip',name:'Poliomielite inativada (VIP)',tags:['PNI'],labels:['1ª dose','2ª dose','3ª dose','Reforço'],note:'PNI 2026: 2, 4 e 6 meses; reforço aos 15 meses.'},
+ {id:'rota',name:'Rotavírus',tags:['PNI','SBP'],labels:['1ª dose','2ª dose','3ª dose (RV5/privada)'],note:'PNI usa esquema de 2 doses. SBP também contempla vacina pentavalente de 3 doses na rede privada.'},
+ {id:'pneumo',name:'Pneumocócica conjugada',tags:['PNI','SBP'],labels:['1ª dose','2ª dose','Reforço','Dose adicional'],note:'PNI: esquema infantil com pneumocócica conjugada; SBP pode recomendar valências superiores conforme disponibilidade.'},
+ {id:'menc',name:'Meningocócica C / ACWY',tags:['PNI','SBP'],labels:['1ª dose','2ª dose','Reforço ACWY','Dose adolescência'],note:'PNI: MenC no lactente e reforço com MenACWY; adolescência conforme calendário vigente.'},
+ {id:'menb',name:'Meningocócica B',tags:['SBP'],labels:['1ª dose','2ª dose','Reforço'],note:'Recomendação complementar SBP; esquema depende da idade de início.'},
+ {id:'flu',name:'Influenza',tags:['PNI','SBP'],labels:['Dose 1 da primovacinação','Dose 2 da primovacinação','Última dose anual'],note:'A partir de 6 meses. Na primeira vacinação antes dos 9 anos, usualmente são necessárias 2 doses separadas por 4 semanas.'},
+ {id:'covid',name:'COVID-19',tags:['PNI'],labels:['1ª dose','2ª dose','3ª dose','Dose anual / adicional'],note:'Esquema varia conforme produto, idade e condição clínica.'},
+ {id:'fa',name:'Febre amarela',tags:['PNI','SBP'],labels:['Dose aos 9 meses / válida','Dose aos 4 anos / reforço','Dose zero / outra'],note:'PNI 2026: 9 meses e 4 anos quando iniciado antes dos 5 anos.'},
+ {id:'scr',name:'Tríplice viral (SCR)',tags:['PNI','SBP'],labels:['1ª dose','2ª dose','Dose zero / outra'],note:'Rotina infantil a partir de 12 meses; doses antes de 12 meses em bloqueio não contam para a rotina.'},
+ {id:'hepa',name:'Hepatite A',tags:['PNI','SBP'],labels:['1ª dose','2ª dose (SBP/privada)'],note:'PNI: dose única aos 15 meses. SBP: esquema de 2 doses a partir de 12 meses.'},
+ {id:'var',name:'Varicela',tags:['PNI','SBP'],labels:['1ª dose','2ª dose'],note:'PNI: doses na infância conforme calendário; SBP recomenda esquema de 2 doses.'},
+ {id:'hpv',name:'HPV4',tags:['PNI','SBP'],labels:['Dose 1','Dose 2 / especial','Dose 3 / especial'],note:'PNI: 1 dose na rotina de 9 a 14 anos; esquemas especiais podem exigir mais doses.'},
+ {id:'dengue',name:'Dengue (DNG4)',tags:['PNI','SBP'],labels:['1ª dose','2ª dose'],note:'PNI: faixa etária definida pelo programa e situação epidemiológica; esquema de 2 doses.'},
+ {id:'dt',name:'dT / dTpa (≥7 anos)',tags:['PNI','SBP'],labels:['Dose 1','Dose 2','Dose 3','Último reforço'],note:'Usar conforme histórico do componente tetânico; esquemas incompletos não devem ser reiniciados.'}
+];
+
+let ageDays=null, ageMonths=null, ageYears=null, dobDate=null;
+
+function renderVaccines(){
+ const el=document.getElementById('vaccines');
+ el.innerHTML=V.map(v=>`
+ <div class="vaccine" id="card_${v.id}">
+  <div class="vhead"><div class="vtitle">${v.name}</div><div class="tags">${v.tags.map(t=>`<span class="tag ${t==='PNI'?'pni':'sbp'}">${t}</span>`).join('')}</div></div>
+  <div class="vbody"><div class="dosegrid">${v.labels.map((l,i)=>`<div><label>${l.toUpperCase()}</label><input type="date" id="${v.id}${i+1}"></div>`).join('')}</div><div class="smallnote">${v.note}</div></div>
+ </div>`).join('');
 }
-function doseLineUI(nome,totalDiaUI,intervalo,maxDiaUI,via,dur,obs,unidade){
-  let d=cap(totalDiaUI,maxDiaUI);
-  let tomadas={"6/6h":4,"8/8h":3,"12/12h":2,"24/24h":1,"1x/dia":1}[intervalo]||1;
-  return `• ${nome}: ${fmt(d)} ${unidade}/dia (${fmt(d/tomadas)} ${unidade} ${intervalo}), ${via}, por ${dur}.${obs?' '+obs:''}`;
+renderVaccines();
+
+function dateVal(id){const v=document.getElementById(id)?.value;return v?new Date(v+'T12:00:00'):null}
+function has(id){return !!document.getElementById(id)?.value}
+function fmt(d){return d?d.toLocaleDateString('pt-BR'):'—'}
+function addDays(d,n){let x=new Date(d);x.setDate(x.getDate()+n);return x}
+function addMonths(d,n){let x=new Date(d);x.setMonth(x.getMonth()+n);return x}
+function ageAt(date){
+ const diff=date-dobDate; return Math.floor(diff/86400000);
 }
-function amoxSusp(totalDia,conc,rotulo){let mlDia=totalDia/conc;return `\n  - Se suspensão ${rotulo||''} ${conc*5} mg/5 mL: ${fmt(mlDia/4)} mL 6/6h (total ${fmt(mlDia)} mL/dia).`}
-function azithLine(p,via,obs){
-  let hca=cap(p*10,500),d25=cap(p*5,250);
-  return `• Azitromicina: ${fmt(hca)} mg (10 mg/kg/dia), 1x/dia, ${via}, por 5 dias — base HCA.${obs?' '+obs:''}\n✦ UpToDate 2026 — complemento internacional: dia 1, ${fmt(hca)} mg (10 mg/kg, máximo 500 mg); dias 2–5, ${fmt(d25)} mg/dia (5 mg/kg/dia, máximo 250 mg/dia).`;
-}
-function perfilLabel(perfil){return {tipico:'típico bacteriano',atipico:'atípico',viral:'predominantemente viral',indeterminado:'indeterminado/misto'}[perfil]||perfil}
-function escHtml(text){return String(text).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[ch]))}
-function rxMark(text){return escHtml(text).replaceAll('✦','<span class="rx-intl-mark">✦</span>')}
-function renderRxReport(items,peso){
-  let lines=items.join('\n').split('\n').map(x=>x.trim()).filter(Boolean),html='',headTitle='Conduta sugerida',headSub='';
-  if(lines[0]&&lines[0].startsWith('CONDUTA:')){
-    let cond=lines.shift().replace(/^CONDUTA:\s*/,'');
-    let parts=cond.split(' + ');headTitle=parts.shift()||headTitle;headSub=parts.join(' + ');
-  }
-  html+=`<div class="rx-head"><div class="rx-head-title">${rxMark(headTitle)}</div>${headSub?`<div class="rx-head-sub">${rxMark(headSub)}</div>`:''}<span class="rx-source-base">Base principal: HCA / SBP / protocolos nacionais</span></div>`;
-  for(const line of lines){
-    if(line.startsWith('• ')){
-      let body=line.slice(2),pos=body.indexOf(':'),nome=pos>=0?body.slice(0,pos):'Medicamento',valor=pos>=0?body.slice(pos+1).trim():body;
-      let doseRef=valor.match(/dose usada:\s*([\d.,]+)\s*mg\/kg\/dia\s*\(faixa aceita ([^)]+)\)\s*(?:— base HCA)?\./i);
-      let totalDia=valor.match(/^([\d.,]+)\s*mg\/dia/i);
-      if(doseRef) valor=valor.replace(doseRef[0],'').replace(/\s{2,}/g,' ').trim();
-      html+=`<div class="rx-row"><div class="rx-label"><span class="rx-icon">💊</span>Medicamento</div><div class="rx-value"><strong>${rxMark(nome)}</strong><br>${rxMark(valor)}</div></div>`;
-      if(doseRef){
-        let calculo=`${doseRef[1]} mg/kg/dia × ${fmt(peso)} kg${totalDia?' = '+totalDia[1]+' mg/dia':''}`;
-        html+=`<div class="rx-row"><div class="rx-label"><span class="rx-icon">⚖️</span>Cálculo da dose</div><div class="rx-value"><strong>${rxMark(calculo)}</strong><br><span class="small">Faixa de referência: ${rxMark(doseRef[2])}</span></div></div>`;
-      }
-    }else if(line.startsWith('- ')){
-      html+=`<div class="rx-row"><div class="rx-label"><span class="rx-icon">🧴</span>Apresentação</div><div class="rx-value">${rxMark(line.slice(2))}</div></div>`;
-    }else if(line.startsWith('✦')){
-      html+=`<div class="rx-row intl-row"><div class="rx-label"><span class="rx-icon">✦</span>Complemento internacional</div><div class="rx-value">${rxMark(line.replace(/^✦\s*/,''))}</div></div>`;
-    }else{
-      html+=`<div class="rx-row"><div class="rx-label"><span class="rx-icon">ℹ️</span>Observação</div><div class="rx-value">${rxMark(line)}</div></div>`;
-    }
-  }
-  return html;
-}
-
-function calc(){
-  let idade=n('idade'),un=document.getElementById('idadeUn').value;
-  let meses=un=='a'?idade*12:idade, anos=meses/12;
-  let p=n('peso'),fr=n('fr'),spo=n('spo2');
-  let seguimento=document.getElementById('seguimento').value;
-  let perfilModo=document.getElementById('perfil').value;
-  if(!p||p<=0){document.getElementById('rx').textContent='Informe peso válido.';return}
-
-  let rapido=false,lim='';
-  if(meses<2){rapido=fr>=60;lim='≥60 irpm'}
-  else if(meses<12){rapido=fr>=50;lim='≥50 irpm'}
-  else if(meses<60){rapido=fr>=40;lim='≥40 irpm'}
-  else{rapido=fr>=30;lim='≥30 irpm (alerta clínico)'}
-
-  let tosse=c('tosse'),tiragem=c('tiragem'),perigo=c('perigo'),oral=c('oral'),comorb=c('comorb'),extensa=c('extensa');
-  let sibilo=c('sibilo'),melhorouBdl=c('melhorouBdl'),conjuntivite=c('conjuntivite');
-  let derrame=c('derrame'),necrose=c('necrose'),abscesso=c('abscesso'),semMelhora=c('semMelhoraDrenagem');
-  let porta=c('porta'),aspirativa=c('aspirativa'),alergia=c('alergia');
-  let semHib=c('semHib'),usoAtb=c('usoAtb'),falha=c('falha'),imunossuprimido=c('imunossuprimido');
-  let hiv=c('hiv'),cateter=c('cateter'),doseAlta=c('doseAlta');
-  let suporteVent=c('suporteVent'),apneia=c('apneia'),choque=c('choque'),mental=c('mental'),altoRisco=c('altoRisco');
-  let influenza=c('influenza'),rapida=c('rapida');
-  let inicioAbrupto=c('inicioAbrupto'),foco=c('foco'),inicioGradual=c('inicioGradual'),tosseSeca=c('tosseSeca');
-  let extrapulm=c('extrapulm'),prodromoViral=c('prodromoViral'),testeViral=c('testeViral');
-
-  let comp = derrame||necrose||abscesso;
-  let perfil=perfilModo, perfilMotivo='seleção manual';
-  let sinaisTipicos=0,sinaisAtipicos=0,sinaisVirais=0,tendencia='';
-  if(perfilModo=='automatico'){
-    sinaisTipicos=(inicioAbrupto?1:0)+(foco?1:0)+(n('temp')>=39?1:0);
-    sinaisAtipicos=(inicioGradual?1:0)+(tosseSeca?1:0)+(extrapulm?1:0);
-    sinaisVirais=(prodromoViral?1:0)+(testeViral?1:0)+((sibilo&&melhorouBdl)?1:0);
-    if(sinaisVirais>=2 && !foco && !perigo && !comp){perfil='viral';perfilMotivo='conjunto viral predominante, sem foco/gravidade bacteriana';}
-    else if(anos>=5 && sinaisAtipicos>=2 && !foco && !perigo && sinaisTipicos<2){perfil='atipico';perfilMotivo='idade compatível + conjunto gradual/seco/extrapulmonar';}
-    else if(sinaisTipicos>=2 && (inicioAbrupto||foco) && sinaisAtipicos<2 && sinaisVirais<2){perfil='tipico';perfilMotivo='conjunto agudo/febre alta/foco';}
-    else {
-      perfil='indeterminado';
-      let maior=Math.max(sinaisTipicos,sinaisAtipicos,sinaisVirais);
-      let unicos=[sinaisTipicos,sinaisAtipicos,sinaisVirais].filter(x=>x==maior).length==1;
-      if(maior>0 && unicos){
-        tendencia=maior==sinaisTipicos?'típica':(maior==sinaisAtipicos?'atípica':'viral');
-        perfilMotivo=`evidência ainda insuficiente para fechar o perfil; tendência ${tendencia}`;
-      } else perfilMotivo='achados insuficientes, conflitantes ou possível quadro misto';
-    }
-  }
-  document.getElementById('perfilLive').innerHTML=`<div class="intl-title">✦ ${perfilModo=='automatico'?'Perfil sugerido agora':'Perfil definido manualmente'}: ${perfilLabel(perfil)}${tendencia?' — tendência '+tendencia:''}</div>${perfilMotivo}.${perfilModo=='automatico'?`<br><span class="small">Evidências marcadas: típico ${sinaisTipicos} · atípico ${sinaisAtipicos} · viral ${sinaisVirais}</span>`:''}`;
-  let internar = meses<2 || spo<92 || perigo || tiragem || oral || comorb || extensa || imunossuprimido || comp || falha;
-  let uti = suporteVent||apneia||choque||mental||altoRisco;
-  internar = internar || uti;
-  let mrsa = influenza || rapida;
-  let evidenciaForte = tiragem || spo<92 || comp || perigo;
-  let pneumonia = tosse && (rapido || evidenciaForte) && (perfil!='viral' || evidenciaForte);
-
-  // badges
-  let b=[];
-  b.push(`<span class="pill ${rapido?'danger':'ok'}">FR ${fr} irpm / limite ${lim}</span>`);
-  b.push(`<span class="pill ${spo<92?'danger':(spo<=96?'warn':'ok')}">SpO₂ ${spo}%</span>`);
-  if(sibilo && !melhorouBdl) b.push('<span class="pill info">Sibilância sem resposta a BDL — investigar/tratar sibilância antes de classificar PAC</span>');
-  if(sibilo && melhorouBdl) b.push('<span class="pill info">Sibilância com melhora ao BDL — considerar asma viral/sibilância antes de PAC bacteriana isolada</span>');
-  b.push(`<span class="pill intl-pill">${perfilModo=='automatico'?'✦ Sugestão automática':'Perfil manual'}: ${perfilLabel(perfil)}</span>`);
-  if(meses>=2 && meses<6) b.push('<span class="pill intl-pill">✦ 2–6 meses: maior cautela</span>');
-  if(seguimento!='sim') b.push('<span class="pill warn">Seguimento domiciliar não garantido</span>');
-  if(mrsa) b.push('<span class="pill danger">✦ Risco de S. aureus/MRSA</span>');
-  if(uti) b.push('<span class="pill danger">Avaliação imediata para UTI pediátrica</span>');
-  if(comp) b.push('<span class="pill danger">PAC complicada</span>');
-  else if(internar) b.push('<span class="pill danger">PAC grave — internação</span>');
-  else if(pneumonia) b.push('<span class="pill warn">PAC não complicada — ambulatorial</span>');
-  else b.push('<span class="pill ok">Sem critério forte de PAC pelo algoritmo</span>');
-  document.getElementById('badges').innerHTML=b.join(' ');
-
-  let rx=[],or=[];
-  if(perfilModo=='automatico') or.push(`✦ Perfil clínico sugerido automaticamente: ${perfilLabel(perfil)} (${perfilMotivo}). Esta classificação é apoio clínico, não confirmação etiológica; revise manualmente quando necessário.`);
-  if(meses>=2 && meses<6) or.push('✦ Idade de maior risco (2–6 meses): considerar limiar mais baixo para observação/internação conforme estado geral, oxigenação, hidratação, etiologia provável e possibilidade de seguimento. Não constitui internação automática isoladamente.');
-  if(seguimento!='sim') or.push('✦ Seguimento em 24–48h não está garantido: reavaliar a segurança do manejo domiciliar. O esquema principal permanece 7–10 dias conforme HCA; como complemento internacional, o UpToDate utiliza 7 dias quando o seguimento é incerto.');
-  if(uti) or.push('🚨 Avaliação imediata para UTI pediátrica: há critério complementar de suporte ventilatório/apneia/instabilidade/alteração mental/alto risco de deterioração. Estabilização e avaliação presencial não devem ser atrasadas pelo cálculo.');
-  if(mrsa) or.push('✦ Risco de pneumonia estafilocócica/MRSA após influenza ou evolução rápida: colher culturas quando possível sem atrasar tratamento e considerar cobertura antiestafilocócica conforme gravidade, epidemiologia e antibiograma institucional; discutir com infectologia/UTI. A calculadora não importa automaticamente um esquema internacional de MRSA.');
-  if(sibilo && !melhorouBdl) or.push('Sibilância predominante: testar broncodilatador de ação rápida (3x, 15/15min) e reclassificar após resposta, para evitar superprescrição de antibiótico e subdiagnóstico de doença obstrutiva de via aérea.');
-  if(sibilo && melhorouBdl) or.push('Houve melhora com broncodilatador — reavaliar cautelosamente antes de rotular como PAC bacteriana isolada (considerar asma viral/bronquiolite).');
-
-  if(!pneumonia && !comp){
-    rx.push('✅ ANTIBIÓTICO NÃO INDICADO AUTOMATICAMENTE\n\nOs dados informados não sustentam, neste momento, antibioticoterapia automática. Reavalie sinais de gravidade e considere diagnósticos como IVAS viral, bronquiolite ou asma/sibilância viral.\n\n⚠️ A ausência de indicação pelo algoritmo não exclui pneumonia. Correlacione com exame clínico, evolução e contexto individual.');
-    if(!tiragem && !perigo && spo>=97 && !comp) or.push('Achados isolados como coriza, tosse leve ou secreção amarelada, sem taquipneia/tiragem/crepitações e sem febre alta, são compatíveis com IVAS viral e não justificam antibiótico por si só.');
-  }
-
-  else if(comp){
-    rx.push('CONDUTA: Internação hospitalar + suporte clínico (oxigênio se necessário, hidratação, monitorização e reavaliação seriada) + imagem (US/TC de tórax conforme indicação) + avaliação de cirurgia torácica/infectologia.');
-    if(imunossuprimido){
-      rx.push(doseLine('Ceftriaxona',p*100,'12/12h',2000,'EV','10–14 dias',''));
-      rx.push(doseLine('Vancomicina',p*40,'6/6h',4000,'EV','10–14 dias','associar.'));
-      rx.push(doseLineUI('Fluconazol',p*12,'1x/dia',400,'EV/VO','conforme evolução','considerar associar (imunossuprimido/oncológico).','mg'));
-    } else if(hiv){
-      rx.push(doseLine('Ceftriaxona',p*100,'12/12h',2000,'EV','7–10 dias',''));
-      rx.push(doseLine('Vancomicina',p*40,'6/6h',4000,'EV','7–10 dias','associar (HIV sem TARV/tratamento irregular).'));
-    } else if(cateter){
-      rx.push(doseLine('Ceftriaxona',p*100,'12/12h',2000,'EV','7 dias',''));
-      rx.push(doseLine('Vancomicina',p*40,'6/6h',4000,'EV','7 dias','associar (internação recente/cateter central/cirurgia prévia).'));
-    } else if(porta){
-      rx.push(doseLine('Ampicilina',p*200,'6/6h',8000,'EV','7 dias',''));
-      rx.push(doseLine('Oxacilina',p*175,'6/6h',12000,'EV','7 dias','associar (varicela/escarlatina/porta de entrada/sepse).'));
-    } else if(abscesso){
-      rx.push(doseLine('Cefotaxima',p*175,'8/8h',6000,'EV','7 dias (mínimo — manter antimicrobiano total por 3–4 semanas conforme evolução, SBP nº7)',''));
-      rx.push(doseLine('Clindamicina',p*40,'8/8h',1000,'EV','idem',' OU trocar por metronidazol.'));
-      rx.push(doseLine('Metronidazol',p*32,'8/8h',1500,'EV','idem','opção no lugar da clindamicina.'));
-      or.push('Abscesso pulmonar: tratamento habitualmente conservador com antimicrobianos por 3–4 semanas; aspiração percutânea guiada por US pode ser considerada em abscesso periférico; VTCA/toracotomia raramente necessárias.');
-    } else if(necrose){
-      rx.push(doseLine('Vancomicina',p*40,'6/6h',4000,'EV','3–4 semanas',''));
-      rx.push(doseLine('Cefotaxima',p*175,'8/8h',6000,'EV','3–4 semanas','associada (alternativas: ceftriaxona ou cefepime).'));
-      or.push('Pneumonia necrosante: antibioticoterapia venosa de amplo espectro por 3–4 semanas (SBP nº7/2022); tratamento inicial deve ser clínico, com cirurgia (drenagem/VTCA/segmentectomia) reservada para piora, empiema associado ou necrose extensa.');
-    } else if(derrame){
-      if(semMelhora){
-        rx.push(doseLine('Ceftriaxona',p*100,'12/12h',2000,'EV','7 dias','(alternativas: cefepime 150mg/kg/dia 8/8h ou cefotaxima 150–200mg/kg/dia 6/6h ou 8/8h).'));
-        rx.push(doseLine('Vancomicina',p*40,'6/6h',4000,'EV','7 dias','associar.'));
-        if(meses<24 || porta) rx.push(doseLine('Oxacilina',p*175,'6/6h',12000,'EV','7 dias','associar (idade <2 anos ou porta de entrada).'));
-      } else {
-        rx.push(doseLine('Ampicilina',p*200,'6/6h',8000,'EV','7 dias','primeira escolha para derrame pleural (HCA). Se sem melhora após drenagem, escalonar conforme abaixo.'));
-      }
-    } else {
-      rx.push(doseLine('Ampicilina',p*200,'6/6h',8000,'EV','7 dias','tratamento inicial de complicação pleural.'));
-    }
-  }
-
-  else if(internar){
-    rx.push('CONDUTA: Internação hospitalar, oxigênio se necessário, hidratação, monitorização e reavaliação seriada; reavaliar clínica/radiologicamente se febre após 72h ou piora.');
-    if(meses<2){
-      rx.push(doseLine('Ampicilina',p*200,'6/6h',8000,'EV','7 dias',''));
-      rx.push(doseLineUI('Gentamicina',p*6.25,'1x/dia',null,'EV/IM','7 dias','(faixa 5–7,5mg/kg/dia; ajustar conforme idade gestacional/função renal — sem dose máxima definida).','mg'));
-      if(conjuntivite) rx.push(doseLine('Eritromicina',p*40,'6/6h',2000,'EV/VO','14 dias','se conjuntivite associada (suspeita de C. trachomatis).'));
-    } else {
-      if(imunossuprimido){
-        rx.push(doseLineUI('Cefepime',p*150,'8/8h',2000,'EV','7 dias','(imunossuprimido — equivale a 50mg/kg/dose 8/8h).','mg'));
-      } else if(aspirativa){
-        rx.push(doseLine('Ampicilina + Sulbactam',p*200,'6/6h',8000,'EV','7 dias','(dose de ampicilina). Alternativas: ceftriaxona + metronidazol ou ceftriaxona + clindamicina — risco de anaeróbios.'));
-      } else if(perigo){
-        rx.push(doseLine('Ceftriaxona',p*100,'12/12h',2000,'EV','7 dias','quadro grave/séptico.'));
-        rx.push(azithLine(p,'VO/EV','Associar conforme perfil clínico.'));
-      } else if(usoAtb || falha){
-        rx.push(doseLine('Ampicilina + Sulbactam',p*200,'6/6h',8000,'EV','7 dias','(dose de ampicilina) — uso recente de ATB/falha ambulatorial.'));
-      } else if(semHib){
-        rx.push(doseLine('Ceftriaxona',p*100,'12/12h',2000,'EV','7 dias','imunização incompleta contra H. influenzae.'));
-      } else {
-        rx.push(doseLine('Ampicilina',p*200,'6/6h',8000,'EV','7 dias','primeira escolha (alternativa: penicilina cristalina 200.000 UI/kg/dia 6/6h, máx. 16 mi UI/dia).'));
-      }
-      if((perfil=='atipico' || perfil=='indeterminado') && anos>=5) rx.push(azithLine(p,'VO/EV',perfil=='atipico'?'Associar/usar por suspeita de germe atípico.':'Considerar associar se a diferenciação típico/atípico permanecer incerta.'));
-      if(alergia) or.push('Alergia a penicilina: considerar cefuroxima EV ou cefalosporina de 2ª/3ª geração e discutir com infectologia, avaliando o tipo de reação (IgE-mediada ou não).');
-    }
-    or.push('Se em uso de ampicilina por mais de 48h com resposta insatisfatória: considerar associar azitromicina; se persistir sem melhora, escalonar para ampicilina+sulbactam OU ceftriaxona, reavaliando complicações (derrame, necrose, abscesso).');
-  }
-
-  else {
-    rx.push('CONDUTA: tratamento ambulatorial + retorno/reavaliação em 48–72h ou antes se piora.');
-    let durBase = '7 a 10 dias';
-    if(alergia){
-      rx.push(doseLine('Cefuroxima',p*40,'12/12h',500,'VO',durBase,'se alergia não anafilática à penicilina; se anafilaxia, individualizar/discutir com alergista.'));
-    } else if(perfil=='atipico' && anos>=5){
-      rx.push('Suspeita de germe atípico predominando o quadro — ver esquema com macrolídeo abaixo. Se também houver dúvida quanto a componente bacteriano típico associado, considerar associar amoxicilina.');
-    } else if(usoAtb){
-      let doseC = 85; // dose alta extrapolada do padrão HCA (sinusite/otite) para uso recente de ATB
-      let totalC = cap(p*doseC,4000);
-      rx.push(doseLine('Amoxicilina + Clavulanato',p*doseC,'12/12h',4000,'VO',durBase,`dose alta (componente amoxicilina, extrapolada do padrão HCA para uso recente de ATB — não consta na tabela específica de PAC não complicada).`)+amoxSusp(totalC,50,'(250mg+62,5mg/5mL)')+amoxSusp(totalC,80,'(400mg+57mg/5mL)'));
-    } else {
-      let dose = anos>=5 ? 90 : (doseAlta?90:50);
-      let total = cap(p*dose,4000);
-      rx.push(doseLine('Amoxicilina',p*dose,'6/6h',4000,'VO',durBase,`dose usada: ${dose} mg/kg/dia (faixa aceita 50–90mg/kg/dia) — base HCA.`)+amoxSusp(total,50)+amoxSusp(total,80));
-    }
-    if((perfil=='atipico' || perfil=='indeterminado') && anos>=5){
-      rx.push(azithLine(p,'VO',perfil=='atipico'?'Opção para suspeita de atípico.':'Considerar em associação à amoxicilina se não for possível diferenciar típico de atípico.'));
-    }
-    if(meses>=6) rx.push(`✦ UpToDate 2026 — complemento internacional: em PAC não complicada, com evolução favorável, considerar 5 dias quando o seguimento em 24–48h estiver garantido; considerar 7 dias quando o seguimento for incerto. O esquema principal acima permanece 7–10 dias conforme HCA.`);
-  }
-
-  or.push('Recomendações gerais (todos os pacientes): hidratação e alimentação adequadas, controle da febre e da dor com antitérmicos, orientar sinais de piora e retorno/reavaliação em 48–72h.');
-  or.push('Sinais de alarme para retorno imediato: piora do desconforto respiratório, SpO₂ baixa, sonolência/rebaixamento do nível de consciência, recusa alimentar/desidratação, cianose, gemência, convulsão, febre persistente ou piora após 48–72h de tratamento.');
-  or.push('Suspeitar de complicação (derrame/empiema, necrose, abscesso) se: febre persistente/toxemia, dor torácica ou abdominal, murmúrio vesicular abolido, ou falha terapêutica após 48–72h de antibiótico adequado.');
-  or.push('Radiografia de tórax não é necessária de rotina em PAC ambulatorial sem sinais de gravidade; considerar em hipoxemia/hipóxia, esforço respiratório importante, má resposta ao tratamento (avaliar complicações) ou febre prolongada com tosse.');
-  if(!comp && meses<2) or.push('Idade <2 meses é, isoladamente, critério de internação.');
-
-  let ex=[];
-  if(!internar && !uti && !comp){
-    ex.push('<div class="alert ok">PAC leve/ambulatorial: não solicitar rotineiramente hemograma, biomarcadores ou RX.</div>');
-    ex.push('<div class="intl">✦ Considerar RX em pneumonia recorrente localizada, suspeita de corpo estranho/anomalia, dúvida diagnóstica relevante ou evolução inadequada. PCR/procalcitonina e painel viral não decidem antibiótico isoladamente.</div>');
-  } else {
-    ex.push('<div class="alert warn">PAC moderada/grave, hospitalizada ou evolução atípica: considerar RX de tórax; hemocultura antes do antibiótico se isso não atrasar o tratamento; teste viral; hemograma; eletrólitos/função renal; PCR e/ou procalcitonina. Considerar PCR para Mycoplasma em casos selecionados e rastreio nasal de MRSA apenas em doença grave/UTI conforme protocolo local.</div>');
-    ex.push('<div class="intl">✦ Teste viral positivo não exclui coinfecção bacteriana. PCR e procalcitonina são inespecíficas e não devem iniciar ou suspender antibiótico isoladamente.</div>');
-  }
-  document.getElementById('exames').innerHTML=ex.join('');
-
-  let tr=[];
-  if(internar||comp||uti){
-    tr.push('<div class="intl"><div class="intl-title">✦ Critérios para considerar transição EV → VO</div><ul><li>melhora do estado geral, FR e trabalho respiratório;</li><li>oxigenação estável;</li><li>afebril por 24–48 horas;</li><li>sem vômitos e tolerando hidratação/medicação oral;</li><li>sem complicação que exija terapia prolongada.</li></ul>Na PAC hospitalizada não complicada, o tempo total internacional é geralmente 5–7 dias, somando EV + VO; protocolos nacionais/institucionais e agente específico prevalecem.</div>');
-  } else tr.push('<p class="small">Não se aplica ao fluxo ambulatorial atual.</p>');
-  document.getElementById('transicao').innerHTML=tr.join('');
-
-  let sumClass = uti||comp||internar ? 'danger' : (pneumonia?'warn':'ok');
-  let sumIcon = uti||comp||internar ? '🚨' : (pneumonia?'⚠️':'✅');
-  let sumText = uti?'Avaliação imediata para UTI pediátrica, além da conduta hospitalar.':comp?'Provável PAC complicada — internação com abordagem específica.':internar?'Critérios para internação/conduta hospitalar.':pneumonia?'Provável PAC não complicada — tratamento ambulatorial.':'Reavaliar quadro clínico e diagnósticos diferenciais.';
-  document.getElementById('summary').innerHTML = `<div class="alert ${sumClass}">${sumIcon} ${sumText}</div>`;
-  let rxEl=document.getElementById('rx');
-  if(!pneumonia&&!comp){rxEl.className='rx no-atb';rxEl.textContent=rx.join('\n');}
-  else{rxEl.className='rx rx-report';rxEl.innerHTML=renderRxReport(rx,p);}
-  document.getElementById('orient').innerHTML = '<ul><li>'+or.join('</li><li>')+'</li></ul>';
+function calcAge(){
+ const v=document.getElementById('dob').value, box=document.getElementById('ageBox');
+ if(!v){box.textContent='Informe a data de nascimento';ageDays=ageMonths=ageYears=null;return}
+ dobDate=new Date(v+'T12:00:00'); const now=new Date();
+ if(dobDate>now){box.textContent='Data inválida';ageDays=ageMonths=ageYears=null;return}
+ ageDays=Math.floor((now-dobDate)/86400000);
+ let y=now.getFullYear()-dobDate.getFullYear(), m=now.getMonth()-dobDate.getMonth();
+ if(now.getDate()<dobDate.getDate())m--; if(m<0){y--;m+=12}
+ ageYears=y;ageMonths=y*12+m;
+ box.textContent=y?`${y} ano(s) e ${m} mês(es) • ${ageDays} dias`:`${m} mês(es) • ${ageDays} dias`;
 }
 
+function count(prefix,n){let c=0;for(let i=1;i<=n;i++)if(has(prefix+i))c++;return c}
+function lastDate(prefix,n){let a=[];for(let i=1;i<=n;i++){let d=dateVal(prefix+i);if(d)a.push(d)}return a.length?new Date(Math.max(...a)):null}
+function li(arr,s){if(!arr.includes(s))arr.push(s)}
+function dueByInterval(last,minDays){return last && new Date()>=addDays(last,minDays)}
+function dateByInterval(last,minDays){return last?fmt(addDays(last,minDays)):null}
 
-// ===== MÓDULO RX DE TÓRAX =====
-const rxState={img:null,scale:1,rotation:0,invert:false,offsetX:0,offsetY:0,drag:false,lastX:0,lastY:0};
-function rxEl(id){return document.getElementById(id)}
-function rxChecked(id){const e=rxEl(id);return !!(e&&e.checked)}
-function rxSet(id,v){const e=rxEl(id);if(e)e.checked=!!v}
-function rxLoadFile(file){
-  if(!file||!file.type.startsWith('image/'))return;
-  const reader=new FileReader();
-  reader.onload=e=>{const im=new Image();im.onload=()=>{rxState.img=im;rxState.rotation=0;rxState.offsetX=0;rxState.offsetY=0;rxEl('rxPlaceholder').style.display='none';rxEl('rxCanvas').style.display='block';rxFit();rxRender();};im.src=e.target.result};
-  reader.readAsDataURL(file);
+function analyze(){
+ calcAge();
+ if(ageDays===null){alert('Informe a data de nascimento.');return}
+ if(ageYears>=20){alert('Este protocolo foi desenhado para pacientes pediátricos/adolescentes até 19 anos.');return}
+ const today=[],next=[],done=[],sbp=[],alerts=[];
+ const weight=parseFloat(document.getElementById('weight').value||'0');
+ const special=document.getElementById('profile').value==='special'||document.getElementById('immuno').checked||document.getElementById('asplenia').checked;
+ const immuno=document.getElementById('immuno').checked, comorb=document.getElementById('comorb').checked, indigenous=document.getElementById('indigenous').checked;
+
+ if(special) alerts.push('⚠️ CONDIÇÃO ESPECIAL/CRIE: não concluir o esquema apenas pela rotina. Confirmar indicação, contraindicações e doses adicionais no Manual do CRIE.');
+ if(document.getElementById('severeallergy').checked) alerts.push('⚠️ REAÇÃO GRAVE PRÉVIA: revisar o imunizante/componente envolvido antes de novas doses.');
+ if(ageDays<31 && weight>0 && weight<2 && !has('bcg1')) alerts.push('⚠️ BCG: em recém-nascido com peso < 2 kg, o PNI orienta adiar até condição/peso adequado.');
+ if(document.getElementById('hbsmom').checked && ageDays<=7 && !has('hb1')) alerts.push('🚨 MÃE HBsAg+: RN requer avaliação imediata para vacina hepatite B + imunoglobulina específica, conforme tempo desde o nascimento.');
+
+ // BCG
+ if(ageMonths<60){
+   if(!has('bcg1')) li(today,'BCG: sem registro. Verificar administração (atualização permitida pelo PNI até 4 anos, 11 meses e 29 dias, se não vacinado e sem contraindicação).');
+   else li(done,'BCG: 1 dose registrada.');
+ } else if(has('bcg1')) li(done,'BCG: dose registrada.');
+ else li(today,'BCG: sem registro; fora da faixa rotineira de atualização do PNI para criança hígida. Não aplicar automaticamente.');
+
+ // Penta
+ let p=count('penta',3), lp=lastDate('penta',3);
+ if(ageMonths>=2 && ageMonths<60){
+   if(p===0) li(today,'Pentavalente: esquema básico não registrado — iniciar/adequar conforme PNI.');
+   else if(p<3){
+     if(dueByInterval(lp,30)) li(today,`Pentavalente: ${p+1}ª dose pendente; intervalo mínimo de 30 dias já atingido.`);
+     else li(next,`Pentavalente: próxima dose não antes de ${dateByInterval(lp,30)} (intervalo mínimo).`);
+   } else li(done,'Pentavalente: 3 doses do esquema básico registradas.');
+ }
+ // DTP boosters
+ let dtpc=count('dtp',2);
+ if(ageMonths>=15 && ageYears<7){
+   if(p>=3 && dtpc<1){
+      let d=lastDate('penta',3); if(dueByInterval(d,180)) li(today,'DTP: 1º reforço pendente após esquema básico.'); else li(next,`DTP: 1º reforço a partir de ${dateByInterval(d,180)} pelo intervalo mínimo.`);
+   } else if(dtpc>=1) li(done,'DTP: ao menos 1 reforço registrado.');
+   if(ageYears>=4 && dtpc<2) li(today,'DTP: revisar necessidade do 2º reforço (faixa de 4–6 anos), conforme intervalo da dose anterior.');
+ }
+
+ // VIP
+ let vip=count('vip',4), vipBasic=count('vip',3), lv=lastDate('vip',3);
+ if(ageMonths>=2 && ageMonths<60){
+   if(vipBasic===0) li(today,'VIP: esquema não registrado — iniciar/adequar.');
+   else if(vipBasic<3){
+     if(dueByInterval(lv,30)) li(today,`VIP: ${vipBasic+1}ª dose do esquema básico pendente; intervalo mínimo atingido.`);
+     else li(next,`VIP: próxima dose do esquema básico a partir de ${dateByInterval(lv,30)}.`);
+   } else li(done,'VIP: 3 doses básicas registradas.');
+   if(ageMonths>=15 && vipBasic>=3 && !has('vip4')){
+     if(dueByInterval(lv,180)) li(today,'VIP: reforço dos 15 meses pendente/revisar.');
+     else li(next,`VIP: reforço não antes de ${dateByInterval(lv,180)} pelo intervalo mínimo.`);
+   }
+ }
+
+ // Rotavirus
+ let r=count('rota',2), lr=lastDate('rota',2);
+ if(ageMonths>=1 && ageMonths<24){
+   if(r===0){
+     if(ageDays<=364 && ageDays>=45) li(today,'Rotavírus: 1ª dose não registrada; ainda dentro da janela etária do PNI para iniciar (confirmar idade exata antes da aplicação).');
+     else if(ageDays>364) li(today,'Rotavírus: 1ª dose não registrada e janela para iniciar pelo PNI foi perdida — não iniciar automaticamente.');
+   } else if(r===1 && !has('rota2')){
+     if(ageDays<=729){
+       if(dueByInterval(lr,30)) li(today,'Rotavírus: 2ª dose pendente; confirmar que está dentro do limite etário máximo antes de aplicar.');
+       else li(next,`Rotavírus: 2ª dose a partir de ${dateByInterval(lr,30)}, mantendo limite etário máximo.`);
+     } else li(today,'Rotavírus: 2ª dose ausente e paciente já ultrapassou o limite etário do PNI.');
+   } else if(r>=2) li(done,'Rotavírus: 2 doses registradas (esquema PNI).');
+ }
+
+ // Pneumo
+ let pn=count('pneumo',3), lpn=lastDate('pneumo',3);
+ if(ageMonths>=2 && ageMonths<60){
+   if(ageMonths<12){
+     if(pn===0) li(today,'Pneumocócica conjugada: iniciar esquema conforme idade.');
+     else if(pn<2){ if(dueByInterval(lpn,30))li(today,'Pneumocócica: completar esquema básico conforme idade e intervalo.');else li(next,`Pneumocócica: próxima dose a partir de ${dateByInterval(lpn,30)}.`)}
+     else if(ageMonths>=12 && !has('pneumo3')) li(today,'Pneumocócica: revisar reforço.');
+   } else {
+     if(pn===0) li(today,'Pneumocócica conjugada: sem esquema completo entre 12 meses e 4a11m — PNI prevê adequação com esquema reduzido conforme idade.');
+     else if(!has('pneumo3') && pn<3) li(today,'Pneumocócica: revisar necessidade de dose de resgate/reforço conforme idade e doses prévias.');
+     else li(done,'Pneumocócica: há esquema/reforço registrado; validar completude conforme idade de início.');
+   }
+ }
+
+ // MenC / ACWY
+ let mn=count('menc',4), lmn=lastDate('menc',4);
+ if(ageMonths>=3 && ageMonths<60){
+   if(ageMonths<12){
+     let basic=(has('menc1')?1:0)+(has('menc2')?1:0);
+     if(basic===0) li(today,'Meningocócica C: esquema básico não registrado — iniciar/adequar conforme idade.');
+     else if(basic===1){if(dueByInterval(lmn,30))li(today,'Meningocócica C: completar esquema básico, respeitando intervalo mínimo.');else li(next,`Meningocócica C: próxima dose a partir de ${dateByInterval(lmn,30)}.`)}
+   } else if(!has('menc3')) li(today,'Meningocócica: entre 12 meses e 4a11m, revisar dose de resgate/reforço com MenACWY conforme histórico.');
+   else li(done,'Meningocócica: reforço MenACWY registrado.');
+ }
+ if(ageYears>=11 && ageYears<=14 && !has('menc4')) li(today,'MenACWY: dose da adolescência pendente/revisar conforme PNI.');
+ if(has('menc4')) li(done,'MenACWY: dose da adolescência registrada.');
+
+ // Influenza
+ let fl=count('flu',3);
+ if(ageMonths>=6){
+   if(ageYears<9 && fl===0) li(today,'Influenza: sem histórico — iniciar vacinação; primovacinação antes dos 9 anos requer 2 doses com intervalo de 4 semanas.');
+   else if(ageYears<9 && fl===1) li(today,'Influenza: conferir se esta é primovacinação; se sim, 2ª dose após 4 semanas.');
+   else if(fl>0) li(done,'Influenza: há dose(s) registrada(s); confirmar dose da temporada atual.');
+   li(next,'Influenza: revisar vacinação a cada temporada. A SBP recomenda vacinação anual a partir de 6 meses.');
+ }
+
+ // COVID
+ let cv=count('covid',4), lcv=lastDate('covid',4);
+ if(ageMonths>=6 && ageYears<5){
+   if(cv===0) li(today,'COVID-19: sem registro — iniciar esquema conforme produto disponível e PNI.');
+   else li(done,'COVID-19: há dose(s) registrada(s); conferir completude conforme produto utilizado.');
+   if(immuno||comorb) li(next,'COVID-19: por condição clínica, revisar necessidade de doses periódicas/adicionais conforme PNI vigente.');
+ } else if(ageYears>=5 && (immuno||comorb)) {
+   li(today,'COVID-19: condição especial em ≥5 anos — revisar dose anual conforme PNI.');
+ }
+
+ // Yellow fever
+ let fa=count('fa',2);
+ if(ageMonths>=9){
+   if(fa===0) li(today,'Febre amarela: sem dose válida registrada — avaliar vacinação conforme PNI.');
+   else if(has('fa1')) li(done,'Febre amarela: dose válida registrada.');
+   if(ageYears>=4 && ageYears<5 && has('fa1') && !has('fa2')) li(today,'Febre amarela: revisar 2ª dose aos 4 anos quando esquema iniciado antes dos 5 anos.');
+ }
+ // SCR
+ let sc=count('scr',2), lsc=lastDate('scr',2);
+ if(ageMonths>=12){
+   if(sc===0) li(today,'Tríplice viral (SCR): sem dose válida registrada — iniciar atualização.');
+   else if(sc===1){
+     if(dueByInterval(lsc,15)) li(today,'Tríplice viral: 2ª dose pendente; intervalo mínimo técnico atingido (preferir agenda de rotina quando não houver urgência epidemiológica).');
+     else li(next,`Tríplice viral: próxima dose não antes de ${dateByInterval(lsc,15)}.`);
+   } else li(done,'Tríplice viral: 2 doses registradas.');
+ }
+
+ // Hep A
+ if(ageMonths>=15){
+   if(!has('hepa1')) li(today,'Hepatite A: dose do PNI não registrada — atualizar.');
+   else li(done,'Hepatite A: ao menos 1 dose registrada (cumpre esquema PNI de rotina, se válida).');
+ }
+ if(ageMonths>=12){
+   if(count('hepa',2)<2) li(sbp,'Hepatite A: SBP recomenda esquema de 2 doses; conferir possibilidade de completar na rede privada.');
+   else li(sbp,'Hepatite A: 2 doses registradas — compatível com recomendação SBP.');
+ }
+
+ // Varicella
+ let va=count('var',2), lva=lastDate('var',2);
+ if(ageMonths>=15 && ageYears<7){
+   if(va===0) li(today,'Varicela: nenhuma dose registrada — atualizar conforme PNI e idade.');
+   else if(va===1 && ageYears>=4) li(today,'Varicela: revisar 2ª dose prevista na infância.');
+   else if(va>=2) li(done,'Varicela: 2 doses registradas.');
+ }
+ if(ageMonths>=12 && va<2) li(sbp,'Varicela: SBP recomenda 2 doses; esquema/intervalo depende da idade.');
+ // HPV
+ let hp=count('hpv',3);
+ if(ageYears>=9 && ageYears<=14){
+   if(hp===0) li(today,'HPV4: 1 dose de rotina PNI pendente.');
+   else li(done,'HPV: ao menos 1 dose registrada; para hígidos na faixa de rotina, PNI utiliza dose única.');
+ }
+ if(ageYears>=15 && ageYears<20 && hp===0) li(today,'HPV: sem histórico. PNI 2026 prevê estratégia de resgate de dose única para 15–19 anos conforme organização local.');
+ if(immuno && ageYears>=9) li(today,'HPV: imunocomprometido — não usar automaticamente esquema de dose única; revisar esquema especial.');
+
+ // Dengue
+ let dg=count('dengue',2), ldg=lastDate('dengue',2);
+ if(ageYears>=10 && ageYears<=14){
+   if(dg===0) li(today,'Dengue (DNG4): sem registro — verificar oferta/indicação no território e iniciar esquema PNI quando disponível.');
+   else if(dg===1){if(dueByInterval(ldg,90))li(today,'Dengue: 2ª dose pendente; confirmar intervalo e mesmo fabricante conforme PNI.');else li(next,`Dengue: 2ª dose prevista após intervalo do esquema; pela referência de 3 meses, a partir de ${dateByInterval(ldg,90)}.`)}
+   else li(done,'Dengue: 2 doses registradas.');
+ }
+
+ // dT
+ if(ageYears>=7){
+   let dtt=count('dt',3);
+   if(p<3 && dtt===0) li(today,'Componente difteria/tétano: histórico básico incompleto/desconhecido em ≥7 anos — completar com vacina apropriada sem reiniciar doses válidas.');
+   if(dtt>0) li(done,'dT/dTpa: há dose(s) registrada(s); conferir total do esquema e data do último reforço.');
+ }
+
+ // SBP extras
+ if(ageMonths>=2 && !has('menb1')) li(sbp,'Meningocócica B: recomendação complementar da SBP; considerar esquema conforme idade de início.');
+ if(ageMonths>=2) li(sbp,'Pneumocócica: SBP prefere esquemas com maior cobertura de sorotipos quando disponíveis; avaliar PCV15/PCV20 conforme idade e histórico.');
+ if(ageMonths>=3) li(sbp,'Meningocócica ACWY: SBP recomenda cobertura ACWY além do esquema público em diferentes faixas etárias, conforme calendário 2026/2027.');
+ if(ageMonths>=6) li(sbp,'Influenza: SBP recomenda vacinação anual de todas as crianças e adolescentes a partir de 6 meses.');
+
+ // interaction alert live vaccines <2
+ if(ageYears<2 && has('fa1') && has('scr1')){
+   const d1=dateVal('fa1'),d2=dateVal('scr1'); const delta=Math.abs((d1-d2)/86400000);
+   if(delta===0 || delta<15) alerts.push('⚠️ FEBRE AMARELA + SCR em menor de 2 anos: revisar as datas. O PNI orienta não administrar simultaneamente e, quando não simultâneas, respeitar intervalo recomendado; intervalo mínimo citado de 15 dias.');
+ }
+
+ if(today.length===0) li(today,'Nenhuma pendência óbvia foi identificada pelas regras automatizadas. Conferir validade das datas, produtos e histórico completo antes de considerar o esquema atualizado.');
+ if(done.length===0) li(done,'Nenhuma dose válida foi reconhecida automaticamente a partir dos campos preenchidos.');
+
+ const filled=V.reduce((acc,v)=>acc+v.labels.filter((_,i)=>has(v.id+(i+1))).length,0);
+ document.getElementById('summary').innerHTML=
+ `<b>Idade:</b> ${document.getElementById('ageBox').textContent}<br>`+
+ `<b>Peso:</b> ${weight?weight.toLocaleString('pt-BR')+' kg':'não informado'}<br>`+
+ `<b>Registros transcritos:</b> ${filled}<br>`+
+ `<b>Classificação:</b> ${today[0].startsWith('Nenhuma pendência')?'sem pendência evidente na triagem automática':'há itens que exigem atualização ou conferência hoje'}.`;
+
+ document.getElementById('alerts').innerHTML=alerts.map(a=>`<div class="box bad">${a}</div>`).join('');
+ document.getElementById('today').innerHTML=today.map(x=>`<li>${x}</li>`).join('');
+ document.getElementById('next').innerHTML=next.map(x=>`<li>${x}</li>`).join('');
+ document.getElementById('done').innerHTML=done.map(x=>`<li>${x}</li>`).join('');
+ document.getElementById('sbpout').innerHTML=sbp.map(x=>`<li>${x}</li>`).join('');
+ const g=[
+  'Levar a caderneta de vacinação em todas as consultas e aplicações.',
+  'Doses atrasadas, em geral, são completadas sem reiniciar séries já válidas.',
+  'Após a vacinação, podem ocorrer dor local, febre baixa e mal-estar transitório; seguir as orientações fornecidas pela sala de vacinação.',
+  'Procurar atendimento se houver dificuldade para respirar, edema importante de face/língua, alteração intensa do estado geral, convulsão ou outro evento grave após vacinação.',
+  'A data e o lote de toda dose administrada devem ser registrados na caderneta e no sistema oficial.'
+ ];
+ document.getElementById('guidance').innerHTML=g.map(x=>`<li>${x}</li>`).join('');
+ document.getElementById('results').style.display='block';
+ document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
 }
-function rxFit(){
-  if(!rxState.img)return;
-  const st=rxEl('rxStage'); const pad=24;
-  const rot=Math.abs(rxState.rotation%180)===90;
-  const iw=rot?rxState.img.height:rxState.img.width, ih=rot?rxState.img.width:rxState.img.height;
-  rxState.scale=Math.min((st.clientWidth-pad*2)/iw,(st.clientHeight-pad*2)/ih);
-  rxState.offsetX=0;rxState.offsetY=0;rxApplyTransform();
+
+function clearAll(){
+ document.querySelectorAll('input').forEach(i=>{if(i.type==='checkbox')i.checked=false;else i.value=''});
+ document.getElementById('profile').value='routine';document.getElementById('ageBox').textContent='Informe a data de nascimento';document.getElementById('results').style.display='none';
 }
-function rxZoom(f){if(!rxState.img)return;rxState.scale=Math.max(.05,Math.min(8,rxState.scale*f));rxApplyTransform()}
-function rxRotate(d){if(!rxState.img)return;rxState.rotation=(rxState.rotation+d)%360;rxApplyTransform()}
-function rxToggleInvert(){rxState.invert=!rxState.invert;rxRender()}
-function rxResetView(){
-  ['rxBrightness','rxContrast'].forEach(id=>rxEl(id).value=0);rxEl('rxGamma').value=100;rxEl('rxSharp').value=0;rxState.invert=false;rxState.rotation=0;rxState.offsetX=0;rxState.offsetY=0;rxUpdateOutputs();rxFit();rxRender();
+function fillExample(){
+ clearAll();
+ const now=new Date(), dob=new Date(now.getFullYear()-1,now.getMonth()-4,now.getDate());
+ document.getElementById('dob').value=dob.toISOString().slice(0,10);document.getElementById('weight').value='9.6';
+ const ds=(m)=>{let d=new Date(dob);d.setMonth(d.getMonth()+m);return d.toISOString().slice(0,10)}
+ document.getElementById('bcg1').value=ds(0);document.getElementById('hb1').value=ds(0);
+ document.getElementById('penta1').value=ds(2);document.getElementById('penta2').value=ds(4);
+ document.getElementById('vip1').value=ds(2);document.getElementById('vip2').value=ds(4);
+ document.getElementById('rota1').value=ds(2);document.getElementById('rota2').value=ds(4);
+ document.getElementById('pneumo1').value=ds(2);document.getElementById('pneumo2').value=ds(4);
+ document.getElementById('menc1').value=ds(3);document.getElementById('menc2').value=ds(5);
+ calcAge();
 }
-function rxApplyTransform(){const c=rxEl('rxCanvas');c.style.transform=`translate(${rxState.offsetX}px,${rxState.offsetY}px) rotate(${rxState.rotation}deg) scale(${rxState.scale})`;}
-function rxUpdateOutputs(){rxEl('rxBrightnessOut').value=rxEl('rxBrightness').value;rxEl('rxContrastOut').value=rxEl('rxContrast').value;rxEl('rxGammaOut').value=(Number(rxEl('rxGamma').value)/100).toFixed(2).replace('.',',');rxEl('rxSharpOut').value=rxEl('rxSharp').value;}
-function rxRender(){
-  if(!rxState.img)return;
-  const im=rxState.img,c=rxEl('rxCanvas'),ctx=c.getContext('2d',{willReadFrequently:true});
-  const maxDim=1800,ratio=Math.min(1,maxDim/Math.max(im.width,im.height));c.width=Math.max(1,Math.round(im.width*ratio));c.height=Math.max(1,Math.round(im.height*ratio));
-  ctx.drawImage(im,0,0,c.width,c.height);
-  let data=ctx.getImageData(0,0,c.width,c.height),d=data.data;
-  const br=Number(rxEl('rxBrightness').value)*2.55,ct=Number(rxEl('rxContrast').value),factor=(259*(ct+255))/(255*(259-ct));const gamma=100/Number(rxEl('rxGamma').value);
-  for(let i=0;i<d.length;i+=4){
-    let r=factor*(d[i]-128)+128+br,g=factor*(d[i+1]-128)+128+br,b=factor*(d[i+2]-128)+128+br;
-    r=255*Math.pow(Math.max(0,Math.min(255,r))/255,gamma);g=255*Math.pow(Math.max(0,Math.min(255,g))/255,gamma);b=255*Math.pow(Math.max(0,Math.min(255,b))/255,gamma);
-    if(rxState.invert){r=255-r;g=255-g;b=255-b}d[i]=r;d[i+1]=g;d[i+2]=b;
-  }
-  ctx.putImageData(data,0,0);
-  if(Number(rxEl('rxSharp').value)>0) rxSharpen(ctx,c.width,c.height,Number(rxEl('rxSharp').value));
-  rxApplyTransform();
-}
-function rxSharpen(ctx,w,h,amount){
-  const src=ctx.getImageData(0,0,w,h),out=ctx.createImageData(w,h),s=src.data,o=out.data,a=.12*amount;
-  for(let y=1;y<h-1;y++)for(let x=1;x<w-1;x++)for(let ch=0;ch<3;ch++){
-    const i=(y*w+x)*4+ch,center=s[i],blur=(s[i-4]+s[i+4]+s[i-w*4]+s[i+w*4])/4;o[i]=Math.max(0,Math.min(255,center+(center-blur)*a*6));
-  }
-  for(let i=3;i<o.length;i+=4)o[i]=255;ctx.putImageData(out,0,0);
-}
-function rxLoc(){const side=rxEl('rxSide').value,reg=rxEl('rxRegion').value;return [reg,side].filter(Boolean).join(' ') }
-function generateRxReport(){
-  const q=rxEl('rxQual').value,inc=rxEl('rxInc').value;let tech=[],find=[];
-  if(inc!=='nao_informada')tech.push(`incidência ${inc.replace('_',' ')}`);
-  tech.push(q==='adequada'?'qualidade técnica adequada':`qualidade técnica ${q}`);
-  if(rxChecked('rxRotacao'))tech.push('com rotação significativa');if(rxChecked('rxHipoinsp'))tech.push('hipoinspiração');if(rxChecked('rxPenet'))tech.push('exposição/penetração inadequada');
-  const loc=rxLoc();
-  if(rxChecked('rxNormal'))find.push('Sem opacidades focais ou outras alterações pulmonares agudas evidentes');
-  if(rxChecked('rxHiperins'))find.push('Hiperinsuflação pulmonar');
-  if(rxChecked('rxPeribronq'))find.push(`Espessamento peribrônquico/perihilar${loc?' '+loc:''}`);
-  if(rxChecked('rxInterst'))find.push(`Opacidades intersticiais/perihilares${loc?' '+loc:''}`);
-  if(rxChecked('rxConsol'))find.push(`Consolidação focal/alveolar${loc?' '+loc:''}`);
-  if(rxChecked('rxMultilobar'))find.push('Acometimento pulmonar multilobar/extenso');
-  if(rxChecked('rxAtelect'))find.push(`Atelectasia${loc?' '+loc:''}`);
-  if(rxChecked('rxDerrame'))find.push(`Derrame pleural${rxEl('rxSide').value?' '+rxEl('rxSide').value:''}`);
-  if(rxChecked('rxPneumo'))find.push(`Pneumotórax${rxEl('rxSide').value?' '+rxEl('rxSide').value:''}`);
-  if(rxChecked('rxCavit'))find.push('Imagem cavitária/pneumatoceles, com necessidade de correlação para complicação necrosante');
-  if(rxChecked('rxCardio'))find.push('Aumento aparente da área cardíaca, considerando a incidência técnica');
-  if(rxChecked('rxOsseo'))find.push('Alteração óssea/partes moles visível');
-  const obs=rxEl('rxObs').value.trim();if(obs)find.push(obs.replace(/[.]+$/,''));
-  let text=`RADIOGRAFIA DE TÓRAX: ${tech.join(', ')}.\n`;
-  text+=(find.length?find.join('. ')+'.':'Sem achados selecionados.');
-  let imp=[];
-  if(rxChecked('rxConsol'))imp.push('achado de consolidação a correlacionar com suspeita clínica de pneumonia');
-  if((rxChecked('rxPeribronq')||rxChecked('rxInterst')||rxChecked('rxHiperins'))&&!rxChecked('rxConsol'))imp.push('padrão de pequenas vias aéreas/intersticial, inespecífico quanto à etiologia');
-  if(rxChecked('rxDerrame')||rxChecked('rxCavit'))imp.push('sinais de possível complicação, exigindo avaliação presencial e correlação clínica');
-  if(rxChecked('rxNormal')&&!rxChecked('rxConsol')&&!rxChecked('rxDerrame')&&!rxChecked('rxPneumo'))imp.push('sem alteração pulmonar aguda evidente pelos itens selecionados');
-  if(imp.length)text+=`\nIMPRESSÃO: ${imp.join('; ')}.`;
-  rxEl('rxAutoReport').textContent=text;
-  syncRxToPac();return text;
-}
-function syncRxToPac(){
-  const ext=rxChecked('rxMultilobar');const derr=rxChecked('rxDerrame');const cav=rxChecked('rxCavit');
-  rxSet('extensa',ext);rxSet('derrame',derr);if(cav)rxSet('necrose',true);
-  const status=[];if(ext)status.push('“pneumonia extensa/multilobar” marcado na gravidade');if(derr)status.push('“derrame pleural/empiema” marcado nas complicações');if(cav)status.push('“pneumonia necrosante” marcada como alerta');
-  rxEl('rxIntegrationStatus').textContent=status.length?'Integração com a calculadora: '+status.join(' • '):'Nenhum critério radiográfico de gravidade/complicação foi transferido.';
-  if(typeof calc==='function')calc();
-}
-function copyRxReport(){const t=rxEl('rxAutoReport').textContent;navigator.clipboard?.writeText(t).then(()=>{rxEl('rxIntegrationStatus').textContent='Descrição copiada para a área de transferência.'}).catch(()=>{});}
-function clearRxFindings(){
-  ['rxNormal','rxHiperins','rxPeribronq','rxInterst','rxConsol','rxMultilobar','rxAtelect','rxDerrame','rxPneumo','rxCavit','rxCardio','rxOsseo','rxRotacao','rxHipoinsp','rxPenet'].forEach(id=>rxSet(id,false));rxEl('rxObs').value='';rxEl('rxSide').value='';rxEl('rxRegion').value='';generateRxReport();
-}
-function rxInit(){
-  const file=rxEl('rxFile'),stage=rxEl('rxStage');
-  file.addEventListener('change',e=>rxLoadFile(e.target.files[0]));
-  ['rxBrightness','rxContrast','rxGamma','rxSharp'].forEach(id=>rxEl(id).addEventListener('input',()=>{rxUpdateOutputs();rxRender()}));
-  stage.addEventListener('dragover',e=>{e.preventDefault();});stage.addEventListener('drop',e=>{e.preventDefault();rxLoadFile(e.dataTransfer.files[0])});
-  stage.addEventListener('wheel',e=>{if(!rxState.img)return;e.preventDefault();rxZoom(e.deltaY<0?1.1:1/1.1)},{passive:false});
-  stage.addEventListener('pointerdown',e=>{if(!rxState.img)return;rxState.drag=true;rxState.lastX=e.clientX;rxState.lastY=e.clientY;stage.setPointerCapture?.(e.pointerId)});
-  stage.addEventListener('pointermove',e=>{if(!rxState.drag)return;rxState.offsetX+=e.clientX-rxState.lastX;rxState.offsetY+=e.clientY-rxState.lastY;rxState.lastX=e.clientX;rxState.lastY=e.clientY;rxApplyTransform()});
-  stage.addEventListener('pointerup',()=>rxState.drag=false);stage.addEventListener('pointercancel',()=>rxState.drag=false);
-  ['rxInc','rxQual','rxRotacao','rxHipoinsp','rxPenet','rxNormal','rxHiperins','rxPeribronq','rxInterst','rxConsol','rxMultilobar','rxAtelect','rxDerrame','rxPneumo','rxCavit','rxCardio','rxOsseo','rxSide','rxRegion','rxObs'].forEach(id=>rxEl(id).addEventListener('change',generateRxReport));
-  rxEl('rxObs').addEventListener('input',generateRxReport);rxUpdateOutputs();generateRxReport();
-}
-
-
-// ===== IA RX: integração de exemplo =====
-let rxAiLast = null;
-function aiBool(v){return v===true}
-function aiLabel(v){return v===true?'Presente':(v===false?'Não identificado':'Indeterminado')}
-function aiClass(v){return v===true?'yes':(v===false?'no':'')}
-function renderAiResult(r){
-  rxAiLast=r;
-  const itens=[
-    ['Hiperinsuflação',r.hiperinsuflacao],['Espessamento peribrônquico',r.espessamento_peribronquico],
-    ['Opacidades intersticiais',r.opacidades_intersticiais],['Consolidação',r.consolidacao],
-    ['Multilobar/extenso',r.multilobar],['Atelectasia',r.atelectasia],['Derrame pleural',r.derrame],
-    ['Pneumotórax',r.pneumotorax],['Cavitação/pneumatoceles',r.cavitacao],['Cardiomegalia aparente',r.cardiomegalia_aparente]
-  ];
-  const el=rxEl('rxAiResult');
-  el.innerHTML=`<div><b>Pré-leitura sugerida</b> <span class="ai-confidence">confiança: ${escHtml(r.confianca||'não informada')}</span></div>
-    <div class="ai-grid">${itens.map(([n,v])=>`<div class="ai-item ${aiClass(v)}"><b>${n}:</b> ${aiLabel(v)}</div>`).join('')}</div>
-    <div style="margin-top:10px"><b>Descrição sugerida:</b><br>${escHtml(r.descricao||'—')}</div>
-    ${r.limitacoes?.length?`<div style="margin-top:8px"><b>Limitações:</b> ${r.limitacoes.map(escHtml).join(' • ')}</div>`:''}
-    <div class="ai-mode">Modo: ${escHtml(r._modo||'API')}</div>`;
-  el.classList.add('show');
-}
-async function analisarRxComIA(){
-  if(!rxState.img){
-    alert('Carregue uma radiografia primeiro.');
-    return;
-  }
-
-  const btn=rxEl('rxAiButton');
-  const status=rxEl('rxAiStatus');
-  btn.disabled=true;
-  status.textContent='Analisando imagem…';
-
-  try{
-    // Usa a imagem original carregada, sem os filtros visuais do canvas.
-    const temp=document.createElement('canvas');
-    const max=1800;
-    const scale=Math.min(1,max/Math.max(rxState.img.width,rxState.img.height));
-    temp.width=Math.max(1,Math.round(rxState.img.width*scale));
-    temp.height=Math.max(1,Math.round(rxState.img.height*scale));
-
-    const ctx=temp.getContext('2d');
-    ctx.drawImage(rxState.img,0,0,temp.width,temp.height);
-    const imageDataUrl=temp.toDataURL('image/jpeg',0.86);
-
-    const resp=await fetch('/api/analisar-rx',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({imageDataUrl})
-    });
-
-    const raw=await resp.text();
-    let data;
-    try{
-      data=raw ? JSON.parse(raw) : {};
-    }catch(_){
-      throw new Error('O endpoint respondeu em formato inválido (HTTP '+resp.status+').');
-    }
-
-    if(!resp.ok){
-      throw new Error(data.erro || data.error || ('Falha na análise (HTTP '+resp.status+').'));
-    }
-
-    const resultado=data.resultado || data;
-    if(!resultado || typeof resultado!=='object'){
-      throw new Error('A API respondeu, mas não retornou um resultado válido.');
-    }
-
-    // Normaliza valores que podem vir do backend em formato textual.
-    if(resultado.incidencia==='AP supino') resultado.incidencia='AP_supino';
-    resultado._modo=resultado._modo || 'API';
-
-    renderAiResult(resultado);
-    status.textContent='Pré-análise concluída. Revise os achados e clique em “APLICAR ACHADOS” se concordar.';
-  }catch(err){
-    console.error('Erro na análise do RX:',err);
-    status.textContent='Falha na análise: '+(err?.message || String(err));
-  }finally{
-    btn.disabled=false;
-  }
-}
-function aplicarAchadosIA(){
-  const r=rxAiLast;if(!r){alert('Execute a análise primeiro.');return}
-  const map={rxHiperins:'hiperinsuflacao',rxPeribronq:'espessamento_peribronquico',rxInterst:'opacidades_intersticiais',rxConsol:'consolidacao',rxMultilobar:'multilobar',rxAtelect:'atelectasia',rxDerrame:'derrame',rxPneumo:'pneumotorax',rxCavit:'cavitacao',rxCardio:'cardiomegalia_aparente'};
-  Object.entries(map).forEach(([id,k])=>{if(typeof r[k]==='boolean')rxSet(id,r[k])});
-  if(r.qualidade&&['adequada','limitada','inadequada'].includes(r.qualidade))rxEl('rxQual').value=r.qualidade;
-  if(r.incidencia&&['PA','AP','AP_supino','lateral'].includes(r.incidencia))rxEl('rxInc').value=r.incidencia;
-  if(typeof r.rotacao==='boolean')rxSet('rxRotacao',r.rotacao);if(typeof r.hipoinspiracao==='boolean')rxSet('rxHipoinsp',r.hipoinspiracao);
-  if(r.descricao)rxEl('rxObs').value='IA (revisar): '+r.descricao;
-  generateRxReport();rxEl('rxAiStatus').textContent='Achados da IA aplicados. Revise manualmente antes de usar a descrição/conduta.';
-}
-function descartarAchadosIA(){rxAiLast=null;rxEl('rxAiResult').classList.remove('show');rxEl('rxAiResult').innerHTML='';rxEl('rxAiStatus').textContent='Pré-análise descartada.'}
-
-rxInit();
-calc();
-if(document.addEventListener){
-  document.addEventListener('change',event=>{if(event.target.matches('input,select')) calc()});
-  document.addEventListener('input',event=>{if(event.target.matches('input[type="number"],select')) calc()});
-  document.addEventListener('click',event=>{if(event.target.matches('input[type="checkbox"],input[type="radio"]')) setTimeout(calc,0)});
+function copyProtocol(){
+ const el=document.getElementById('results');
+ navigator.clipboard.writeText(el.innerText).then(()=>alert('Protocolo copiado.'));
 }
 </script>
-</body></html>
+</body>
+</html>
