@@ -301,10 +301,10 @@ function renderHistory(past){
 function renderFuture(future){
  const next=future.slice(0,8);
  document.getElementById('futureList').innerHTML=next.map(e=>`
-   <div class="vrow future">
+   <div class="vrow future" style="grid-template-columns:1fr 1fr">
      <div><div class="vname">${e.v}</div><div class="dose">${e.d}</div><span class="status sfuture">${e.age}</span></div>
      <div class="target"><b>Data prevista</b>${fmt(targetDate(e))}${e.note?`<div class="dose">${e.note}</div>`:''}</div>
-     <div class="dateinput"><label>QUANDO CHEGAR, REGISTRAR AQUI</label><input type="date" data-event-id="${e.id}" value="${savedDates[e.id]||''}" onchange="onDateChange('${e.id}')"></div>
+     <div class="target"><b>Orientação</b>Aguardar a data prevista. O registro será feito quando esta dose passar a integrar as vacinas já esperadas para a idade.</div>
    </div>`).join('') || '<div class="intro">Não há novos marcos fixos neste recorte. Manter revisão anual e por faixa etária.</div>';
 }
 function renderCalendar(future){
