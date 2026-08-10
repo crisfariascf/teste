@@ -51,6 +51,7 @@ button{border:0;border-radius:11px;padding:11px 14px;font-weight:850;cursor:poin
 .summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
 .metric{padding:11px;border:1px solid var(--line);border-radius:12px;background:#fbfcfd}.metric b{display:block;font-size:20px}.metric span{font-size:11px;color:#64748b}
 .small{font-size:11px;color:#64748b;line-height:1.45}
+.checks{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.check{display:flex;gap:7px;align-items:flex-start;border:1px solid var(--line);border-radius:10px;padding:9px;background:#fbfcfd;font-size:11px}.check input{width:auto;margin-top:2px}.check label{margin:0;font-weight:650;color:#334155}
 @media(max-width:760px){.grid,.summary{grid-template-columns:1fr}.vrow{grid-template-columns:1fr}.dateinput{margin-top:2px}.hero h1{font-size:20px}}
 @media print{body{background:#fff}.card,.hero{box-shadow:none}.no-print{display:none!important}.vrow{break-inside:avoid}}
 </style>
@@ -96,8 +97,65 @@ button{border:0;border-radius:11px;padding:11px 14px;font-weight:850;cursor:poin
     <div class="calendar" id="calendar"></div>
   </section>
 
-  <section class="card panel" id="orientationPanel">
-    <h2>5) Orientação / plano</h2>
+  
+<section class="card panel" id="suppPanel">
+  <div class="topbar">
+    <div>
+      <h2>5) Suplementação preventiva • SBP</h2>
+      <div class="intro">Vitamina D + ferro. As perguntas abaixo aparecem para individualizar a profilaxia e a posologia.</div>
+    </div>
+    <div class="legend"><span class="tag sbp">SBP atualizada</span></div>
+  </div>
+
+  <div class="infoBox info"><b>💊 VITAMINA D</b><br>O protocolo calcula a profilaxia pela idade e procura fatores de risco que podem modificar a dose.</div>
+  <div class="grid">
+    <div><label>USA VITAMINA D ATUALMENTE?</label>
+      <select id="vitUse" onchange="renderSupp()"><option value="no">Não</option><option value="yes">Sim</option></select>
+    </div>
+    <div><label>DOSE ATUAL (UI/DIA)</label><input id="vitCurrent" type="number" min="0" placeholder="Ex.: 400" oninput="renderSupp()"></div>
+    <div><label>25-OH VITAMINA D / DEFICIÊNCIA CONHECIDA?</label>
+      <select id="vitDef" onchange="renderSupp()"><option value="no">Não / desconhecido</option><option value="yes">Sim</option></select>
+    </div>
+  </div>
+  <div class="checks" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px">
+    <div class="check"><input type="checkbox" id="vrObesity" onchange="renderSupp()"><label for="vrObesity">Obesidade</label></div>
+    <div class="check"><input type="checkbox" id="vrVeg" onchange="renderSupp()"><label for="vrVeg">Dieta estritamente vegetariana</label></div>
+    <div class="check"><input type="checkbox" id="vrMalabs" onchange="renderSupp()"><label for="vrMalabs">Má absorção / doença celíaca / DII / fibrose cística / bariátrica</label></div>
+    <div class="check"><input type="checkbox" id="vrRenal" onchange="renderSupp()"><label for="vrRenal">Nefropatia ou hepatopatia crônica</label></div>
+    <div class="check"><input type="checkbox" id="vrDrugs" onchange="renderSupp()"><label for="vrDrugs">Anticonvulsivante / corticoide / rifampicina / cetoconazol</label></div>
+  </div>
+  <div id="vitResult"></div>
+
+  <div class="infoBox warnBox" style="margin-top:16px"><b>🩸 FERRO</b><br>SBP 2026 mudou a profilaxia do lactente a termo: o protocolo abaixo diferencia termo, prematuridade/baixo peso e fórmula infantil.</div>
+  <div class="grid">
+    <div><label>IDADE GESTACIONAL AO NASCER</label>
+      <select id="gest" onchange="renderSupp()"><option value="term">≥ 37 semanas (termo)</option><option value="preterm">&lt; 37 semanas (prematuro)</option></select>
+    </div>
+    <div><label>PESO AO NASCER (G)</label><input id="birthWeight" type="number" min="300" max="6000" placeholder="Ex.: 3200" oninput="renderSupp()"></div>
+    <div><label>ALIMENTAÇÃO ATUAL</label>
+      <select id="feeding" onchange="renderSupp()">
+        <option value="breast">Aleitamento materno / alimentação complementar</option>
+        <option value="formula">Fórmula infantil</option>
+        <option value="cow">Leite de vaca</option>
+        <option value="mixed">Mista</option>
+      </select>
+    </div>
+  </div>
+  <div class="grid" style="margin-top:10px">
+    <div><label>USA FERRO ATUALMENTE?</label><select id="ironUse" onchange="renderSupp()"><option value="no">Não</option><option value="yes">Sim</option></select></div>
+    <div><label>DOSE ATUAL DE FERRO ELEMENTAR (MG/DIA)</label><input id="ironCurrent" type="number" min="0" step="0.1" placeholder="Ex.: 10" oninput="renderSupp()"></div>
+    <div><label>ANEMIA / DEFICIÊNCIA DE FERRO JÁ DIAGNOSTICADA?</label><select id="ironDx" onchange="renderSupp()"><option value="no">Não</option><option value="yes">Sim</option></select></div>
+  </div>
+  <div class="checks" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px">
+    <div class="check"><input type="checkbox" id="ironTransfusion" onchange="renderSupp()"><label for="ironTransfusion">Transfusões crônicas / sobrecarga de ferro</label></div>
+    <div class="check"><input type="checkbox" id="ironPoorDiet" onchange="renderSupp()"><label for="ironPoorDiet">Alimentação pobre em ferro / seletividade importante</label></div>
+    <div class="check"><input type="checkbox" id="ironGrowth" onchange="renderSupp()"><label for="ironGrowth">Crescimento inadequado / fator de risco clínico</label></div>
+  </div>
+  <div id="ironResult"></div>
+</section>
+
+<section class="card panel" id="orientationPanel">
+    <h2>6) Orientação / plano</h2>
     <div id="plan"></div>
     <div class="infoBox info">
       <b>📌 Regra geral:</b> esquema vacinal atrasado não deve ser reiniciado quando as doses anteriores forem válidas; completar conforme idade atual, intervalo mínimo e regras específicas de cada imunizante.
@@ -203,6 +261,7 @@ function buildProtocol(){
  renderFuture(future);
  renderCalendar(future);
  renderPlan(past,future);
+ renderSupp();
  document.querySelectorAll('.panel').forEach(x=>x.style.display='block');
 }
 function targetDate(e){return addMonthsSafe(DOB,e.m)}
@@ -283,6 +342,86 @@ function copyPlan(){
  const text=document.getElementById('orientationPanel').innerText;
  navigator.clipboard.writeText(text).then(()=>alert('Orientação copiada.'));
 }
+
+function checked(id){return !!document.getElementById(id)?.checked}
+function sval(id){return document.getElementById(id)?.value||''}
+function nval(id){return parseFloat(sval(id)||'0')}
+
+function renderSupp(){
+ if(!DOB || ageDays===null) return;
+ const vit=document.getElementById('vitResult'), iron=document.getElementById('ironResult');
+ if(!vit || !iron) return;
+
+ // VITAMINA D — SBP: <1a 400 UI/d; 1–18a 600 UI/d.
+ const vitRisk = ['vrObesity','vrVeg','vrMalabs','vrRenal','vrDrugs'].some(checked);
+ let vhtml='';
+ if(sval('vitDef')==='yes'){
+   vhtml=`<div class="infoBox warnBox"><b>⚠️ HIPOVITAMINOSE D JÁ DIAGNOSTICADA</b><br>Não usar automaticamente a dose profilática. A dose terapêutica depende da idade, valor de 25(OH)D, quadro clínico e duração do tratamento. Após correção, retornar à manutenção adequada à idade.</div>`;
+ } else if(ageYears<=18){
+   let dose = ageMonths<12 ? 400 : 600;
+   if(vitRisk){
+     vhtml=`<div class="infoBox warnBox"><b>VITAMINA D — GRUPO DE RISCO</b><br>SBP: prevenção geralmente <b>1.200–1.800 UI/dia de colecalciferol</b>, ajustada conforme a condição. Considerar avaliação individual e 25(OH)D conforme o fator de risco.</div>`;
+   }else{
+     vhtml=`<div class="infoBox info"><b>VITAMINA D — PROFILAXIA</b><br><b>${dose} UI/dia de colecalciferol (vitamina D3)</b> ${ageMonths<12?'até completar 1 ano; depois 600 UI/dia até 18 anos.':'para crianças/adolescentes de 1 a 18 anos.'}<br><span class="small">SBP: não é necessária dosagem rotineira de 25(OH)D em criança saudável usando dose preventiva.</span></div>`;
+   }
+   if(sval('vitUse')==='yes' && nval('vitCurrent')>0){
+     vhtml += `<div class="small">Dose informada em uso: <b>${nval('vitCurrent')} UI/dia</b>. Comparar com a recomendação acima.</div>`;
+   }
+ }
+ vit.innerHTML=vhtml;
+
+ // FERRO — SBP 2026
+ const bw=nval('birthWeight'), preterm=sval('gest')==='preterm';
+ const riskIron=checked('ironPoorDiet')||checked('ironGrowth');
+ const currentWeight=nval('weight');
+ let ih='';
+ if(sval('ironDx')==='yes'){
+   ih=`<div class="infoBox warnBox"><b>⚠️ DEFICIÊNCIA DE FERRO / ANEMIA JÁ DIAGNOSTICADA</b><br>Este módulo deixa de aplicar profilaxia. SBP 2026: tratamento oral usual com <b>3–6 mg/kg/dia de ferro elementar</b>, com reavaliação laboratorial e manutenção até correção da hemoglobina e reposição dos estoques. Individualizar prescrição.</div>`;
+ } else if(checked('ironTransfusion')){
+   ih=`<div class="infoBox warnBox"><b>⚠️ AVALIAÇÃO INDIVIDUAL</b><br>Transfusão crônica/sobrecarga de ferro pode contraindicar profilaxia automática. Avaliar estoques e condição clínica.</div>`;
+ } else if((preterm || (bw>0 && bw<2500))){
+   let mgkg = bw>0 && bw<1000 ? 4 : bw>0 && bw<1500 ? 3 : 2;
+   if(ageDays<30){
+     ih=`<div class="infoBox info"><b>FERRO — PREMATURO/BAIXO PESO</b><br>Programar início aos <b>30 dias de vida</b>: ${mgkg} mg/kg/dia de ferro elementar durante o primeiro ano.</div>`;
+   } else if(ageMonths<12){
+     let calc=currentWeight?` ≈ <b>${(mgkg*currentWeight).toFixed(1)} mg/dia</b> para ${currentWeight} kg`:'';
+     ih=`<div class="infoBox warnBox"><b>FERRO — PREMATURO/BAIXO PESO</b><br><b>${mgkg} mg/kg/dia de ferro elementar</b>${calc}, dos 30 dias até 12 meses.</div>`;
+   } else if(ageMonths<24){
+     let calc=currentWeight?` ≈ <b>${currentWeight.toFixed(1)} mg/dia</b> para ${currentWeight} kg`:'';
+     ih=`<div class="infoBox warnBox"><b>FERRO — 2º ANO APÓS PREMATURIDADE/BAIXO PESO</b><br><b>1 mg/kg/dia de ferro elementar</b>${calc}, continuamente até 24 meses.</div>`;
+   } else ih=`<div class="infoBox info"><b>FERRO:</b> profilaxia sistemática do esquema de prematuridade/baixo peso já ultrapassou 24 meses. Avaliar dieta e fatores de risco.</div>`;
+ } else {
+   // Term infant
+   if(ageMonths<6){
+     ih=`<div class="infoBox info"><b>FERRO — LACTENTE A TERMO</b><br>Programar 1º ciclo aos <b>6 meses</b>. SBP 2026: 10–12,5 mg/dia de ferro elementar por 3 meses.</div>`;
+     if(sval('feeding')==='cow') ih+=`<div class="infoBox warnBox"><b>⚠️ LEITE DE VACA:</b> inadequado como substituto principal antes de 12 meses e associado a maior risco de deficiência de ferro; avaliar individualmente necessidade de intervenção mais precoce.</div>`;
+   } else if(ageMonths>=6 && ageMonths<9){
+     ih=`<div class="infoBox warnBox"><b>FERRO — 1º CICLO (6–9 MESES)</b><br><b>10–12,5 mg/dia de ferro elementar</b>, diariamente por 3 meses.</div>`;
+   } else if(ageMonths>=9 && ageMonths<12){
+     ih=`<div class="infoBox info"><b>FERRO — PAUSA PROGRAMADA (9–12 MESES)</b><br>Após completar o primeiro ciclo, manter <b>pausa de 3 meses</b>. Programar novo ciclo aos 12 meses.</div>`;
+   } else if(ageMonths>=12 && ageMonths<15){
+     if(sval('feeding')==='formula'){
+       let calc=currentWeight?` (${currentWeight.toFixed(1)} mg/dia para ${currentWeight} kg)`:'';
+       ih=`<div class="infoBox warnBox"><b>FERRO — FÓRMULA INFANTIL</b><br>SBP 2026: para lactentes a termo que recebem fórmula infantil, <b>1 mg/kg/dia</b>${calc}, entre 12 e 24 meses, de forma contínua.</div>`;
+     } else {
+       ih=`<div class="infoBox warnBox"><b>FERRO — 2º CICLO (12–15 MESES)</b><br><b>10–12,5 mg/dia de ferro elementar</b>, diariamente por 3 meses.</div>`;
+     }
+   } else if(ageMonths>=15 && ageMonths<24){
+     if(sval('feeding')==='formula'){
+       let calc=currentWeight?` (${currentWeight.toFixed(1)} mg/dia para ${currentWeight} kg)`:'';
+       ih=`<div class="infoBox warnBox"><b>FERRO — FÓRMULA INFANTIL</b><br><b>1 mg/kg/dia</b>${calc}, continuamente até 24 meses.</div>`;
+     } else {
+       ih=`<div class="infoBox info"><b>FERRO — APÓS OS DOIS CICLOS</b><br>Se os ciclos de 6–9 e 12–15 meses foram completados, não há novo ciclo fixo até 24 meses na recomendação SBP 2026. Manter alimentação rica em ferro e reavaliar fatores de risco.</div>`;
+     }
+   } else {
+     ih=`<div class="infoBox info"><b>FERRO:</b> fora da faixa da profilaxia universal do lactente. Avaliar dieta, crescimento, perdas e fatores de risco.</div>`;
+   }
+   if(riskIron) ih+=`<div class="infoBox warnBox"><b>🔎 FATOR DE RISCO PRESENTE:</b> alimentação inadequada/crescimento inadequado. SBP 2026 recomenda considerar hemograma, ferritina e PCR, preferencialmente entre 9–12 meses ou conforme indicação clínica.</div>`;
+ }
+ if(sval('ironUse')==='yes' && nval('ironCurrent')>0) ih+=`<div class="small">Dose informada em uso: <b>${nval('ironCurrent')} mg/dia de ferro elementar</b>. Comparar com o esquema indicado acima.</div>`;
+ iron.innerHTML=ih;
+}
+
 </script>
 </body>
 </html>
