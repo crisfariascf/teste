@@ -82,16 +82,9 @@ button{border:0;border-radius:11px;padding:11px 14px;font-weight:850;cursor:poin
     <div id="history"></div>
   </section>
 
-  <section class="card panel" id="nextPanel">
-    <div class="section-title">
-      <div><h2>3) Próximas vacinas</h2><div class="intro">Agenda prospectiva calculada pela data de nascimento.</div></div>
-    </div>
-    <div id="futureList"></div>
-  </section>
-
   <section class="card panel" id="calendarPanel">
     <div class="topbar">
-      <div><h2>4) Calendário individual</h2><div class="intro">Linha do tempo com as próximas datas importantes.</div></div>
+      <div><h2>3) Próximas vacinas • Calendário individual</h2><div class="intro">Linha do tempo com as próximas datas importantes.</div></div>
       <div class="legend"><span class="tag pni">PNI</span><span class="tag sbp">SBP complementar</span></div>
     </div>
     <div class="calendar" id="calendar"></div>
@@ -101,7 +94,7 @@ button{border:0;border-radius:11px;padding:11px 14px;font-weight:850;cursor:poin
 <section class="card panel" id="suppPanel">
   <div class="topbar">
     <div>
-      <h2>5) Suplementação preventiva • SBP</h2>
+      <h2>4) Suplementação preventiva • SBP</h2>
       <div class="intro">Vitamina D + ferro. As perguntas abaixo aparecem para individualizar a profilaxia e a posologia.</div>
     </div>
     <div class="legend"><span class="tag sbp">SBP atualizada</span></div>
@@ -155,7 +148,7 @@ button{border:0;border-radius:11px;padding:11px 14px;font-weight:850;cursor:poin
 </section>
 
 <section class="card panel" id="orientationPanel">
-    <h2>6) Orientação / plano</h2>
+    <h2>5) Orientação / plano</h2>
     <div id="plan"></div>
     <div class="infoBox info">
       <b>📌 Regra geral:</b> esquema vacinal atrasado não deve ser reiniciado quando as doses anteriores forem válidas; completar conforme idade atual, intervalo mínimo e regras específicas de cada imunizante.
@@ -299,8 +292,10 @@ function renderHistory(past){
    <div class="metric"><b>${review}</b><span>itens de revisão</span></div>`;
 }
 function renderFuture(future){
+ const target=document.getElementById('futureList');
+ if(!target) return;
  const next=future.slice(0,8);
- document.getElementById('futureList').innerHTML=next.map(e=>`
+ target.innerHTML=next.map(e=>`
    <div class="vrow future" style="grid-template-columns:1fr 1fr">
      <div><div class="vname">${e.v}</div><div class="dose">${e.d}</div><span class="status sfuture">${e.age}</span></div>
      <div class="target"><b>Data prevista</b>${fmt(targetDate(e))}${e.note?`<div class="dose">${e.note}</div>`:''}</div>
