@@ -67,7 +67,7 @@ button{border:0;border-radius:11px;padding:11px 14px;font-weight:850;cursor:poin
     <h2>1) Paciente</h2>
     <div class="grid">
       <div><label>DATA DE NASCIMENTO</label><input type="date" id="dob" onchange="buildProtocol()"></div>
-      <div><label>PESO (KG)</label><input type="number" id="weight" step="0.01" min="0" placeholder="Opcional"></div>
+      <div><label>PESO (KG)</label><input type="number" id="weight" step="0.01" min="0" placeholder="Opcional" oninput="renderSupp()"></div>
       <div><label>IDADE ATUAL</label><div class="agebox" id="ageBox">Informe a data de nascimento</div></div>
     </div>
     <div class="intro" style="margin-top:10px">A data de nascimento é usada para gerar automaticamente a <b>data-alvo de cada dose</b>. Você só preenche a data realmente registrada na caderneta.</div>
@@ -228,7 +228,7 @@ const SBP_FUTURE = [
  {m:12,v:'Varicela – esquema completo',note:'SBP recomenda 2 doses.'}
 ];
 
-let DOB=null, ageMonths=0, ageDays=0;
+let DOB=null, ageMonths=0, ageDays=0, ageYears=0;
 const savedDates={};
 
 function parseLocal(s){return new Date(s+'T12:00:00')}
@@ -251,7 +251,7 @@ function buildProtocol(){
  if(!s){document.querySelectorAll('.panel').forEach(x=>x.style.display='none');document.getElementById('ageBox').textContent='Informe a data de nascimento';return}
  DOB=parseLocal(s);
  if(DOB>today()){document.getElementById('ageBox').textContent='Data inválida';return}
- ageMonths=monthDiff(DOB,today()); ageDays=daysDiff(DOB,today());
+ ageMonths=monthDiff(DOB,today()); ageDays=daysDiff(DOB,today()); ageYears=Math.floor(ageMonths/12);
  document.getElementById('ageBox').textContent=`${ageText()} • ${ageDays} dias`;
 
  const past=EVENTS.filter(e=>e.m<=ageMonths).sort((a,b)=>a.m-b.m);
@@ -261,8 +261,8 @@ function buildProtocol(){
  renderFuture(future);
  renderCalendar(future);
  renderPlan(past,future);
- renderSupp();
  document.querySelectorAll('.panel').forEach(x=>x.style.display='block');
+ try { renderSupp(); } catch(e) { console.error('Erro no módulo de suplementação:', e); }
 }
 function targetDate(e){return addMonthsSafe(DOB,e.m)}
 function dateInput(e){
