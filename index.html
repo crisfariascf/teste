@@ -3,417 +3,285 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Protocolo Pediátrico de Adequação Vacinal • PNI 2026 + SBP 2026/2027</title>
+<title>Protocolo Pediátrico de Adequação Vacinal</title>
 <style>
 :root{
-  --bg:#f4f7f8;--card:#fff;--ink:#17212b;--muted:#64748b;--line:#dbe4e8;
-  --pri:#0c7468;--pri2:#095c53;--ok:#166534;--okbg:#eaf8ef;
-  --warn:#92400e;--warnbg:#fff7df;--bad:#9f1d1d;--badbg:#fff0f0;
-  --blue:#1d4ed8;--bluebg:#eef5ff;--vio:#6d28d9;--viobg:#f4efff;
+  --bg:#f5f7f8;--card:#fff;--ink:#17212b;--muted:#64748b;--line:#dbe4e8;
+  --pri:#0e766c;--pri2:#0a5d55;--ok:#166534;--okbg:#ecfdf3;
+  --warn:#92400e;--warnbg:#fff8e6;--bad:#991b1b;--badbg:#fff1f1;
+  --future:#1d4ed8;--futurebg:#eef5ff;--vio:#6d28d9;--viobg:#f5f0ff;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial}
-.wrap{max-width:1180px;margin:auto;padding:16px}
-.hero{background:linear-gradient(135deg,#0c7468,#0f514b);color:#fff;border-radius:20px;padding:22px;box-shadow:0 10px 30px #0f172a12}
-.hero h1{margin:0;font-size:25px}.hero p{margin:7px 0 0;font-size:13px;opacity:.93}
-.pills{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}.pill{padding:6px 9px;border-radius:99px;background:#ffffff1f;font-size:11px;font-weight:800}
-.card{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:17px;padding:16px;box-shadow:0 3px 12px #0f172a08}
-h2{font-size:17px;margin:0 0 12px}h3{font-size:14px;margin:0 0 8px}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-label{font-size:11px;font-weight:800;color:#506070;display:block;margin-bottom:5px}
-input,select{width:100%;border:1px solid #cbd7dc;border-radius:10px;padding:10px;background:#fff;color:#17212b;font-size:14px}
-input:focus,select:focus{outline:2px solid #99f6e4;border-color:#0f766e}
-.age{padding:10px;border-radius:10px;background:#ecfdf5;border:1px solid #a7f3d0;font-size:13px;font-weight:800;color:#166534;min-height:41px}
-.checks{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:11px}
-.check{display:flex;align-items:flex-start;gap:7px;background:#f8fafc;border:1px solid #e2e8f0;padding:9px;border-radius:10px;font-size:12px}
-.check input{width:auto;margin-top:2px}.check label{font-weight:600;margin:0;color:#334155}
-.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
-.btn{border:0;border-radius:11px;padding:11px 14px;font-weight:800;cursor:pointer}
-.btn-pri{background:var(--pri);color:#fff}.btn-pri:hover{background:var(--pri2)}.btn-lite{background:#e9eff2;color:#334155}
-.btn-wide{width:100%;font-size:15px;margin-top:12px}
-.vaccine{border:1px solid var(--line);border-radius:14px;margin:9px 0;overflow:hidden}
-.vhead{display:flex;justify-content:space-between;align-items:center;padding:11px 12px;background:#fbfcfd;gap:8px}
-.vtitle{font-weight:850;font-size:14px}.tags{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}
-.tag{font-size:10px;padding:4px 7px;border-radius:99px;font-weight:850}.pni{background:#ccfbf1;color:#115e59}.sbp{background:#ede9fe;color:#5b21b6}.special{background:#fee2e2;color:#991b1b}
-.vbody{padding:12px}.dosegrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.smallnote{font-size:11px;color:var(--muted);line-height:1.4;margin-top:7px}
-.sectionbar{display:flex;justify-content:space-between;gap:10px;align-items:center}
-#results{display:none}.box{padding:13px;border-radius:13px;margin:9px 0;border:1px solid transparent}.box ul{margin:5px 0 0 18px;padding:0}.box li{margin:5px 0;line-height:1.35}
-.info{background:var(--bluebg);border-color:#c7dcff;color:#1e3a8a}.bad{background:var(--badbg);border-color:#fecaca;color:#7f1d1d}.warn{background:var(--warnbg);border-color:#fde68a;color:#78350f}.ok{background:var(--okbg);border-color:#bbf7d0;color:#14532d}.vio{background:var(--viobg);border-color:#ddd0ff;color:#5b21b6}
-.legend{display:flex;gap:7px;flex-wrap:wrap}.legend span{font-size:10px;font-weight:800;padding:5px 7px;border-radius:99px}
-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}th,td{border-bottom:1px solid #e5e7eb;padding:8px;text-align:left;vertical-align:top}th{color:#475569;background:#f8fafc}
-.footer{font-size:11px;color:#64748b;padding:14px 2px 30px;line-height:1.5}
-.hidden{display:none!important}
-@media(max-width:820px){.grid{grid-template-columns:1fr 1fr}.checks{grid-template-columns:1fr 1fr}.dosegrid{grid-template-columns:1fr 1fr}}
-@media(max-width:520px){.grid,.checks,.dosegrid{grid-template-columns:1fr}.wrap{padding:10px}.hero{border-radius:16px}.hero h1{font-size:20px}.vhead{align-items:flex-start}}
-@media print{body{background:#fff}.hero{box-shadow:none}.card{box-shadow:none}.no-print{display:none!important}.wrap{max-width:none}.vaccine{break-inside:avoid}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial}
+.wrap{max-width:1080px;margin:auto;padding:16px}
+.hero{padding:22px;border-radius:20px;background:linear-gradient(135deg,#0e766c,#0b514b);color:#fff;box-shadow:0 10px 28px #0f172a12}
+.hero h1{margin:0;font-size:24px}.hero p{margin:7px 0 0;font-size:13px;opacity:.93}
+.card{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:16px;margin-top:14px;box-shadow:0 3px 12px #0f172a08}
+h2{font-size:17px;margin:0 0 12px}h3{font-size:14px;margin:0}
+.grid{display:grid;grid-template-columns:1.2fr .8fr .8fr;gap:10px}
+label{display:block;font-size:11px;font-weight:800;color:#52616f;margin-bottom:5px}
+input,select{width:100%;border:1px solid #cbd5e1;border-radius:10px;padding:10px;background:#fff;font-size:14px}
+.agebox{min-height:41px;padding:10px;border-radius:10px;background:#ecfdf5;border:1px solid #bbf7d0;color:#166534;font-weight:800}
+.intro{font-size:12px;color:var(--muted);line-height:1.45}
+.topbar{display:flex;justify-content:space-between;gap:8px;align-items:flex-start;flex-wrap:wrap}
+.legend{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:10px;font-weight:850;padding:4px 7px;border-radius:99px}
+.pni{background:#ccfbf1;color:#115e59}.sbp{background:#ede9fe;color:#5b21b6}
+.panel{display:none}
+.section-title{display:flex;align-items:center;justify-content:space-between;margin:4px 0 9px}
+.count{font-size:11px;font-weight:850;border-radius:99px;padding:5px 8px;background:#eef2f7;color:#475569}
+.vrow{display:grid;grid-template-columns:1.2fr .8fr .95fr;gap:10px;align-items:center;border:1px solid var(--line);border-radius:13px;padding:11px;margin:8px 0}
+.vname{font-weight:850;font-size:14px}.dose{font-size:11px;color:#64748b;margin-top:2px}
+.target{font-size:12px}.target b{display:block;color:#334155;margin-bottom:2px}
+.dateinput label{font-size:10px}.dateinput input{padding:8px}
+.overdue{border-left:5px solid #dc2626}.now{border-left:5px solid #d97706}.done{border-left:5px solid #16a34a;background:#fbfffc}.future{border-left:5px solid #2563eb;background:#fcfdff}
+.status{display:inline-block;font-size:10px;font-weight:850;border-radius:99px;padding:4px 7px;margin-top:5px}
+.sbad{background:#fee2e2;color:#991b1b}.swarn{background:#fef3c7;color:#92400e}.sok{background:#dcfce7;color:#166534}.sfuture{background:#dbeafe;color:#1e40af}
+.calendar{position:relative;margin:8px 0 0 9px;padding-left:20px;border-left:2px solid #dbe4e8}
+.calitem{position:relative;padding:0 0 18px 11px}
+.calitem:before{content:"";position:absolute;left:-27px;top:3px;width:12px;height:12px;border-radius:50%;background:#fff;border:3px solid #0e766c}
+.caldate{font-size:12px;font-weight:850;color:#0f766e}.calage{font-size:10px;color:#64748b;margin-left:5px}
+.calvacc{font-size:13px;font-weight:750;margin-top:4px}.calnote{font-size:11px;color:#64748b;margin-top:2px}
+.infoBox{padding:12px;border-radius:12px;margin:9px 0;font-size:12px;line-height:1.45}
+.info{background:var(--futurebg);color:#1e3a8a;border:1px solid #c7dcff}
+.warnBox{background:var(--warnbg);color:#78350f;border:1px solid #fde68a}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+button{border:0;border-radius:11px;padding:11px 14px;font-weight:850;cursor:pointer}
+.primary{background:var(--pri);color:#fff}.light{background:#e8eef1;color:#334155}
+.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.metric{padding:11px;border:1px solid var(--line);border-radius:12px;background:#fbfcfd}.metric b{display:block;font-size:20px}.metric span{font-size:11px;color:#64748b}
+.small{font-size:11px;color:#64748b;line-height:1.45}
+@media(max-width:760px){.grid,.summary{grid-template-columns:1fr}.vrow{grid-template-columns:1fr}.dateinput{margin-top:2px}.hero h1{font-size:20px}}
+@media print{body{background:#fff}.card,.hero{box-shadow:none}.no-print{display:none!important}.vrow{break-inside:avoid}}
 </style>
 </head>
 <body>
 <div class="wrap">
-<section class="hero">
-  <h1>💉 Protocolo Pediátrico de Adequação Vacinal</h1>
-  <p>Reconstrução do histórico, identificação de pendências e planejamento de resgate vacinal.</p>
-  <div class="pills"><span class="pill">PNI / Ministério da Saúde 2026 = referência principal</span><span class="pill">SBP 2026/2027 = recomendações complementares</span><span class="pill">0–19 anos</span></div>
-</section>
+  <section class="hero">
+    <h1>💉 Protocolo Pediátrico de Adequação Vacinal</h1>
+    <p>Informe a data de nascimento. O protocolo exibe somente o que já deveria ter sido realizado e as próximas etapas do calendário individual.</p>
+  </section>
 
-<section class="card">
-  <h2>1) Dados do paciente</h2>
-  <div class="grid">
-    <div><label>DATA DE NASCIMENTO</label><input id="dob" type="date" onchange="calcAge()"></div>
-    <div><label>PESO (KG)</label><input id="weight" type="number" min="0" step="0.01" placeholder="Ex.: 8,6"></div>
-    <div><label>IDADE</label><div class="age" id="ageBox">Informe a data de nascimento</div></div>
-    <div><label>PERFIL</label><select id="profile"><option value="routine">Rotina / hígido</option><option value="special">Condição especial / CRIE</option></select></div>
+  <section class="card">
+    <h2>1) Paciente</h2>
+    <div class="grid">
+      <div><label>DATA DE NASCIMENTO</label><input type="date" id="dob" onchange="buildProtocol()"></div>
+      <div><label>PESO (KG)</label><input type="number" id="weight" step="0.01" min="0" placeholder="Opcional"></div>
+      <div><label>IDADE ATUAL</label><div class="agebox" id="ageBox">Informe a data de nascimento</div></div>
+    </div>
+    <div class="intro" style="margin-top:10px">A data de nascimento é usada para gerar automaticamente a <b>data-alvo de cada dose</b>. Você só preenche a data realmente registrada na caderneta.</div>
+  </section>
+
+  <section class="card panel" id="historyPanel">
+    <div class="topbar">
+      <div><h2>2) Vacinas que já deveriam ter sido feitas</h2><div class="intro">Somente doses esperadas até a idade atual aparecem aqui.</div></div>
+      <div class="legend"><span class="tag pni">PNI 2026</span></div>
+    </div>
+    <div class="summary" id="metrics"></div>
+    <div id="history"></div>
+  </section>
+
+  <section class="card panel" id="nextPanel">
+    <div class="section-title">
+      <div><h2>3) Próximas vacinas</h2><div class="intro">Agenda prospectiva calculada pela data de nascimento.</div></div>
+    </div>
+    <div id="futureList"></div>
+  </section>
+
+  <section class="card panel" id="calendarPanel">
+    <div class="topbar">
+      <div><h2>4) Calendário individual</h2><div class="intro">Linha do tempo com as próximas datas importantes.</div></div>
+      <div class="legend"><span class="tag pni">PNI</span><span class="tag sbp">SBP complementar</span></div>
+    </div>
+    <div class="calendar" id="calendar"></div>
+  </section>
+
+  <section class="card panel" id="orientationPanel">
+    <h2>5) Orientação / plano</h2>
+    <div id="plan"></div>
+    <div class="infoBox info">
+      <b>📌 Regra geral:</b> esquema vacinal atrasado não deve ser reiniciado quando as doses anteriores forem válidas; completar conforme idade atual, intervalo mínimo e regras específicas de cada imunizante.
+    </div>
+    <div class="infoBox warnBox">
+      <b>⚠️ Importante:</b> condições especiais, imunossupressão, asplenia, exposição, surtos, viagem, reação grave prévia ou necessidade de CRIE exigem avaliação específica e podem modificar este calendário.
+    </div>
+    <div class="btns no-print">
+      <button class="light" onclick="copyPlan()">📋 Copiar orientação</button>
+      <button class="light" onclick="window.print()">🖨️ Imprimir / PDF</button>
+      <button class="light" onclick="clearDates()">Limpar datas da caderneta</button>
+    </div>
+  </section>
+
+  <div class="small" style="padding:14px 2px 28px">
+    Base principal: Calendário Nacional de Vacinação / PNI 2026. Recomendações da SBP 2026/2027 aparecem apenas como complemento. COVID-19, influenza, dengue e situações especiais devem ser conferidas conforme produto, campanha, grupo e norma vigente.
   </div>
-  <div class="checks">
-    <div class="check"><input type="checkbox" id="immuno"><label for="immuno">Imunocomprometido</label></div>
-    <div class="check"><input type="checkbox" id="comorb"><label for="comorb">Comorbidade relevante</label></div>
-    <div class="check"><input type="checkbox" id="indigenous"><label for="indigenous">Indígena</label></div>
-    <div class="check"><input type="checkbox" id="asplenia"><label for="asplenia">Asplenia / hiposplenia</label></div>
-    <div class="check"><input type="checkbox" id="hbsmom"><label for="hbsmom">Mãe HBsAg positiva</label></div>
-    <div class="check"><input type="checkbox" id="severeallergy"><label for="severeallergy">Reação grave prévia a vacina/componente</label></div>
-  </div>
-</section>
-
-<section class="card">
-<div class="sectionbar">
-  <div>
-    <h2>2) Transcrição da caderneta</h2>
-    <div class="smallnote">Digite somente as datas comprovadas. Campos vazios são tratados como “sem registro”.</div>
-  </div>
-  <div class="legend no-print"><span class="pni">PNI</span><span class="sbp">SBP</span></div>
-</div>
-<div class="toolbar no-print">
-  <button class="btn btn-lite" onclick="fillExample()">Preencher exemplo</button>
-  <button class="btn btn-lite" onclick="clearAll()">Limpar</button>
-</div>
-<div id="vaccines"></div>
-<button class="btn btn-pri btn-wide no-print" onclick="analyze()">ANALISAR E GERAR PROTOCOLO</button>
-</section>
-
-<section class="card" id="results">
-  <h2>3) Protocolo individualizado</h2>
-  <div id="alerts"></div>
-  <div class="box info"><h3>📋 RESUMO DA SITUAÇÃO VACINAL</h3><div id="summary"></div></div>
-  <div class="box bad"><h3>💉 CONDUTA / VACINAS A REVISAR HOJE</h3><ul id="today"></ul></div>
-  <div class="box warn"><h3>📅 PRÓXIMAS DOSES / JANELAS</h3><ul id="next"></ul></div>
-  <div class="box ok"><h3>✅ ESQUEMAS OU DOSES IDENTIFICADOS</h3><ul id="done"></ul></div>
-  <div class="box vio"><h3>🟣 COMPLEMENTO SBP 2026/2027</h3><ul id="sbpout"></ul></div>
-  <div class="box info"><h3>👨‍👩‍👧 ORIENTAÇÕES AOS RESPONSÁVEIS</h3><ul id="guidance"></ul></div>
-  <div class="toolbar no-print">
-    <button class="btn btn-lite" onclick="copyProtocol()">📋 Copiar protocolo</button>
-    <button class="btn btn-lite" onclick="window.print()">🖨️ Imprimir / PDF</button>
-  </div>
-</section>
-
-<section class="card">
-  <h2>4) Regras importantes do protocolo</h2>
-  <table>
-    <tr><th>Regra</th><th>Aplicação</th></tr>
-    <tr><td>Esquema atrasado</td><td>Em regra, não reiniciar séries válidas. Completar o que falta respeitando idade e intervalo mínimo.</td></tr>
-    <tr><td>Rotavírus</td><td>Possui limites etários próprios. O sistema sinaliza quando a oportunidade de determinada dose pode ter sido perdida.</td></tr>
-    <tr><td>Vacinas vivas</td><td>Condições de imunossupressão, uso de imunossupressores e situações especiais exigem revisão individual.</td></tr>
-    <tr><td>Menores de 2 anos</td><td>Febre amarela e SCR/tetraviral não devem ser aplicadas simultaneamente na rotina; respeitar o intervalo recomendado quando aplicável.</td></tr>
-    <tr><td>CRIE</td><td>Condições especiais não são resolvidas automaticamente por este módulo; o resultado sinaliza necessidade de protocolo específico.</td></tr>
-  </table>
-</section>
-
-<div class="footer">
-  <b>Base técnica:</b> Calendário Nacional de Vacinação e Instrução Normativa do PNI 2026; Calendário de Vacinação da Sociedade Brasileira de Pediatria 2026/2027. Ferramenta de apoio à conferência clínica; situações especiais, contraindicações, intercambialidade, surtos, exposição, viagens e produtos específicos devem ser confirmados na norma vigente.
-</div>
 </div>
 
 <script>
-const V = [
- {id:'bcg',name:'BCG',tags:['PNI'],labels:['Dose única'],note:'PNI: rotina ao nascer; atualização até 4 anos, 11 meses e 29 dias.'},
- {id:'hb',name:'Hepatite B',tags:['PNI','SBP'],labels:['Ao nascer','Dose 2 / registro','Dose 3 / registro','Dose 4 / registro'],note:'A dose ao nascer é monovalente; doses posteriores podem estar contidas em vacinas combinadas.'},
- {id:'penta',name:'Pentavalente (DTP-HB-Hib)',tags:['PNI'],labels:['1ª dose','2ª dose','3ª dose'],note:'Rotina PNI: 2, 4 e 6 meses.'},
- {id:'dtp',name:'DTP / reforços',tags:['PNI'],labels:['1º reforço','2º reforço'],note:'PNI: reforços após esquema primário; revisar dT a partir de 7 anos quando aplicável.'},
- {id:'vip',name:'Poliomielite inativada (VIP)',tags:['PNI'],labels:['1ª dose','2ª dose','3ª dose','Reforço'],note:'PNI 2026: 2, 4 e 6 meses; reforço aos 15 meses.'},
- {id:'rota',name:'Rotavírus',tags:['PNI','SBP'],labels:['1ª dose','2ª dose','3ª dose (RV5/privada)'],note:'PNI usa esquema de 2 doses. SBP também contempla vacina pentavalente de 3 doses na rede privada.'},
- {id:'pneumo',name:'Pneumocócica conjugada',tags:['PNI','SBP'],labels:['1ª dose','2ª dose','Reforço','Dose adicional'],note:'PNI: esquema infantil com pneumocócica conjugada; SBP pode recomendar valências superiores conforme disponibilidade.'},
- {id:'menc',name:'Meningocócica C / ACWY',tags:['PNI','SBP'],labels:['1ª dose','2ª dose','Reforço ACWY','Dose adolescência'],note:'PNI: MenC no lactente e reforço com MenACWY; adolescência conforme calendário vigente.'},
- {id:'menb',name:'Meningocócica B',tags:['SBP'],labels:['1ª dose','2ª dose','Reforço'],note:'Recomendação complementar SBP; esquema depende da idade de início.'},
- {id:'flu',name:'Influenza',tags:['PNI','SBP'],labels:['Dose 1 da primovacinação','Dose 2 da primovacinação','Última dose anual'],note:'A partir de 6 meses. Na primeira vacinação antes dos 9 anos, usualmente são necessárias 2 doses separadas por 4 semanas.'},
- {id:'covid',name:'COVID-19',tags:['PNI'],labels:['1ª dose','2ª dose','3ª dose','Dose anual / adicional'],note:'Esquema varia conforme produto, idade e condição clínica.'},
- {id:'fa',name:'Febre amarela',tags:['PNI','SBP'],labels:['Dose aos 9 meses / válida','Dose aos 4 anos / reforço','Dose zero / outra'],note:'PNI 2026: 9 meses e 4 anos quando iniciado antes dos 5 anos.'},
- {id:'scr',name:'Tríplice viral (SCR)',tags:['PNI','SBP'],labels:['1ª dose','2ª dose','Dose zero / outra'],note:'Rotina infantil a partir de 12 meses; doses antes de 12 meses em bloqueio não contam para a rotina.'},
- {id:'hepa',name:'Hepatite A',tags:['PNI','SBP'],labels:['1ª dose','2ª dose (SBP/privada)'],note:'PNI: dose única aos 15 meses. SBP: esquema de 2 doses a partir de 12 meses.'},
- {id:'var',name:'Varicela',tags:['PNI','SBP'],labels:['1ª dose','2ª dose'],note:'PNI: doses na infância conforme calendário; SBP recomenda esquema de 2 doses.'},
- {id:'hpv',name:'HPV4',tags:['PNI','SBP'],labels:['Dose 1','Dose 2 / especial','Dose 3 / especial'],note:'PNI: 1 dose na rotina de 9 a 14 anos; esquemas especiais podem exigir mais doses.'},
- {id:'dengue',name:'Dengue (DNG4)',tags:['PNI','SBP'],labels:['1ª dose','2ª dose'],note:'PNI: faixa etária definida pelo programa e situação epidemiológica; esquema de 2 doses.'},
- {id:'dt',name:'dT / dTpa (≥7 anos)',tags:['PNI','SBP'],labels:['Dose 1','Dose 2','Dose 3','Último reforço'],note:'Usar conforme histórico do componente tetânico; esquemas incompletos não devem ser reiniciados.'}
+// Marcos rotineiros do PNI 2026 para gerar a interface por idade.
+// Eventos com esquemas variáveis (COVID, influenza, dengue) são tratados como "revisar", não como dose fixa universal.
+const EVENTS = [
+ {id:'bcg',m:0,v:'BCG',d:'Dose única',age:'Ao nascer',note:'Preferencialmente ainda na maternidade.'},
+ {id:'hb0',m:0,v:'Hepatite B',d:'Dose ao nascer',age:'Ao nascer',note:'Preferencialmente nas primeiras horas de vida.'},
+
+ {id:'penta1',m:2,v:'Pentavalente',d:'1ª dose',age:'2 meses'},
+ {id:'vip1',m:2,v:'VIP',d:'1ª dose',age:'2 meses'},
+ {id:'rota1',m:2,v:'Rotavírus',d:'1ª dose',age:'2 meses',note:'Possui limite etário próprio.'},
+ {id:'pcv1',m:2,v:'Pneumocócica conjugada',d:'1ª dose',age:'2 meses'},
+
+ {id:'menc1',m:3,v:'Meningocócica C',d:'1ª dose',age:'3 meses'},
+
+ {id:'penta2',m:4,v:'Pentavalente',d:'2ª dose',age:'4 meses'},
+ {id:'vip2',m:4,v:'VIP',d:'2ª dose',age:'4 meses'},
+ {id:'rota2',m:4,v:'Rotavírus',d:'2ª dose',age:'4 meses',note:'Possui limite etário próprio.'},
+ {id:'pcv2',m:4,v:'Pneumocócica conjugada',d:'2ª dose',age:'4 meses'},
+
+ {id:'menc2',m:5,v:'Meningocócica C',d:'2ª dose',age:'5 meses'},
+
+ {id:'penta3',m:6,v:'Pentavalente',d:'3ª dose',age:'6 meses'},
+ {id:'vip3',m:6,v:'VIP',d:'3ª dose',age:'6 meses'},
+ {id:'fluReview',m:6,v:'Influenza',d:'Iniciar/revisar vacinação',age:'A partir de 6 meses',review:true,note:'Primovacinação pode exigir 2 doses; depois, vacinação conforme temporada/grupo.'},
+ {id:'covidReview',m:6,v:'COVID-19',d:'Iniciar/revisar esquema vigente',age:'A partir de 6 meses',review:true,note:'Produto e número de doses variam conforme idade e condição clínica.'},
+
+ {id:'fa1',m:9,v:'Febre amarela',d:'1ª dose',age:'9 meses'},
+
+ {id:'pcvR',m:12,v:'Pneumocócica conjugada',d:'Reforço',age:'12 meses'},
+ {id:'menacwyR',m:12,v:'Meningocócica ACWY',d:'Reforço',age:'12 meses'},
+ {id:'scr1',m:12,v:'Tríplice viral (SCR)',d:'1ª dose',age:'12 meses'},
+
+ {id:'dtpR1',m:15,v:'DTP',d:'1º reforço',age:'15 meses'},
+ {id:'vipR',m:15,v:'VIP',d:'Reforço',age:'15 meses'},
+ {id:'hepa',m:15,v:'Hepatite A',d:'Dose do PNI',age:'15 meses'},
+ {id:'var1',m:15,v:'Varicela',d:'1ª dose',age:'15 meses'},
+
+ {id:'dtpR2',m:48,v:'DTP',d:'2º reforço',age:'4 anos'},
+ {id:'var2',m:48,v:'Varicela',d:'2ª dose',age:'4 anos'},
+ {id:'faR',m:48,v:'Febre amarela',d:'Reforço / 2ª dose quando aplicável',age:'4 anos',note:'Para esquema iniciado antes dos 5 anos.'},
+
+ {id:'hpv',m:108,v:'HPV4',d:'Dose de rotina',age:'A partir de 9 anos',review:true,note:'PNI: dose única na rotina de 9 a 14 anos, salvo situações especiais.'},
+ {id:'menTeen',m:132,v:'Meningocócica ACWY',d:'Dose da adolescência',age:'11–14 anos',review:true,note:'Revisar conforme faixa etária vigente do PNI.'},
+ {id:'dengue',m:120,v:'Dengue',d:'Revisar indicação territorial/faixa etária',age:'10–14 anos',review:true,note:'Oferta depende da estratégia do PNI e território.'}
 ];
 
-let ageDays=null, ageMonths=null, ageYears=null, dobDate=null;
+const SBP_FUTURE = [
+ {m:2,v:'Meningocócica B',note:'SBP: considerar esquema conforme idade de início e produto.'},
+ {m:2,v:'Pneumocócica de maior valência',note:'SBP: considerar formulações de maior cobertura quando disponíveis.'},
+ {m:12,v:'Hepatite A – 2 doses',note:'SBP utiliza esquema de 2 doses.'},
+ {m:12,v:'Varicela – esquema completo',note:'SBP recomenda 2 doses.'}
+];
 
-function renderVaccines(){
- const el=document.getElementById('vaccines');
- el.innerHTML=V.map(v=>`
- <div class="vaccine" id="card_${v.id}">
-  <div class="vhead"><div class="vtitle">${v.name}</div><div class="tags">${v.tags.map(t=>`<span class="tag ${t==='PNI'?'pni':'sbp'}">${t}</span>`).join('')}</div></div>
-  <div class="vbody"><div class="dosegrid">${v.labels.map((l,i)=>`<div><label>${l.toUpperCase()}</label><input type="date" id="${v.id}${i+1}"></div>`).join('')}</div><div class="smallnote">${v.note}</div></div>
- </div>`).join('');
+let DOB=null, ageMonths=0, ageDays=0;
+const savedDates={};
+
+function parseLocal(s){return new Date(s+'T12:00:00')}
+function addMonthsSafe(d,m){const x=new Date(d);const day=x.getDate();x.setDate(1);x.setMonth(x.getMonth()+m);const last=new Date(x.getFullYear(),x.getMonth()+1,0).getDate();x.setDate(Math.min(day,last));return x}
+function fmt(d){return d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'})}
+function today(){const t=new Date();t.setHours(12,0,0,0);return t}
+function monthDiff(a,b){let m=(b.getFullYear()-a.getFullYear())*12+(b.getMonth()-a.getMonth());if(b.getDate()<a.getDate())m--;return m}
+function daysDiff(a,b){return Math.floor((b-a)/86400000)}
+function ageText(){
+ let m=ageMonths,y=Math.floor(m/12),rm=m%12;
+ if(y>0)return `${y} ano(s) e ${rm} mês(es)`;
+ return `${Math.max(0,m)} mês(es)`;
 }
-renderVaccines();
-
-function dateVal(id){const v=document.getElementById(id)?.value;return v?new Date(v+'T12:00:00'):null}
-function has(id){return !!document.getElementById(id)?.value}
-function fmt(d){return d?d.toLocaleDateString('pt-BR'):'—'}
-function addDays(d,n){let x=new Date(d);x.setDate(x.getDate()+n);return x}
-function addMonths(d,n){let x=new Date(d);x.setMonth(x.getMonth()+n);return x}
-function ageAt(date){
- const diff=date-dobDate; return Math.floor(diff/86400000);
+function saveCurrentDates(){
+ document.querySelectorAll('[data-event-id]').forEach(i=>{if(i.value)savedDates[i.dataset.eventId]=i.value;else delete savedDates[i.dataset.eventId]});
 }
-function calcAge(){
- const v=document.getElementById('dob').value, box=document.getElementById('ageBox');
- if(!v){box.textContent='Informe a data de nascimento';ageDays=ageMonths=ageYears=null;return}
- dobDate=new Date(v+'T12:00:00'); const now=new Date();
- if(dobDate>now){box.textContent='Data inválida';ageDays=ageMonths=ageYears=null;return}
- ageDays=Math.floor((now-dobDate)/86400000);
- let y=now.getFullYear()-dobDate.getFullYear(), m=now.getMonth()-dobDate.getMonth();
- if(now.getDate()<dobDate.getDate())m--; if(m<0){y--;m+=12}
- ageYears=y;ageMonths=y*12+m;
- box.textContent=y?`${y} ano(s) e ${m} mês(es) • ${ageDays} dias`:`${m} mês(es) • ${ageDays} dias`;
+function buildProtocol(){
+ saveCurrentDates();
+ const s=document.getElementById('dob').value;
+ if(!s){document.querySelectorAll('.panel').forEach(x=>x.style.display='none');document.getElementById('ageBox').textContent='Informe a data de nascimento';return}
+ DOB=parseLocal(s);
+ if(DOB>today()){document.getElementById('ageBox').textContent='Data inválida';return}
+ ageMonths=monthDiff(DOB,today()); ageDays=daysDiff(DOB,today());
+ document.getElementById('ageBox').textContent=`${ageText()} • ${ageDays} dias`;
+
+ const past=EVENTS.filter(e=>e.m<=ageMonths).sort((a,b)=>a.m-b.m);
+ const future=EVENTS.filter(e=>e.m>ageMonths).sort((a,b)=>a.m-b.m);
+
+ renderHistory(past);
+ renderFuture(future);
+ renderCalendar(future);
+ renderPlan(past,future);
+ document.querySelectorAll('.panel').forEach(x=>x.style.display='block');
 }
-
-function count(prefix,n){let c=0;for(let i=1;i<=n;i++)if(has(prefix+i))c++;return c}
-function lastDate(prefix,n){let a=[];for(let i=1;i<=n;i++){let d=dateVal(prefix+i);if(d)a.push(d)}return a.length?new Date(Math.max(...a)):null}
-function li(arr,s){if(!arr.includes(s))arr.push(s)}
-function dueByInterval(last,minDays){return last && new Date()>=addDays(last,minDays)}
-function dateByInterval(last,minDays){return last?fmt(addDays(last,minDays)):null}
-
-function analyze(){
- calcAge();
- if(ageDays===null){alert('Informe a data de nascimento.');return}
- if(ageYears>=20){alert('Este protocolo foi desenhado para pacientes pediátricos/adolescentes até 19 anos.');return}
- const today=[],next=[],done=[],sbp=[],alerts=[];
- const weight=parseFloat(document.getElementById('weight').value||'0');
- const special=document.getElementById('profile').value==='special'||document.getElementById('immuno').checked||document.getElementById('asplenia').checked;
- const immuno=document.getElementById('immuno').checked, comorb=document.getElementById('comorb').checked, indigenous=document.getElementById('indigenous').checked;
-
- if(special) alerts.push('⚠️ CONDIÇÃO ESPECIAL/CRIE: não concluir o esquema apenas pela rotina. Confirmar indicação, contraindicações e doses adicionais no Manual do CRIE.');
- if(document.getElementById('severeallergy').checked) alerts.push('⚠️ REAÇÃO GRAVE PRÉVIA: revisar o imunizante/componente envolvido antes de novas doses.');
- if(ageDays<31 && weight>0 && weight<2 && !has('bcg1')) alerts.push('⚠️ BCG: em recém-nascido com peso < 2 kg, o PNI orienta adiar até condição/peso adequado.');
- if(document.getElementById('hbsmom').checked && ageDays<=7 && !has('hb1')) alerts.push('🚨 MÃE HBsAg+: RN requer avaliação imediata para vacina hepatite B + imunoglobulina específica, conforme tempo desde o nascimento.');
-
- // BCG
- if(ageMonths<60){
-   if(!has('bcg1')) li(today,'BCG: sem registro. Verificar administração (atualização permitida pelo PNI até 4 anos, 11 meses e 29 dias, se não vacinado e sem contraindicação).');
-   else li(done,'BCG: 1 dose registrada.');
- } else if(has('bcg1')) li(done,'BCG: dose registrada.');
- else li(today,'BCG: sem registro; fora da faixa rotineira de atualização do PNI para criança hígida. Não aplicar automaticamente.');
-
- // Penta
- let p=count('penta',3), lp=lastDate('penta',3);
- if(ageMonths>=2 && ageMonths<60){
-   if(p===0) li(today,'Pentavalente: esquema básico não registrado — iniciar/adequar conforme PNI.');
-   else if(p<3){
-     if(dueByInterval(lp,30)) li(today,`Pentavalente: ${p+1}ª dose pendente; intervalo mínimo de 30 dias já atingido.`);
-     else li(next,`Pentavalente: próxima dose não antes de ${dateByInterval(lp,30)} (intervalo mínimo).`);
-   } else li(done,'Pentavalente: 3 doses do esquema básico registradas.');
- }
- // DTP boosters
- let dtpc=count('dtp',2);
- if(ageMonths>=15 && ageYears<7){
-   if(p>=3 && dtpc<1){
-      let d=lastDate('penta',3); if(dueByInterval(d,180)) li(today,'DTP: 1º reforço pendente após esquema básico.'); else li(next,`DTP: 1º reforço a partir de ${dateByInterval(d,180)} pelo intervalo mínimo.`);
-   } else if(dtpc>=1) li(done,'DTP: ao menos 1 reforço registrado.');
-   if(ageYears>=4 && dtpc<2) li(today,'DTP: revisar necessidade do 2º reforço (faixa de 4–6 anos), conforme intervalo da dose anterior.');
- }
-
- // VIP
- let vip=count('vip',4), vipBasic=count('vip',3), lv=lastDate('vip',3);
- if(ageMonths>=2 && ageMonths<60){
-   if(vipBasic===0) li(today,'VIP: esquema não registrado — iniciar/adequar.');
-   else if(vipBasic<3){
-     if(dueByInterval(lv,30)) li(today,`VIP: ${vipBasic+1}ª dose do esquema básico pendente; intervalo mínimo atingido.`);
-     else li(next,`VIP: próxima dose do esquema básico a partir de ${dateByInterval(lv,30)}.`);
-   } else li(done,'VIP: 3 doses básicas registradas.');
-   if(ageMonths>=15 && vipBasic>=3 && !has('vip4')){
-     if(dueByInterval(lv,180)) li(today,'VIP: reforço dos 15 meses pendente/revisar.');
-     else li(next,`VIP: reforço não antes de ${dateByInterval(lv,180)} pelo intervalo mínimo.`);
-   }
- }
-
- // Rotavirus
- let r=count('rota',2), lr=lastDate('rota',2);
- if(ageMonths>=1 && ageMonths<24){
-   if(r===0){
-     if(ageDays<=364 && ageDays>=45) li(today,'Rotavírus: 1ª dose não registrada; ainda dentro da janela etária do PNI para iniciar (confirmar idade exata antes da aplicação).');
-     else if(ageDays>364) li(today,'Rotavírus: 1ª dose não registrada e janela para iniciar pelo PNI foi perdida — não iniciar automaticamente.');
-   } else if(r===1 && !has('rota2')){
-     if(ageDays<=729){
-       if(dueByInterval(lr,30)) li(today,'Rotavírus: 2ª dose pendente; confirmar que está dentro do limite etário máximo antes de aplicar.');
-       else li(next,`Rotavírus: 2ª dose a partir de ${dateByInterval(lr,30)}, mantendo limite etário máximo.`);
-     } else li(today,'Rotavírus: 2ª dose ausente e paciente já ultrapassou o limite etário do PNI.');
-   } else if(r>=2) li(done,'Rotavírus: 2 doses registradas (esquema PNI).');
- }
-
- // Pneumo
- let pn=count('pneumo',3), lpn=lastDate('pneumo',3);
- if(ageMonths>=2 && ageMonths<60){
-   if(ageMonths<12){
-     if(pn===0) li(today,'Pneumocócica conjugada: iniciar esquema conforme idade.');
-     else if(pn<2){ if(dueByInterval(lpn,30))li(today,'Pneumocócica: completar esquema básico conforme idade e intervalo.');else li(next,`Pneumocócica: próxima dose a partir de ${dateByInterval(lpn,30)}.`)}
-     else if(ageMonths>=12 && !has('pneumo3')) li(today,'Pneumocócica: revisar reforço.');
-   } else {
-     if(pn===0) li(today,'Pneumocócica conjugada: sem esquema completo entre 12 meses e 4a11m — PNI prevê adequação com esquema reduzido conforme idade.');
-     else if(!has('pneumo3') && pn<3) li(today,'Pneumocócica: revisar necessidade de dose de resgate/reforço conforme idade e doses prévias.');
-     else li(done,'Pneumocócica: há esquema/reforço registrado; validar completude conforme idade de início.');
-   }
- }
-
- // MenC / ACWY
- let mn=count('menc',4), lmn=lastDate('menc',4);
- if(ageMonths>=3 && ageMonths<60){
-   if(ageMonths<12){
-     let basic=(has('menc1')?1:0)+(has('menc2')?1:0);
-     if(basic===0) li(today,'Meningocócica C: esquema básico não registrado — iniciar/adequar conforme idade.');
-     else if(basic===1){if(dueByInterval(lmn,30))li(today,'Meningocócica C: completar esquema básico, respeitando intervalo mínimo.');else li(next,`Meningocócica C: próxima dose a partir de ${dateByInterval(lmn,30)}.`)}
-   } else if(!has('menc3')) li(today,'Meningocócica: entre 12 meses e 4a11m, revisar dose de resgate/reforço com MenACWY conforme histórico.');
-   else li(done,'Meningocócica: reforço MenACWY registrado.');
- }
- if(ageYears>=11 && ageYears<=14 && !has('menc4')) li(today,'MenACWY: dose da adolescência pendente/revisar conforme PNI.');
- if(has('menc4')) li(done,'MenACWY: dose da adolescência registrada.');
-
- // Influenza
- let fl=count('flu',3);
- if(ageMonths>=6){
-   if(ageYears<9 && fl===0) li(today,'Influenza: sem histórico — iniciar vacinação; primovacinação antes dos 9 anos requer 2 doses com intervalo de 4 semanas.');
-   else if(ageYears<9 && fl===1) li(today,'Influenza: conferir se esta é primovacinação; se sim, 2ª dose após 4 semanas.');
-   else if(fl>0) li(done,'Influenza: há dose(s) registrada(s); confirmar dose da temporada atual.');
-   li(next,'Influenza: revisar vacinação a cada temporada. A SBP recomenda vacinação anual a partir de 6 meses.');
- }
-
- // COVID
- let cv=count('covid',4), lcv=lastDate('covid',4);
- if(ageMonths>=6 && ageYears<5){
-   if(cv===0) li(today,'COVID-19: sem registro — iniciar esquema conforme produto disponível e PNI.');
-   else li(done,'COVID-19: há dose(s) registrada(s); conferir completude conforme produto utilizado.');
-   if(immuno||comorb) li(next,'COVID-19: por condição clínica, revisar necessidade de doses periódicas/adicionais conforme PNI vigente.');
- } else if(ageYears>=5 && (immuno||comorb)) {
-   li(today,'COVID-19: condição especial em ≥5 anos — revisar dose anual conforme PNI.');
- }
-
- // Yellow fever
- let fa=count('fa',2);
- if(ageMonths>=9){
-   if(fa===0) li(today,'Febre amarela: sem dose válida registrada — avaliar vacinação conforme PNI.');
-   else if(has('fa1')) li(done,'Febre amarela: dose válida registrada.');
-   if(ageYears>=4 && ageYears<5 && has('fa1') && !has('fa2')) li(today,'Febre amarela: revisar 2ª dose aos 4 anos quando esquema iniciado antes dos 5 anos.');
- }
- // SCR
- let sc=count('scr',2), lsc=lastDate('scr',2);
- if(ageMonths>=12){
-   if(sc===0) li(today,'Tríplice viral (SCR): sem dose válida registrada — iniciar atualização.');
-   else if(sc===1){
-     if(dueByInterval(lsc,15)) li(today,'Tríplice viral: 2ª dose pendente; intervalo mínimo técnico atingido (preferir agenda de rotina quando não houver urgência epidemiológica).');
-     else li(next,`Tríplice viral: próxima dose não antes de ${dateByInterval(lsc,15)}.`);
-   } else li(done,'Tríplice viral: 2 doses registradas.');
- }
-
- // Hep A
- if(ageMonths>=15){
-   if(!has('hepa1')) li(today,'Hepatite A: dose do PNI não registrada — atualizar.');
-   else li(done,'Hepatite A: ao menos 1 dose registrada (cumpre esquema PNI de rotina, se válida).');
- }
- if(ageMonths>=12){
-   if(count('hepa',2)<2) li(sbp,'Hepatite A: SBP recomenda esquema de 2 doses; conferir possibilidade de completar na rede privada.');
-   else li(sbp,'Hepatite A: 2 doses registradas — compatível com recomendação SBP.');
- }
-
- // Varicella
- let va=count('var',2), lva=lastDate('var',2);
- if(ageMonths>=15 && ageYears<7){
-   if(va===0) li(today,'Varicela: nenhuma dose registrada — atualizar conforme PNI e idade.');
-   else if(va===1 && ageYears>=4) li(today,'Varicela: revisar 2ª dose prevista na infância.');
-   else if(va>=2) li(done,'Varicela: 2 doses registradas.');
- }
- if(ageMonths>=12 && va<2) li(sbp,'Varicela: SBP recomenda 2 doses; esquema/intervalo depende da idade.');
- // HPV
- let hp=count('hpv',3);
- if(ageYears>=9 && ageYears<=14){
-   if(hp===0) li(today,'HPV4: 1 dose de rotina PNI pendente.');
-   else li(done,'HPV: ao menos 1 dose registrada; para hígidos na faixa de rotina, PNI utiliza dose única.');
- }
- if(ageYears>=15 && ageYears<20 && hp===0) li(today,'HPV: sem histórico. PNI 2026 prevê estratégia de resgate de dose única para 15–19 anos conforme organização local.');
- if(immuno && ageYears>=9) li(today,'HPV: imunocomprometido — não usar automaticamente esquema de dose única; revisar esquema especial.');
-
- // Dengue
- let dg=count('dengue',2), ldg=lastDate('dengue',2);
- if(ageYears>=10 && ageYears<=14){
-   if(dg===0) li(today,'Dengue (DNG4): sem registro — verificar oferta/indicação no território e iniciar esquema PNI quando disponível.');
-   else if(dg===1){if(dueByInterval(ldg,90))li(today,'Dengue: 2ª dose pendente; confirmar intervalo e mesmo fabricante conforme PNI.');else li(next,`Dengue: 2ª dose prevista após intervalo do esquema; pela referência de 3 meses, a partir de ${dateByInterval(ldg,90)}.`)}
-   else li(done,'Dengue: 2 doses registradas.');
- }
-
- // dT
- if(ageYears>=7){
-   let dtt=count('dt',3);
-   if(p<3 && dtt===0) li(today,'Componente difteria/tétano: histórico básico incompleto/desconhecido em ≥7 anos — completar com vacina apropriada sem reiniciar doses válidas.');
-   if(dtt>0) li(done,'dT/dTpa: há dose(s) registrada(s); conferir total do esquema e data do último reforço.');
- }
-
- // SBP extras
- if(ageMonths>=2 && !has('menb1')) li(sbp,'Meningocócica B: recomendação complementar da SBP; considerar esquema conforme idade de início.');
- if(ageMonths>=2) li(sbp,'Pneumocócica: SBP prefere esquemas com maior cobertura de sorotipos quando disponíveis; avaliar PCV15/PCV20 conforme idade e histórico.');
- if(ageMonths>=3) li(sbp,'Meningocócica ACWY: SBP recomenda cobertura ACWY além do esquema público em diferentes faixas etárias, conforme calendário 2026/2027.');
- if(ageMonths>=6) li(sbp,'Influenza: SBP recomenda vacinação anual de todas as crianças e adolescentes a partir de 6 meses.');
-
- // interaction alert live vaccines <2
- if(ageYears<2 && has('fa1') && has('scr1')){
-   const d1=dateVal('fa1'),d2=dateVal('scr1'); const delta=Math.abs((d1-d2)/86400000);
-   if(delta===0 || delta<15) alerts.push('⚠️ FEBRE AMARELA + SCR em menor de 2 anos: revisar as datas. O PNI orienta não administrar simultaneamente e, quando não simultâneas, respeitar intervalo recomendado; intervalo mínimo citado de 15 dias.');
- }
-
- if(today.length===0) li(today,'Nenhuma pendência óbvia foi identificada pelas regras automatizadas. Conferir validade das datas, produtos e histórico completo antes de considerar o esquema atualizado.');
- if(done.length===0) li(done,'Nenhuma dose válida foi reconhecida automaticamente a partir dos campos preenchidos.');
-
- const filled=V.reduce((acc,v)=>acc+v.labels.filter((_,i)=>has(v.id+(i+1))).length,0);
- document.getElementById('summary').innerHTML=
- `<b>Idade:</b> ${document.getElementById('ageBox').textContent}<br>`+
- `<b>Peso:</b> ${weight?weight.toLocaleString('pt-BR')+' kg':'não informado'}<br>`+
- `<b>Registros transcritos:</b> ${filled}<br>`+
- `<b>Classificação:</b> ${today[0].startsWith('Nenhuma pendência')?'sem pendência evidente na triagem automática':'há itens que exigem atualização ou conferência hoje'}.`;
-
- document.getElementById('alerts').innerHTML=alerts.map(a=>`<div class="box bad">${a}</div>`).join('');
- document.getElementById('today').innerHTML=today.map(x=>`<li>${x}</li>`).join('');
- document.getElementById('next').innerHTML=next.map(x=>`<li>${x}</li>`).join('');
- document.getElementById('done').innerHTML=done.map(x=>`<li>${x}</li>`).join('');
- document.getElementById('sbpout').innerHTML=sbp.map(x=>`<li>${x}</li>`).join('');
- const g=[
-  'Levar a caderneta de vacinação em todas as consultas e aplicações.',
-  'Doses atrasadas, em geral, são completadas sem reiniciar séries já válidas.',
-  'Após a vacinação, podem ocorrer dor local, febre baixa e mal-estar transitório; seguir as orientações fornecidas pela sala de vacinação.',
-  'Procurar atendimento se houver dificuldade para respirar, edema importante de face/língua, alteração intensa do estado geral, convulsão ou outro evento grave após vacinação.',
-  'A data e o lote de toda dose administrada devem ser registrados na caderneta e no sistema oficial.'
- ];
- document.getElementById('guidance').innerHTML=g.map(x=>`<li>${x}</li>`).join('');
- document.getElementById('results').style.display='block';
- document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+function targetDate(e){return addMonthsSafe(DOB,e.m)}
+function dateInput(e){
+ const val=savedDates[e.id]||'';
+ return `<div class="dateinput"><label>DATA REGISTRADA NA CADERNETA</label><input type="date" data-event-id="${e.id}" value="${val}" onchange="onDateChange('${e.id}')"></div>`;
 }
-
-function clearAll(){
- document.querySelectorAll('input').forEach(i=>{if(i.type==='checkbox')i.checked=false;else i.value=''});
- document.getElementById('profile').value='routine';document.getElementById('ageBox').textContent='Informe a data de nascimento';document.getElementById('results').style.display='none';
+function onDateChange(id){
+ const el=document.querySelector(`[data-event-id="${id}"]`);
+ if(el&&el.value)savedDates[id]=el.value;else delete savedDates[id];
+ buildProtocol();
 }
-function fillExample(){
- clearAll();
- const now=new Date(), dob=new Date(now.getFullYear()-1,now.getMonth()-4,now.getDate());
- document.getElementById('dob').value=dob.toISOString().slice(0,10);document.getElementById('weight').value='9.6';
- const ds=(m)=>{let d=new Date(dob);d.setMonth(d.getMonth()+m);return d.toISOString().slice(0,10)}
- document.getElementById('bcg1').value=ds(0);document.getElementById('hb1').value=ds(0);
- document.getElementById('penta1').value=ds(2);document.getElementById('penta2').value=ds(4);
- document.getElementById('vip1').value=ds(2);document.getElementById('vip2').value=ds(4);
- document.getElementById('rota1').value=ds(2);document.getElementById('rota2').value=ds(4);
- document.getElementById('pneumo1').value=ds(2);document.getElementById('pneumo2').value=ds(4);
- document.getElementById('menc1').value=ds(3);document.getElementById('menc2').value=ds(5);
- calcAge();
+function statusFor(e){
+ if(savedDates[e.id]) return ['done','sok','✓ Realizada'];
+ const td=targetDate(e), delta=daysDiff(td,today());
+ if(e.review) return ['now','swarn','Revisar'];
+ if(delta>30) return ['overdue','sbad','Pendente / atrasada'];
+ return ['now','swarn','Na faixa / revisar agora'];
 }
-function copyProtocol(){
- const el=document.getElementById('results');
- navigator.clipboard.writeText(el.innerText).then(()=>alert('Protocolo copiado.'));
+function renderHistory(past){
+ let html='',done=0,pending=0,review=0;
+ past.forEach(e=>{
+   const [cls,scls,st]=statusFor(e);
+   if(savedDates[e.id])done++; else if(e.review)review++; else pending++;
+   html+=`<div class="vrow ${cls}">
+     <div><div class="vname">${e.v}</div><div class="dose">${e.d} • ${e.age}</div><span class="status ${scls}">${st}</span></div>
+     <div class="target"><b>Data recomendada</b>${fmt(targetDate(e))}${e.note?`<div class="dose">${e.note}</div>`:''}</div>
+     ${dateInput(e)}
+   </div>`;
+ });
+ document.getElementById('history').innerHTML=html||'<div class="intro">Ainda não há doses rotineiras vencidas para esta idade.</div>';
+ document.getElementById('metrics').innerHTML=`
+   <div class="metric"><b>${done}</b><span>registradas</span></div>
+   <div class="metric"><b>${pending}</b><span>pendentes / conferir</span></div>
+   <div class="metric"><b>${review}</b><span>itens de revisão</span></div>`;
+}
+function renderFuture(future){
+ const next=future.slice(0,8);
+ document.getElementById('futureList').innerHTML=next.map(e=>`
+   <div class="vrow future">
+     <div><div class="vname">${e.v}</div><div class="dose">${e.d}</div><span class="status sfuture">${e.age}</span></div>
+     <div class="target"><b>Data prevista</b>${fmt(targetDate(e))}${e.note?`<div class="dose">${e.note}</div>`:''}</div>
+     <div class="dateinput"><label>QUANDO CHEGAR, REGISTRAR AQUI</label><input type="date" data-event-id="${e.id}" value="${savedDates[e.id]||''}" onchange="onDateChange('${e.id}')"></div>
+   </div>`).join('') || '<div class="intro">Não há novos marcos fixos neste recorte. Manter revisão anual e por faixa etária.</div>';
+}
+function renderCalendar(future){
+ let base=future.slice(0,10).map(e=>({date:targetDate(e),age:e.age,v:`${e.v} — ${e.d}`,note:'PNI 2026'}));
+ // adiciona complementos SBP que ainda não venceram
+ SBP_FUTURE.filter(x=>x.m>ageMonths).slice(0,3).forEach(x=>base.push({date:addMonthsSafe(DOB,x.m),age:`${x.m} meses`,v:x.v,note:x.note}));
+ base.sort((a,b)=>a.date-b.date);
+ document.getElementById('calendar').innerHTML=base.slice(0,10).map(x=>`
+   <div class="calitem"><span class="caldate">${fmt(x.date)}</span><span class="calage">${x.age}</span>
+   <div class="calvacc">${x.v}</div><div class="calnote">${x.note}</div></div>`).join('') || '<div class="intro">Sem novos marcos automáticos.</div>';
+}
+function renderPlan(past,future){
+ const missing=past.filter(e=>!savedDates[e.id]&&!e.review);
+ const reviews=past.filter(e=>!savedDates[e.id]&&e.review);
+ const next=future.slice(0,4);
+ let html='';
+ if(missing.length){
+   html+=`<div class="infoBox warnBox"><b>💉 READEQUAÇÃO A REVISAR AGORA</b><br>${missing.map(e=>`${e.v} (${e.d})`).join(' • ')}</div>`;
+ }else{
+   html+=`<div class="infoBox info"><b>✅ SEM PENDÊNCIAS FIXAS ÓBVIAS</b><br>As doses de rotina já vencidas foram marcadas como realizadas. Conferir validade, intervalos e produtos.</div>`;
+ }
+ if(reviews.length){
+   html+=`<div class="infoBox info"><b>🔎 ITENS QUE EXIGEM REVISÃO</b><br>${reviews.map(e=>`${e.v}: ${e.d}`).join(' • ')}</div>`;
+ }
+ if(next.length){
+   html+=`<div class="infoBox info"><b>📅 PRÓXIMAS ETAPAS</b><br>${next.map(e=>`${fmt(targetDate(e))} — ${e.v} (${e.d})`).join('<br>')}</div>`;
+ }
+ document.getElementById('plan').innerHTML=html;
+}
+function clearDates(){
+ Object.keys(savedDates).forEach(k=>delete savedDates[k]);
+ buildProtocol();
+}
+function copyPlan(){
+ const text=document.getElementById('orientationPanel').innerText;
+ navigator.clipboard.writeText(text).then(()=>alert('Orientação copiada.'));
 }
 </script>
 </body>
